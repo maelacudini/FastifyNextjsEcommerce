@@ -1,0 +1,38 @@
+services:
+
+  backend:
+    container_name: fastify_next_server_cont
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile.dev
+    ports:
+      - "80:80"
+    develop:
+      watch:
+        - action: sync
+          path: ./apps/api
+          target: /apps/api
+          ignore:
+            - node_modules/
+            - dist/
+
+  frontend:
+    container_name: fastify_next_client_cont
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:80
+      - NEXT_TELEMETRY_DISABLED=1
+    develop:
+      watch:
+        - action: sync
+          path: ./apps/web
+          target: /apps/web
+          ignore:
+            - node_modules/
+            - .next

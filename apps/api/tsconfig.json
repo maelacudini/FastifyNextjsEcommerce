@@ -1,0 +1,50 @@
+{
+  "compilerOptions": {
+    // File Layout
+    "rootDir": "../../",
+    "outDir": "dist",
+
+    "baseUrl": "../../",
+    "paths": {
+      "@/packages/*": ["packages/*"],
+      "@/*": ["apps/api/src/*"]
+    },
+
+    // Environment Settings
+    // See also https://aka.ms/tsconfig/module
+    "module": "nodenext",
+    "target": "esnext",
+    // "types": [],
+    // For nodejs:
+    "lib": ["esnext"],
+    "types": ["node"],
+
+    // Other Outputs
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    // Stricter Typechecking Options
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    // Style Options
+    // "noImplicitReturns": true,
+    // "noImplicitOverride": true,
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
+    // "noFallthroughCasesInSwitch": true,
+    // "noPropertyAccessFromIndexSignature": true,
+
+    // Recommended Options
+    "strict": true,
+    "jsx": "react-jsx",
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "noUncheckedSideEffectImports": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true,
+  },
+  "include": ["src/**/*", "../../packages/**/*"],
+  "exclude": ["node_modules", "../../node_modules", "../web", "web"]
+}

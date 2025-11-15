@@ -1,0 +1,20 @@
+# Exclude node_modules directory
+node_modules
+
+# Exclude all log files
+*.log
+
+# Exclude environment files
+.env
+.env.local
+.env.production
+
+# Ignore build directories
+/build
+/dist
+
+# Ignore test files
+test.http
+
+# Ignore git files
+.git

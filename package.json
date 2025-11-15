@@ -1,0 +1,28 @@
+{
+  "name": "fastifynextsetup",
+  "version": "1.0.0",
+  "description": "A minimal starter to run a Fastify backend and a Next.js frontend together. This repository contains two main folders:\r - `server/` — Fastify (Fastify, TypeScript-ready).\r - `client/` — Next.js (React -Next.js-, TypeScript-ready).",
+  "private": "true",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maelacudini/FastifyNextjsSetup.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/maelacudini/FastifyNextjsSetup/issues"
+  },
+  "homepage": "https://github.com/maelacudini/FastifyNextjsSetup#readme",
+  "dependencies": {
+    "openapi-fetch": "^0.15.0"
+  },
+  "devDependencies": {
+    "openapi-typescript": "^7.10.1",
+    "typescript": "^5.9.3"
+  }
+}
