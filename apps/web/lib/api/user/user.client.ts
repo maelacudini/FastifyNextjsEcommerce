@@ -3,7 +3,7 @@ import { api } from "../client";
 const findAllUsers = () => {
     return api.useQuery(
     "get",
-    "/users",
+    "/users"
   );
 }
 
@@ -16,7 +16,7 @@ const findOneUser = (id: string) => {
         path: { 
           id: id
         }
-    },
+      },
     }
   );
 }

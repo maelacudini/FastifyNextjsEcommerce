@@ -1,12 +1,9 @@
 import type { User } from "@/user/domain/user.entity.js";
 
-// Geneic types
+// Generic types
 export type UserId = User["id"]
 export type UserWithoutPassword = Omit<User, "password">
-export enum UserRole {
-  Admin = "admin",
-  Customer = "customer"
-}
+export type UserRole = "admin" | "customer"
 
 // Request params types
 export type FindUserByIdParamsType = {
@@ -15,6 +12,7 @@ export type FindUserByIdParamsType = {
 export type CreateUserParamsType = {
   email: User["email"],
   password: User["password"]
+  role: User["role"]
 };
 export type DeleteUserParamsType = {
   id: UserId

@@ -15,13 +15,13 @@ export const UserListServer = async () => {
 		return (
 			<p>{t("error")}</p>
 		);
-	}
+	}	
 
 	return (
 		<div>
 			<p className="text-2xl">{t("server_fetch")}</p>
 			{users.map((user) => (
-				<p className="text-foreground" key={user.name}>{user.name}</p>
+				<p className="text-foreground" key={user.id}>{user.email}</p>
 			))}
 		</div>
 	);

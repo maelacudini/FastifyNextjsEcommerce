@@ -45,7 +45,7 @@ The client uses environment variables to determine the backend API URL and other
 
 Recommended vars:
 - NEXT_PUBLIC_WEB_URL — URL used by client code (browser and server components if needed).
-- NEXT_PUBLIC_API_URL=http://backend:80
+- NEXT_PUBLIC_API_URL=http://localhost:80
   - In Docker Compose, set `NEXT_PUBLIC_WEB_URL=http://backend:80` so server-side Next fetches can resolve backend by service name.
 - NEXT_TELEMETRY_DISABLED=1
 

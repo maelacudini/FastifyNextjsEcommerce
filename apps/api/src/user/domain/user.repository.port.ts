@@ -15,11 +15,11 @@ import type {
 } from "@/user/types.js";
 
 export interface UserRepositoryPort {
-  findUserById( id: FindUserByIdParamsType ): FindUserByIdReturnType;
-	findUserByEmail( id: FindUserByEmailParamsType ): FindUserByEmailReturnType;
   findAllUsers(): FindAllUsersReturnType;
+	findUserById( data: FindUserByIdParamsType ): FindUserByIdReturnType;
+	findUserByEmail( data: FindUserByEmailParamsType ): FindUserByEmailReturnType;
   createUser( data: CreateUserParamsType ): CreateUserReturnType;
-  deleteUser( id: DeleteUserParamsType ): DeleteUserReturnType;
+  deleteUser( data: DeleteUserParamsType ): DeleteUserReturnType;
 	updateUser( data: UpdateUserParamsType ): UpdateUserReturnType;
 	updateUserPassword( data: UpdateUserPasswordParamsType ): UpdateUserPasswordReturnType;
 }

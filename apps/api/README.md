@@ -166,3 +166,24 @@ app.listen({ port: 3000 }, () => {
 
 ### ✅ Why?
 This is the app entry point — composition root for wiring everything.
+
+
+
+# Generate schemas from types
+
+## Because writing schemas is a pain in the @ss
+
+I refused to write all schemas on my own, so I picked [typescript-json-schema](https://github.com/YousefED/typescript-json-schema) to help me generate schemas. Now, I know that there might be better options out there, if you happen to know one of them please let me know: I am desperate.
+To generate a schema from a type (e.g. FindUserByEmailParamsType) open the terminal and enter the following command (inside apps/api):
+
+```powershell
+npx typescript-json-schema tsconfig.json <your type> --required > <your file>.json
+```
+
+Example:
+
+```powershell
+npx typescript-json-schema tsconfig.json FindUserByEmailParamsType --required > generated.schemas.json
+```
+
+Then, from the generated file, pick the part of the schema you're interested in and use it wherever you're defining schemas (e.g. user.schemas.ts, the schema generated with the command right above from FindUserByEmailParamsType would be the 200 response schema).
