@@ -3,6 +3,7 @@ import globals from "globals";
 import tseslint from "typescript-eslint";
 import json from "@eslint/json";
 import { defineConfig } from "eslint/config";
+import importPlugin from "eslint-plugin-import";
 
 export default defineConfig( [
   {
@@ -20,7 +21,7 @@ export default defineConfig( [
       "src/*.{js,mjs,cjs,ts,mts,cts}",
       "src/**/*.{js,mjs,cjs,ts,mts,cts}"
     ],
-    plugins: { js },
+    plugins: { js, import: importPlugin },
     extends: [ "js/recommended" ],
     languageOptions: { globals: globals.node },
     rules: {
@@ -31,6 +32,7 @@ export default defineConfig( [
       "max-statements": [ "error", 20 ],
       "max-lines-per-function": [ "error", 200 ],
       "no-duplicate-imports": [ "error", { "includeExports": true } ],
+      "no-trailing-spaces": "error",
       "no-console": "error",
       "eqeqeq": "error",
       "curly": "error",
@@ -39,10 +41,11 @@ export default defineConfig( [
       "no-unused-vars": "error",
       "quotes": [ "error", "double" ],
       "indent": [ "error", "tab" ],
-      "semi": [ "error", "always" ],
+      "semi": [ "error", "never" ],
       "no-extra-semi": "error",
       "object-curly-spacing": [ "error", "always" ],
-      "space-in-parens": [ "error", "always" ]
+      "space-in-parens": [ "error", "always" ],
+      "import/newline-after-import": [ "error", { "count": 1 } ]
     },
   },
   tseslint.configs.recommended,

@@ -1,0 +1,12 @@
+import type { BiscuitRepositoryPort } from "../domain/buiscuit.repository.ports.js"
+import type { BiscuitId } from "../types.js"
+
+export class FindActiveBiscuitsByIdUseCase {
+	constructor( private readonly biscuitRepo: BiscuitRepositoryPort ) {}
+
+	async execute( id: BiscuitId ) {
+		const biscuits = await this.biscuitRepo.findActiveBiscuitById( { id } )
+
+		return biscuits
+	}
+}

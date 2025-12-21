@@ -1,10 +1,13 @@
-import type { UserRole } from "../types.js";
-
 export interface User {
   id: string
   email: string
   password: string
-  role: UserRole
+  role: "admin" | "customer"
+  isVerified: boolean
+  isDisabled: boolean
+  refreshTokenVersion: number
+  createdAt: string
+  updatedAt?: string
   username?: string
   address?: {
     country: string
@@ -14,5 +17,8 @@ export interface User {
   }
   phone?: string
   favorites?: string[]
+  cart?: string[]
   marketingOptIn?: boolean
+  lastLoginAt?: string
+  lastPasswordChangeAt?: string
 }

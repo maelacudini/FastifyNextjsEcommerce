@@ -1,9 +1,8 @@
 # Introduction
 
-A minimal starter to run a Fastify backend and a Next.js frontend together. This repository contains two main folders:
+This repository contains two main folders:
 - `apps/api` — Fastify (Fastify, TypeScript-ready).
 - `apps/web` — Next.js (React -Next.js-, TypeScript-ready).
-- `packages` — Shared stuff between client and server.
 
 
 

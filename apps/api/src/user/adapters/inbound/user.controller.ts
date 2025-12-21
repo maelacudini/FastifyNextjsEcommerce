@@ -1,247 +1,349 @@
 /* eslint-disable max-lines-per-function */
-import type { FastifyInstance } from "fastify";
-import type { FromSchema } from "json-schema-to-ts";
-import { MockUserRepository } from "@/user/adapters/outbound/user.repository.mock.js";
-import { FindUserByIdUseCase } from "@/user/application/find-user-by-id.usecase.js";
-import { FindAllUsersUseCase } from "@/user/application/find-all-users.usecase.js";
-import { CreateUserUseCase } from "@/user/application/create-user.usecase.js";
-import { DeleteUserUseCase } from "@/user/application/delete-user.usecase.js";
-import { FindUserByEmailUseCase } from "@/user/application/find-user-by-email.usecase.js";
-import { UpdateUserUseCase } from "@/user/application/update-user.usecase.js";
-import { UpdateUserPasswordUseCase } from "@/user/application/update-user-password.usecase.js";
-import { 
-	createUserBodySchema,
-	createUserSuccessReturnSchema,
-	deleteUserParamsSchema,
-	deleteUserSuccessReturnSchema,
-	findAllUsersSuccessReturnSchema,
-	findUserByEmailParamsSchema,
-	findUserByEmailSuccessReturnSchema,
-	findUserByIdParamsSchema,
-	findUserByIdSuccessReturnSchema,
-	notFoundSchema,
-	serverErrorSchema,
-	unauthorizedSchema,
-	updateUserBodySchema,
-	updateUserParamsSchema,
-	updateUserPasswordBodySchema,
-	updateUserPasswordParamsSchema,
-	updateUserPasswordSuccessReturnSchema,
-	updateUserSuccessReturnSchema,
-} from "./user.schema.js";
+import schemas from "./user.schema.js"
+import type { FastifyInstance } from "fastify"
+import type { FromSchema } from "json-schema-to-ts"
+import usecasesFactory from "./user.usecase.factory.js"
+import type {
+	CreateUserReplyType,
+	DeleteUserReplyType,
+	FindAllUsersReplyType,
+	FindUserByEmailReplyType,
+	FindUserByIdReplyType,
+	UpdateUserCartReplyType,
+	UpdateUserFavoritesReplyType,
+	UpdateUserIsDisabledReplyType,
+	UpdateUserIsVerifiedReplyType,
+	UpdateUserMarketingOptInReplyType,
+	UpdateUserPasswordReplyType,
+	UpdateUserReplyType,
+	UpdateUserRoleReplyType
+} from "@/user/types.js"
+import { errorSchemas } from "@/const.js"
+
 
 export async function userController( app: FastifyInstance ) {
 	// The controller wires the inbound and outbound sides
-	const userRepo = new MockUserRepository();
-	const findAllUsersUseCase = new FindAllUsersUseCase( userRepo );
-	const findUserByIdUseCase = new FindUserByIdUseCase( userRepo );
-	const findUserByEmailUseCase = new FindUserByEmailUseCase( userRepo );
-	const createUserUseCase = new CreateUserUseCase( userRepo );
-	const deleteUserUseCase = new DeleteUserUseCase( userRepo );
-	const updateUserUseCase = new UpdateUserUseCase( userRepo );
-	const updateUserPasswordUseCase = new UpdateUserPasswordUseCase( userRepo );
 
 	// PUBLIC - FIND ALL USERS
-	app.get<{ Reply: {
-		200: FromSchema<typeof findAllUsersSuccessReturnSchema>,
-		404: FromSchema<typeof notFoundSchema>,
-		401: FromSchema<typeof unauthorizedSchema>,
-		500: FromSchema<typeof serverErrorSchema>,
-	} }>( "/users", { schema: {
+	app.get<{ Reply: FindAllUsersReplyType }>( "/users", { schema: {
 		response: {
-			200: findAllUsersSuccessReturnSchema,
-			404: notFoundSchema,
-			401: unauthorizedSchema,
-			500: serverErrorSchema,
+			200: schemas.findAllUsersSuccessReturnSchema,
+			...errorSchemas
 		}
 	} }, async ( req, reply ) => {
-		const users = await findAllUsersUseCase.execute();
+		const users = await usecasesFactory.findAllUsersUseCase.execute()
 
-		return reply.code( 200 ).send( users );
-	} );
+		return reply.code( 200 ).send( users )
+	} )
 
 	// PUBLIC - FIND USER BY ID
-	app.get<{ 
-		Params: FromSchema<typeof findUserByIdParamsSchema>, 
-		Reply: {
-			200: FromSchema<typeof findUserByIdSuccessReturnSchema>,
-			404: FromSchema<typeof notFoundSchema>,
-			401: FromSchema<typeof unauthorizedSchema>,
-			500: FromSchema<typeof serverErrorSchema>,
-		} }>( "/users/:id", { schema: {
-			params: findUserByIdParamsSchema,
-			response: {
-				200: findUserByIdSuccessReturnSchema,
-				404: notFoundSchema,
-				401: unauthorizedSchema,
-				500: serverErrorSchema,
-			}
-		} }, async ( req, reply ) => {
-			const { id } = req.params;
+	app.get<{
+		Params: FromSchema<typeof schemas.findUserByIdParamsSchema>,
+		Reply: FindUserByIdReplyType
+	}>( "/users/:id", { schema: {
+		params: schemas.findUserByIdParamsSchema,
+		response: {
+			200: schemas.findUserByIdSuccessReturnSchema,
+			...errorSchemas
+		}
+	} }, async ( req, reply ) => {
+		const { id } = req.params
 
-			const user = await findUserByIdUseCase.execute( { id: id } );
+		const user = await usecasesFactory.findUserByIdUseCase.execute( { id: id } )
 
-			if ( !user ) {
-				return reply.code( 404 ).send( { error: "User not found" } );
-			}
+		if ( !user ) {
+			return reply.code( 404 ).send( { error: "User not found" } )
+		}
 
-			return reply.code( 200 ).send( user );
-		} );
+		return reply.code( 200 ).send( user )
+	} )
 
 	// PUBLIC - FIND USER BY EMAIL
-	app.get<{ 
-		Params: FromSchema<typeof findUserByEmailParamsSchema>, 
-		Reply: {
-			200: FromSchema<typeof findUserByEmailSuccessReturnSchema>,
-			404: FromSchema<typeof notFoundSchema>,
-			401: FromSchema<typeof unauthorizedSchema>,
-			500: FromSchema<typeof serverErrorSchema>,
-		} }>( "/users/email/:email", { schema: {
-			params: findUserByEmailParamsSchema,
-			response: {
-				200: findUserByEmailSuccessReturnSchema,
-				404: notFoundSchema,
-				401: unauthorizedSchema,
-				500: serverErrorSchema,
-			}
-		} }, async ( req, reply ) => {
-			const { email } = req.params;
+	app.get<{
+		Params: FromSchema<typeof schemas.findUserByEmailParamsSchema>,
+		Reply: FindUserByEmailReplyType
+	}>( "/users/email/:email", { schema: {
+		params: schemas.findUserByEmailParamsSchema,
+		response: {
+			200: schemas.findUserByEmailSuccessReturnSchema,
+			...errorSchemas
+		}
+	} }, async ( req, reply ) => {
+		const { email } = req.params
 
-			const user = await findUserByEmailUseCase.execute( { email: email } );
+		const user = await usecasesFactory.findUserByEmailUseCase.execute( { email: email } )
 
-			if ( !user ) {
-				return reply.code( 404 ).send( { error: "User not found" } );
-			}
+		if ( !user ) {
+			return reply.code( 404 ).send( { error: "User not found" } )
+		}
 
-			return reply.code( 200 ).send( user );
-		} );
+		return reply.code( 200 ).send( user )
+	} )
 
 	// PUBLIC - CREATE USER
-	app.post<{ 
-		Body: FromSchema<typeof createUserBodySchema>, 
-		Reply: {
-			200: FromSchema<typeof createUserSuccessReturnSchema>,
-			404: FromSchema<typeof notFoundSchema>,
-			401: FromSchema<typeof unauthorizedSchema>,
-			500: FromSchema<typeof serverErrorSchema>,
-		} }>( "/users", { schema: {
-			body: createUserBodySchema,
-			response: {
-				200: createUserSuccessReturnSchema,
-				404: notFoundSchema,
-				401: unauthorizedSchema,
-				500: serverErrorSchema,
-			}
-		} }, async ( req, reply ) => {
-			const data = req.body;
+	app.post<{
+		Body: FromSchema<typeof schemas.createUserBodySchema>,
+		Reply: CreateUserReplyType
+	}>( "/users", { schema: {
+		body: schemas.createUserBodySchema,
+		response: {
+			200: schemas.createUserSuccessReturnSchema,
+			...errorSchemas
+		}
+	} }, async ( req, reply ) => {
+		const data = req.body
 
-			try {
-				const newUser = await createUserUseCase.execute( data );
+		try {
+			const newUser = await usecasesFactory.createUserUseCase.execute( data )
 
-				return reply.code( 200 ).send( newUser );
-			} catch ( err: unknown ) {
-				const errorMessage = err instanceof Error ? err.message : "Unknown error";
+			return reply.code( 200 ).send( newUser )
+		} catch ( err: unknown ) {
+			const errorMessage = err instanceof Error ? err.message : "Unknown error"
 
-				return reply.code( 500 ).send( { message: errorMessage } );
-			}
-		} );
+			return reply.code( 500 ).send( { message: errorMessage } )
+		}
+	} )
 
 	// PRIVATE - DELETE USER
-	app.delete<{ 
-		Params: FromSchema<typeof deleteUserParamsSchema>, 
-		Reply: {
-			200: FromSchema<typeof deleteUserSuccessReturnSchema>,
-			404: FromSchema<typeof notFoundSchema>,
-			401: FromSchema<typeof unauthorizedSchema>,
-			500: FromSchema<typeof serverErrorSchema>,
-		} }>( "/users/:id", { schema: {
-			params: deleteUserParamsSchema,
-			response: {
-				200: deleteUserSuccessReturnSchema,
-				404: notFoundSchema,
-				401: unauthorizedSchema,
-				500: serverErrorSchema,
-			}
-		} }, async ( req, reply ) => {
-			const { id } = req.params;
+	app.delete<{
+		Params: FromSchema<typeof schemas.deleteUserParamsSchema>,
+		Reply: DeleteUserReplyType
+	}>( "/users/:id", { schema: {
+		params: schemas.deleteUserParamsSchema,
+		response: {
+			200: schemas.deleteUserSuccessReturnSchema,
+			...errorSchemas
+		}
+	} }, async ( req, reply ) => {
+		const { id } = req.params
 
-			try {
-				const user = await deleteUserUseCase.execute( { id: id } );
-				if ( !user ) {
-					return reply.code( 404 ).send( { error: "User not found" } );
-				}
-
-				return reply.code( 200 ).send( user );
-			} catch ( err: unknown ) {
-				const errorMessage = err instanceof Error ? err.message : "Unknown error";
-			
-				return reply.code( 500 ).send( { message: errorMessage } );
+		try {
+			const user = await usecasesFactory.deleteUserUseCase.execute( { id: id } )
+			if ( !user ) {
+				return reply.code( 404 ).send( { error: "User not found" } )
 			}
-		} );
+
+			return reply.code( 200 ).send( user )
+		} catch ( err: unknown ) {
+			const errorMessage = err instanceof Error ? err.message : "Unknown error"
+
+			return reply.code( 500 ).send( { message: errorMessage } )
+		}
+	} )
 
 	// PRIVATE - UPDATE USER
-	app.put<{ 
-		Params: FromSchema<typeof updateUserParamsSchema>,
-		Body: FromSchema<typeof updateUserBodySchema>,
-		Reply: {
-			200: FromSchema<typeof updateUserSuccessReturnSchema>,
-			404: FromSchema<typeof notFoundSchema>,
-			401: FromSchema<typeof unauthorizedSchema>,
-			500: FromSchema<typeof serverErrorSchema>,
-		} }>( "/users/:id",{ schema: {
-			params: updateUserParamsSchema,
-			body: updateUserBodySchema,
-			response: {
-				200: updateUserSuccessReturnSchema,
-				404: notFoundSchema,
-				401: unauthorizedSchema,
-				500: serverErrorSchema,
-			}
-		} }, async ( req, reply ) => {
-			const { id } = req.params;
-			const data = req.body;
+	app.put<{
+		Params: FromSchema<typeof schemas.updateUserParamsSchema>,
+		Body: FromSchema<typeof schemas.updateUserBodySchema>,
+		Reply: UpdateUserReplyType
+	}>( "/users/:id",{ schema: {
+		params: schemas.updateUserParamsSchema,
+		body: schemas.updateUserBodySchema,
+		response: {
+			200: schemas.updateUserSuccessReturnSchema,
+			...errorSchemas
+		}
+	} }, async ( req, reply ) => {
+		const { id } = req.params
+		const user = req.body
 
-			try {
-				const updatedUser = await updateUserUseCase.execute( { id: id, user: data.user } );
-			
-				return reply.code( 200 ).send( updatedUser );
-			} catch ( err: unknown ) {
-				const errorMessage = err instanceof Error ? err.message : "Unknown error";
-			
-				return reply.code( 500 ).send( { message: errorMessage } );
-			}
-		} );
+		try {
+			const updatedUser = await usecasesFactory.updateUserUseCase.execute( { id: id, user: user } )
+
+			return reply.code( 200 ).send( updatedUser )
+		} catch ( err: unknown ) {
+			const errorMessage = err instanceof Error ? err.message : "Unknown error"
+
+			return reply.code( 500 ).send( { message: errorMessage } )
+		}
+	} )
 
 	// PRIVATE - UPDATE USER PASSWORD
-	app.put<{ 
-		Params: FromSchema<typeof updateUserPasswordParamsSchema>,
-		Body: FromSchema<typeof updateUserPasswordBodySchema>,
-		Reply: {
-			200: FromSchema<typeof updateUserPasswordSuccessReturnSchema>,
-			404: FromSchema<typeof notFoundSchema>,
-			401: FromSchema<typeof unauthorizedSchema>,
-			500: FromSchema<typeof serverErrorSchema>,
-		} }>( "/users/:id/password", { schema: {
-			params: updateUserPasswordParamsSchema,
-			body: updateUserPasswordBodySchema,
-			response: {
-				200: updateUserPasswordSuccessReturnSchema,
-				404: notFoundSchema,
-				401: unauthorizedSchema,
-				500: serverErrorSchema,
-			}
-		} }, async ( req, reply ) => {
-			const { id } = req.params;
-			const { newPassword } = req.body;
+	app.put<{
+		Params: FromSchema<typeof schemas.updateUserPasswordParamsSchema>,
+		Body: FromSchema<typeof schemas.updateUserPasswordBodySchema>,
+		Reply: UpdateUserPasswordReplyType
+	 }>( "/users/:id/password", { schema: {
+	 	params: schemas.updateUserPasswordParamsSchema,
+	 	body: schemas.updateUserPasswordBodySchema,
+	 	response: {
+	 		200: schemas.updateUserPasswordSuccessReturnSchema,
+	 		...errorSchemas
+	 	}
+	 } }, async ( req, reply ) => {
+	 	const { id } = req.params
+	 	const { newPassword } = req.body
 
-			try {
-				const user = await updateUserPasswordUseCase.execute( { id, newPassword } );
-			
-				return reply.code( 200 ).send( user );
-			} catch ( err: unknown ) {
-				const errorMessage = err instanceof Error ? err.message : "Unknown error";
-			
-				return reply.code( 500 ).send( { message: errorMessage } );
-			}
-		} );
+	 	try {
+	 		const user = await usecasesFactory.updateUserPasswordUseCase.execute( { id, newPassword } )
+
+	 		return reply.code( 200 ).send( user )
+	 	} catch ( err: unknown ) {
+	 		const errorMessage = err instanceof Error ? err.message : "Unknown error"
+
+	 		return reply.code( 500 ).send( { message: errorMessage } )
+	 	}
+	 } )
+
+	// PRIVATE - UPDATE USER ISVERIFIED
+	app.put<{
+		Params: FromSchema<typeof schemas.updateUserIsVerifiedParamsSchema>,
+		Body: FromSchema<typeof schemas.updateUserIsVerifiedBodySchema>,
+		Reply: UpdateUserIsVerifiedReplyType
+	}>( "/users/:id/isVerified", { schema: {
+		params: schemas.updateUserIsVerifiedParamsSchema,
+		body: schemas.updateUserIsVerifiedBodySchema,
+		response: {
+			200: schemas.updateUserIsVerifiedSuccessReturnSchema,
+			...errorSchemas
+		}
+	} }, async ( req, reply ) => {
+		const { id } = req.params
+		const { isVerified } = req.body
+
+		try {
+			const user = await usecasesFactory.updateUserIsVerifiedUseCase.execute( { id, isVerified } )
+
+			return reply.code( 200 ).send( user )
+		} catch ( err: unknown ) {
+			const errorMessage = err instanceof Error ? err.message : "Unknown error"
+
+			return reply.code( 500 ).send( { message: errorMessage } )
+		}
+	} )
+
+	// PRIVATE - UPDATE USER ISDISABLED
+	app.put<{
+		Params: FromSchema<typeof schemas.updateUserIsDisabledParamsSchema>,
+		Body: FromSchema<typeof schemas.updateUserIsDisabledBodySchema>,
+		Reply: UpdateUserIsDisabledReplyType
+	}>( "/users/:id/isDisabled", { schema: {
+		params: schemas.updateUserIsDisabledParamsSchema,
+		body: schemas.updateUserIsDisabledBodySchema,
+		response: {
+			200: schemas.updateUserIsDisabledSuccessReturnSchema,
+			...errorSchemas
+		}
+	} }, async ( req, reply ) => {
+		const { id } = req.params
+		const { isDisabled } = req.body
+
+		try {
+			const user = await usecasesFactory.updateUserIsDisabledUseCase.execute( { id, isDisabled } )
+
+			return reply.code( 200 ).send( user )
+		} catch ( err: unknown ) {
+			const errorMessage = err instanceof Error ? err.message : "Unknown error"
+
+			return reply.code( 500 ).send( { message: errorMessage } )
+		}
+	} )
+
+	// PRIVATE - UPDATE USER ROLE
+	app.put<{
+		Params: FromSchema<typeof schemas.updateUserRoleParamsSchema>,
+		Body: FromSchema<typeof schemas.updateUserRoleBodySchema>,
+		Reply: UpdateUserRoleReplyType
+	}>( "/users/:id/role", { schema: {
+		params: schemas.updateUserRoleParamsSchema,
+		body: schemas.updateUserRoleBodySchema,
+		response: {
+			200: schemas.updateUserRoleSuccessReturnSchema,
+			...errorSchemas
+		}
+	} }, async ( req, reply ) => {
+		const { id } = req.params
+		const { role } = req.body
+
+		try {
+			const user = await usecasesFactory.updateUserRoleUseCase.execute( { id, role } )
+
+			return reply.code( 200 ).send( user )
+		} catch ( err: unknown ) {
+			const errorMessage = err instanceof Error ? err.message : "Unknown error"
+
+			return reply.code( 500 ).send( { message: errorMessage } )
+		}
+	} )
+
+	// PRIVATE - UPDATE USER MARKETINGOPTIN
+	app.put<{
+		Params: FromSchema<typeof schemas.updateUserMarketingOptInParamsSchema>,
+		Body: FromSchema<typeof schemas.updateUserMarketingOptInBodySchema>,
+		Reply: UpdateUserMarketingOptInReplyType
+	}>( "/users/:id/marketingOptIn", { schema: {
+		params: schemas.updateUserMarketingOptInParamsSchema,
+		body: schemas.updateUserMarketingOptInBodySchema,
+		response: {
+			200: schemas.updateUserMarketingOptInSuccessReturnSchema,
+			...errorSchemas
+		}
+	} }, async ( req, reply ) => {
+		const { id } = req.params
+		const { marketingOptIn } = req.body
+
+		try {
+			const user = await usecasesFactory.updateUserMarketingOptInUseCase.execute( { id, marketingOptIn } )
+
+			return reply.code( 200 ).send( user )
+		} catch ( err: unknown ) {
+			const errorMessage = err instanceof Error ? err.message : "Unknown error"
+
+			return reply.code( 500 ).send( { message: errorMessage } )
+		}
+	} )
+
+	// PRIVATE - UPDATE USER FAVORITES
+	app.put<{
+		Params: FromSchema<typeof schemas.updateUserFavoritesParamsSchema>,
+		Body: FromSchema<typeof schemas.updateUserFavoritesBodySchema>,
+		Reply: UpdateUserFavoritesReplyType
+	}>( "/users/:id/favorites", { schema: {
+		params: schemas.updateUserFavoritesParamsSchema,
+		body: schemas.updateUserFavoritesBodySchema,
+		response: {
+			200: schemas.updateUserFavoritesSuccessReturnSchema,
+			...errorSchemas
+		}
+	} }, async ( req, reply ) => {
+		const { id } = req.params
+		const { favorites } = req.body
+
+		try {
+			const user = await usecasesFactory.updateUserFavoritesUseCase.execute( { id, favorites } )
+
+			return reply.code( 200 ).send( user )
+		} catch ( err: unknown ) {
+			const errorMessage = err instanceof Error ? err.message : "Unknown error"
+
+			return reply.code( 500 ).send( { message: errorMessage } )
+		}
+	} )
+
+	// PRIVATE - UPDATE USER CART
+	app.put<{
+		Params: FromSchema<typeof schemas.updateUserCartParamsSchema>,
+		Body: FromSchema<typeof schemas.updateUserCartBodySchema>,
+		Reply: UpdateUserCartReplyType
+	}>( "/users/:id/cart", { schema: {
+		params: schemas.updateUserCartParamsSchema,
+		body: schemas.updateUserCartBodySchema,
+		response: {
+			200: schemas.updateUserCartSuccessReturnSchema,
+			...errorSchemas
+		}
+	} }, async ( req, reply ) => {
+		const { id } = req.params
+		const { cart } = req.body
+
+		try {
+			const user = await usecasesFactory.updateUserCartUseCase.execute( { id, cart } )
+
+			return reply.code( 200 ).send( user )
+		} catch ( err: unknown ) {
+			const errorMessage = err instanceof Error ? err.message : "Unknown error"
+
+			return reply.code( 500 ).send( { message: errorMessage } )
+		}
+	} )
 }

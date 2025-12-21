@@ -6,7 +6,6 @@
 
     "baseUrl": "../../",
     "paths": {
-      "@/packages/*": ["packages/*"],
       "@/*": ["apps/api/src/*"]
     },
 
@@ -45,6 +44,6 @@
     "moduleDetection": "force",
     "skipLibCheck": true,
   },
-  "include": ["src/**/*", "../../packages/**/*"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "../../node_modules", "../web", "web"]
 }

@@ -1,4 +1,4 @@
-import type { 
+import type {
 	CreateUserParamsType,
 	CreateUserReturnType,
 	DeleteUserParamsType,
@@ -8,11 +8,24 @@ import type {
 	FindUserByEmailReturnType,
 	FindUserByIdParamsType,
 	FindUserByIdReturnType,
+	UpdateUserCartParamsType,
+	UpdateUserCartReturnType,
+	UpdateUserFavoritesParamsType,
+	UpdateUserFavoritesReturnType,
+	UpdateUserIsDisabledParamsType,
+	UpdateUserIsDisabledReturnType,
+	UpdateUserIsVerifiedParamsType,
+	UpdateUserIsVerifiedReturnType,
+	UpdateUserMarketingOptInParamsType,
+	UpdateUserMarketingOptInReturnType,
 	UpdateUserParamsType,
 	UpdateUserPasswordParamsType,
 	UpdateUserPasswordReturnType,
-	UpdateUserReturnType
-} from "@/user/types.js";
+	UpdateUserReturnType,
+	UpdateUserRoleParamsType,
+	UpdateUserRoleReturnType
+} from "@/user/types.js"
+
 
 export interface UserRepositoryPort {
   findAllUsers(): FindAllUsersReturnType;
@@ -22,4 +35,10 @@ export interface UserRepositoryPort {
   deleteUser( data: DeleteUserParamsType ): DeleteUserReturnType;
 	updateUser( data: UpdateUserParamsType ): UpdateUserReturnType;
 	updateUserPassword( data: UpdateUserPasswordParamsType ): UpdateUserPasswordReturnType;
+	updateUserFavorites( data: UpdateUserFavoritesParamsType ): UpdateUserFavoritesReturnType;
+	updateUserIsDisabled( data: UpdateUserIsDisabledParamsType ): UpdateUserIsDisabledReturnType;
+	updateUserIsVerified( data: UpdateUserIsVerifiedParamsType ): UpdateUserIsVerifiedReturnType;
+	updateUserRole( data: UpdateUserRoleParamsType ): UpdateUserRoleReturnType;
+	updateUserMarketingOptIn( data: UpdateUserMarketingOptInParamsType ): UpdateUserMarketingOptInReturnType;
+	updateUserCart( data: UpdateUserCartParamsType ): UpdateUserCartReturnType;
 }
