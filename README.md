@@ -35,10 +35,16 @@ You can run the apps independently or start them together via Docker Compose.
 
 2. Start the client:
   - Open a separate terminal
-  - cd client
+  - cd apps/web
   - npm install
-  - Provide the API base URL so the frontend knows where the backend is. Create `client/.env.local` (or set environment variables in your shell) with:
-    - NEXT_PUBLIC_WEB_URL=http://localhost:your_port
+  - Provide the API base URL so the frontend knows where the backend is. Create `apps/web/.env.local` (or set environment variables in your shell). Examples:
+    - For local development (no Docker):
+      - NEXT_PUBLIC_WEB_URL=http://localhost:3000
+      - NEXT_PUBLIC_API_URL=http://localhost:80
+      - API_INTERNAL_URL=http://localhost:80
+    - For Docker Compose (services communicate using service names):
+      - NEXT_PUBLIC_API_URL=http://localhost:80
+      - API_INTERNAL_URL=http://backend:80
   - Start Next.js in development:
     - npm run dev
 
@@ -88,9 +94,14 @@ Notes:
 ## Environment variables
 
 - client:
-  - NEXT_PUBLIC_WEB_URL — base URL for the API used by the client (e.g. `http://localhost:3000`).
-  - NEXT_PUBLIC_API_URL — base URL for the API used to connect to the backend (e.g. `http://backend:80`).
-  - Use a `.env.local` file in `client/` for Next.js environment variables.
+  - NEXT_PUBLIC_WEB_URL — public URL where the Next.js app is served (e.g. `http://localhost:3000`).
+  - NEXT_PUBLIC_API_URL — base URL used by browser-side code to call the backend.
+    - Local dev example: `http://localhost:80`
+    - Docker Compose example: `http://localhost:80`
+  - API_INTERNAL_URL — internal backend URL used by server-side code or services inside Docker.
+    - Local dev example: `http://localhost:80`
+    - Docker Compose example: `http://backend:80`
+  - Use a `.env.local` file in `apps/web/` for Next.js environment variables.
 
 - server:
   - PORT — port for the API used by the server.

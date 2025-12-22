@@ -7,6 +7,8 @@ services:
       dockerfile: Dockerfile.dev
     ports:
       - "80:80"
+    environment:
+      - PORT=80
     develop:
       watch:
         - action: sync
@@ -26,7 +28,8 @@ services:
     depends_on:
       - backend
     environment:
-      - NEXT_PUBLIC_API_URL=http://backend:80
+      - NEXT_PUBLIC_API_URL=http://localhost:80
+      - API_INTERNAL_URL=http://backend:80
       - NEXT_TELEMETRY_DISABLED=1
     develop:
       watch:

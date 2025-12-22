@@ -1,7 +1,7 @@
-import { fetchClient } from "../server";
+import { fetchServer } from "../server";
 
 const findAllUsers = async () => {
-  return await fetchClient.GET("/users");
+  return await fetchServer.GET("/users");
 }
 
 export {

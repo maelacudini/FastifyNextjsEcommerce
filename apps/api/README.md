@@ -173,7 +173,7 @@ This is the app entry point — composition root for wiring everything.
 
 ## Because writing schemas is a pain in the @ss
 
-I refused to write all schemas on my own, so I picked [typescript-json-schema](https://github.com/YousefED/typescript-json-schema) to help me generate schemas. Now, I know that there might be better options out there, if you happen to know one of them please let me know: I am desperate.
+I refused to write all schemas on my own, so I picked [typescript-json-schema](https://github.com/YousefED/typescript-json-schema) to help me generate schemas. Now, I know that there might be better options out there, if you happen to know one of them please let me know.
 To generate a schema from a type (e.g. FindUserByEmailParamsType) open the terminal and enter the following command (inside apps/api):
 
 ```powershell

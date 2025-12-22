@@ -21,7 +21,7 @@ This folder contains the Next.js frontend for the project. It is a modern React/
 
 1. Install dependencies
 ```powershell
-cd client
+cd apps/web
 npm install
 ```
 
@@ -44,14 +44,18 @@ npm run start
 The client uses environment variables to determine the backend API URL and other runtime settings.
 
 Recommended vars:
-- NEXT_PUBLIC_WEB_URL — URL used by client code (browser and server components if needed).
-- NEXT_PUBLIC_API_URL=http://localhost:80
-  - In Docker Compose, set `NEXT_PUBLIC_WEB_URL=http://backend:80` so server-side Next fetches can resolve backend by service name.
+- NEXT_PUBLIC_WEB_URL — public URL where the Next.js app is served (e.g. `http://localhost:3000`).
+- NEXT_PUBLIC_API_URL — base URL used by browser-side code to call the backend.
+  - Local dev example: `http://localhost:80`
+  - Docker Compose example: `http://localhost:80`
+- API_INTERNAL_URL — internal backend URL used by server-side code or services inside Docker.
+  - Local dev example: `http://localhost:80`
+  - Docker Compose example: `http://backend:80`(use service name when the Next app runs in a container)
 - NEXT_TELEMETRY_DISABLED=1
 
 Notes:
-- Use NEXT_PUBLIC_* prefix when the value must be available to browser code. Server-only values (not exposed to browser) can be defined without the prefix, but server components can access both.
-- For server-side fetches inside the Next server running in Docker, you can use `http://backend:80` (service name) as the base URL. For browser requests, use a URL reachable from the browser (e.g. http://localhost:80).
+- Use the `NEXT_PUBLIC_` prefix for variables that must be exposed to browser code. Server-only values (not exposed to the browser) can be defined without the prefix.
+- When running the Next server inside Docker Compose, use `http://backend:80` for server-side/internal fetches so the container can resolve the backend by its service name. For requests issued from a developer's browser (not inside Docker), use `http://localhost:80` or the host address that reaches the backend.
 
 
 ## i18n (next-intl)
