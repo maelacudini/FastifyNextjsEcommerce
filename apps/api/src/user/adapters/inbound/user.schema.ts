@@ -1,3 +1,5 @@
+import { paginationMetaSchema } from "@/const.js"
+
 const userIdSchema = {
 	description: "User id schema.",
 	type: "object",
@@ -103,10 +105,20 @@ const userWithoutPasswordSuccessReturnSchema = {
 	type: "object"
 } as const
 
-const findAllUsersSuccessReturnSchema = {
-	description: "Find all users success response.",
-	type: "array",
-	items: userWithoutPasswordSuccessReturnSchema
+export const findAllUsersSuccessReturnSchema = {
+	description: "Find all users paginated response.",
+	type: "object",
+	properties: {
+		items: {
+			type: "array",
+			items: userWithoutPasswordSuccessReturnSchema,
+		},
+		...paginationMetaSchema.properties
+	},
+	required: [
+		"items",
+		...paginationMetaSchema.required
+	]
 } as const
 
 const findUserByIdParamsSchema = {

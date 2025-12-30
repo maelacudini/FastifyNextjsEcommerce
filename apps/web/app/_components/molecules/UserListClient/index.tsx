@@ -4,8 +4,7 @@ import { findAllUsers } from "@/lib/api/user/user.client";
 import { useTranslations } from "next-intl";
 
 export const UserListClient = () => {
-	const data = findAllUsers();
-	const { data: users, error, isLoading } = data;
+	const { data, error, isLoading } = findAllUsers();
 	const t = useTranslations("common");
 
 	if (isLoading) {
@@ -14,7 +13,7 @@ export const UserListClient = () => {
 		);
 	}
 
-	if (!users || error) {
+	if (!data || error) {
 		return (
 			<p>{t("error")}</p>
 		);
@@ -23,7 +22,7 @@ export const UserListClient = () => {
 	return (
 		<div>
 			<p className="text-2xl">{t("client_fetch")}</p>
-			{users.map((user) => (
+			{data.items.map((user) => (
 				<p className="text-foreground" key={user.id}>{user.email}</p>
 			))}
 		</div>

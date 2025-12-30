@@ -16,6 +16,7 @@ import type {
 	UpdateUserRoleParamsType,
 	UserRole
 } from "@/user/types.js"
+import { paginationDefaultLimit } from "@/const.js"
 
 
 const mockUsers: User[] = [
@@ -26,7 +27,13 @@ const mockUsers: User[] = [
 export class MockUserRepository implements UserRepositoryPort {
 
 	async findAllUsers() {
-		return mockUsers
+		return {
+			items: mockUsers,
+			page: 1,
+			limit: paginationDefaultLimit,
+			total: mockUsers.length,
+			totalPages: Math.round( paginationDefaultLimit / mockUsers.length )
+		}
 	}
 
 	async findUserById( data: FindUserByIdParamsType ) {

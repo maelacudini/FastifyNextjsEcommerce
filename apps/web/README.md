@@ -80,7 +80,8 @@ npm run lint
 ```
 
 ## Types
-This project uses OpenAPI to convert OpenAPI 3.0/3.1 schemas to TypeScript types and create type-safe fetching. To use run the following command:
+This project uses OpenAPI to convert OpenAPI 3.0/3.1 schemas to TypeScript types and create type-safe fetching.
+To generate types make sure the backend is running, then use the following command:
 ```powershell
 npm run gen:api
 ```

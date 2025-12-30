@@ -2,7 +2,7 @@ import { findAllUsers } from "@/lib/api/user/user.server";
 import { getTranslations } from "next-intl/server";
 
 export const UserListServer = async () => {
-	const { data: users, error } = await findAllUsers();
+	const { data, error } = await findAllUsers();
 	const t = await getTranslations("common");
 
 	if (error) {
@@ -11,7 +11,7 @@ export const UserListServer = async () => {
 		);
 	}
 
-	if (!users || error) {
+	if (!data || error) {
 		return (
 			<p>{t("error")}</p>
 		);
@@ -20,7 +20,7 @@ export const UserListServer = async () => {
 	return (
 		<div>
 			<p className="text-2xl">{t("server_fetch")}</p>
-			{users.map((user) => (
+			{data.items.map((user) => (
 				<p className="text-foreground" key={user.id}>{user.email}</p>
 			))}
 		</div>

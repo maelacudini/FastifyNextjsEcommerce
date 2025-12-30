@@ -1,3 +1,5 @@
+import { paginationMetaSchema } from "@/const.js"
+
 const biscuitIdSchema = {
 	description: "Biscuit ID schema.",
 	type: "object",
@@ -31,118 +33,339 @@ const nutritionalValuesSchema = {
 
 const biscuitSchema = {
 	description: "Biscuit entity schema.",
+	properties: {
+		createdAt: {
+			type: "string"
+		},
+		description: {
+			type: "string"
+		},
+		id: {
+			type: "string"
+		},
+		images: {
+			items: {
+				type: "string"
+			},
+			type: "array"
+		},
+		ingredients: {
+			type: "string"
+		},
+		isDisabled: {
+			type: "boolean"
+		},
+		name: {
+			type: "string"
+		},
+		nutritionalValues: {
+			properties: {
+				carbohydrates: {
+					type: "number"
+				},
+				energy: {
+					type: "number"
+				},
+				fats: {
+					type: "number"
+				},
+				protein: {
+					type: "number"
+				},
+				salt: {
+					type: "number"
+				},
+				saturatedFats: {
+					type: "number"
+				},
+				sugarCarbohydrates: {
+					type: "number"
+				}
+			},
+			required: [
+				"carbohydrates",
+				"energy",
+				"fats",
+				"protein",
+				"salt",
+				"saturatedFats",
+				"sugarCarbohydrates"
+			],
+			type: "object"
+		},
+		price: {
+			type: "string"
+		},
+		tags: {
+			items: {
+				type: "string"
+			},
+			type: "array"
+		},
+		updatedAt: {
+			type: "string"
+		}
+	},
+	required: [
+		"createdAt",
+		"description",
+		"id",
+		"images",
+		"ingredients",
+		"name",
+		"nutritionalValues",
+		"price"
+	],
+	type: "object"
+} as const
+
+export const findAllActiveBiscuitsSuccessReturnSchema = {
+	description: "Find all active biscuits, these are the available ones to the clients.",
 	type: "object",
 	properties: {
-		id: { type: "string" },
-		name: { type: "string" },
-		price: { type: "string" },
-		ingredients: { type: "string" },
-		description: { type: "string" },
-		nutritionalValues: nutritionalValuesSchema,
+		items: {
+			type: "array",
+			items: biscuitSchema,
+		},
+		...paginationMetaSchema.properties
+	},
+	required: [
+		"items",
+		...paginationMetaSchema.required
+	]
+} as const
+
+const findActiveBiscuitByIdParamsSchema = biscuitIdSchema
+
+const findActiveBiscuitByIdSuccessReturnSchema = biscuitSchema
+
+const findAllBiscuitsSuccessReturnSchema = {
+	description: "Find all biscuits.",
+	type: "object",
+	properties: {
+		items: {
+			type: "array",
+			items: biscuitSchema,
+		},
+		...paginationMetaSchema.properties
+	},
+	required: [
+		"items",
+		...paginationMetaSchema.required
+	]
+} as const
+
+const findBiscuitByIdParamsSchema = biscuitIdSchema
+
+const findBiscuitByIdSuccessReturnSchema = biscuitSchema
+
+const createBiscuitParamsSchema = {
+	description: "Create biscuit payload schema.",
+	properties: {
+		createdAt: {
+			type: "string"
+		},
+		description: {
+			type: "string"
+		},
 		images: {
-			type: "array",
-			items: { type: "string" }
+			items: {
+				type: "string"
+			},
+			type: "array"
 		},
-		createdAt: { type: "string" },
-		updatedAt: { type: "string", nullable: true },
-		tags: {
-			type: "array",
-			items: { type: "string" },
-			nullable: true
+		ingredients: {
+			type: "string"
 		},
-		isDisabled: { type: "boolean", nullable: true }
+		name: {
+			type: "string"
+		},
+		nutritionalValues: {
+			properties: {
+				carbohydrates: {
+					type: "number"
+				},
+				energy: {
+					type: "number"
+				},
+				fats: {
+					type: "number"
+				},
+				protein: {
+					type: "number"
+				},
+				salt: {
+					type: "number"
+				},
+				saturatedFats: {
+					type: "number"
+				},
+				sugarCarbohydrates: {
+					type: "number"
+				}
+			},
+			required: [
+				"carbohydrates",
+				"energy",
+				"fats",
+				"protein",
+				"salt",
+				"saturatedFats",
+				"sugarCarbohydrates"
+			],
+			type: "object"
+		},
+		price: {
+			type: "string"
+		}
+	},
+	required: [
+		"createdAt",
+		"description",
+		"images",
+		"ingredients",
+		"name",
+		"nutritionalValues",
+		"price"
+	],
+	type: "object"
+} as const
+
+const createBiscuitSuccessReturnSchema = biscuitSchema
+
+const updateBiscuitParamsSchema = {
+	description: "Update biscuit payload schema.",
+	properties: {
+		biscuit: {
+			properties: {
+				description: {
+					type: "string"
+				},
+				images: {
+					items: {
+						type: "string"
+					},
+					type: "array"
+				},
+				ingredients: {
+					type: "string"
+				},
+				isDisabled: {
+					type: "boolean"
+				},
+				name: {
+					type: "string"
+				},
+				nutritionalValues: {
+					properties: {
+						carbohydrates: {
+							type: "number"
+						},
+						energy: {
+							type: "number"
+						},
+						fats: {
+							type: "number"
+						},
+						protein: {
+							type: "number"
+						},
+						salt: {
+							type: "number"
+						},
+						saturatedFats: {
+							type: "number"
+						},
+						sugarCarbohydrates: {
+							type: "number"
+						}
+					},
+					required: [
+						"carbohydrates",
+						"energy",
+						"fats",
+						"protein",
+						"salt",
+						"saturatedFats",
+						"sugarCarbohydrates"
+					],
+					type: "object"
+				},
+				price: {
+					type: "string"
+				},
+				tags: {
+					items: {
+						type: "string"
+					},
+					type: "array"
+				},
+				updatedAt: {
+					type: "string"
+				}
+			},
+			required: [
+				"description",
+				"images",
+				"ingredients",
+				"name",
+				"nutritionalValues",
+				"price"
+			],
+			type: "object"
+		},
+		id: {
+			type: "string"
+		}
+	},
+	required: [
+		"biscuit",
+		"id"
+	],
+	type: "object"
+} as const
+
+const updateBiscuitSuccessReturnSchema = biscuitSchema
+
+const deleteBiscuitParamsSchema = biscuitIdSchema
+
+const deleteBiscuitSuccessReturnSchema = biscuitSchema
+
+const setDisableBiscuitParamsSchema = {
+	description: "Disable biscuit payload schema.",
+	properties: {
+		id: {
+			type: "string"
+		},
+		isDisabled: {
+			type: "boolean"
+		}
 	},
 	required: [
 		"id",
-		"name",
-		"price",
-		"ingredients",
-		"description",
-		"nutritionalValues",
-		"images",
-		"createdAt"
-	]
+		"isDisabled"
+	],
+	type: "object"
 } as const
 
-const createBiscuitSchema = {
-	description: "Create biscuit payload schema.",
-	type: "object",
-	properties: {
-		name: { type: "string" },
-		price: { type: "string" },
-		ingredients: { type: "string" },
-		description: { type: "string" },
-		nutritionalValues: nutritionalValuesSchema,
-		createdAt: { type: "string" },
-		images: {
-			type: "array",
-			items: { type: "string" }
-		}
-	},
-	required: [
-		"name",
-		"price",
-		"ingredients",
-		"description",
-		"nutritionalValues",
-		"createdAt",
-		"images"
-	]
-} as const
-
-const updateBiscuitSchema = {
-	description: "Update biscuit payload schema.",
-	type: "object",
-	properties: {
-		id: { type: "string" },
-		biscuit: {
-			type: "object",
-			properties: {
-				name: { type: "string" },
-				price: { type: "string" },
-				ingredients: { type: "string" },
-				description: { type: "string" },
-				nutritionalValues: nutritionalValuesSchema,
-				images: {
-					type: "array",
-					items: { type: "string" }
-				},
-				updatedAt: { type: "string", nullable: true },
-				tags: {
-					type: "array",
-					items: { type: "string" },
-					nullable: true
-				},
-				isDisabled: { type: "boolean", nullable: true }
-			},
-			required: [
-				"name",
-				"price",
-				"ingredients",
-				"description",
-				"nutritionalValues",
-				"images"
-			]
-		}
-	},
-	required: ["id", "biscuit"]
-} as const
-
-const disableBiscuitSchema = {
-	description: "Disable biscuit payload schema.",
-	type: "object",
-	properties: {
-		id: { type: "string" },
-		isDisabled: { type: "boolean" }
-	},
-	required: ["id", "isDisabled"]
-} as const
+const setBiscuitDisabledSuccessReturnSchema = biscuitSchema
 
 export default {
 	biscuitIdSchema,
 	biscuitSchema,
-	createBiscuitSchema,
-	disableBiscuitSchema,
+	findAllActiveBiscuitsSuccessReturnSchema,
+	createBiscuitParamsSchema,
+	createBiscuitSuccessReturnSchema,
+	setDisableBiscuitParamsSchema,
+	setBiscuitDisabledSuccessReturnSchema,
 	nutritionalValuesSchema,
-	updateBiscuitSchema
+	updateBiscuitParamsSchema,
+	updateBiscuitSuccessReturnSchema,
+	findActiveBiscuitByIdParamsSchema,
+	findActiveBiscuitByIdSuccessReturnSchema,
+	findAllBiscuitsSuccessReturnSchema,
+	findBiscuitByIdParamsSchema,
+	findBiscuitByIdSuccessReturnSchema,
+	deleteBiscuitParamsSchema,
+	deleteBiscuitSuccessReturnSchema,
 }

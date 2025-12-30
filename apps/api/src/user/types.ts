@@ -1,7 +1,7 @@
 import type { User } from "@/user/domain/user.entity.js"
 import type { FromSchema } from "json-schema-to-ts"
 import schemas from "../user/adapters/inbound/user.schema.js"
-import type { ErrorSchemasTypes } from "@/types.js"
+import type { ErrorSchemasTypes, PaginatedResultType } from "@/types.js"
 
 // Generic types
 export type UserId = User["id"]
@@ -69,7 +69,7 @@ export type UpdateUserCartParamsType = {
 
 // Return types
 export type FindUserByIdReturnType = Promise<UserWithoutPassword | undefined>;
-export type FindAllUsersReturnType = Promise<UserWithoutPassword[]>;
+export type FindAllUsersReturnType = Promise<PaginatedResultType<UserWithoutPassword>>;
 export type CreateUserReturnType = Promise<UserWithoutPassword>;
 export type DeleteUserReturnType = Promise<UserWithoutPassword | undefined>;
 export type UpdateUserReturnType = Promise<UserWithoutPassword>

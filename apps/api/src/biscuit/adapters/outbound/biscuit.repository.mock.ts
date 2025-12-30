@@ -1,29 +1,47 @@
 import type { Biscuit } from "@/biscuit/domain/biscuit.entity.js"
-import type { BiscuitRepositoryPort } from "../../domain/buiscuit.repository.ports.js"
-import type { BiscuitId, CreateBiscuitParams, DisableBiscuitParams, UpdateBiscuitParams } from "../../types.js"
+import type { BiscuitRepositoryPort } from "../../domain/biscuit.repository.ports.js"
+import type { CreateBiscuitParamsType, DeleteBiscuitParamsType, DisableBiscuitParamsType, FindActiveBiscuitByIdParamsType, FindBiscuitByIdParamsType, UpdateBiscuitParamsType } from "../../types.js"
+import { paginationDefaultLimit } from "@/const.js"
 
 const biscuits: Biscuit[] = []
 
 export class MockBiscuitRepository implements BiscuitRepositoryPort {
-	// PUBLIC (ONLY ACTIVE)
+
 	async findAllActiveBiscuits() {
-		return biscuits.filter( b => !b.isDisabled )
+		const activeBiscuits = biscuits.filter( b => !b.isDisabled )
+
+		return {
+			items: activeBiscuits,
+			page: 1,
+			limit: paginationDefaultLimit,
+			total: activeBiscuits.length,
+			totalPages: Math.round( paginationDefaultLimit / activeBiscuits.length )
+		}
 	}
 
-	async findActiveBiscuitById( { id }: { id: BiscuitId } ) {
+	async findActiveBiscuitById( data: FindActiveBiscuitByIdParamsType ) {
+		const { id } = data
+
 		return biscuits.find( b => b.id === id && !b.isDisabled )
 	}
 
-	// ADMIN (FULL ACCESS)
-	async findAllBiscuits(): Promise<Biscuit[]> {
-		return [...biscuits]
+	async findAllBiscuits() {
+		return {
+			items: biscuits,
+			page: 1,
+			limit: paginationDefaultLimit,
+			total: biscuits.length,
+			totalPages: Math.round( paginationDefaultLimit / biscuits.length )
+		}
 	}
 
-	async findBiscuitById( { id }: { id: BiscuitId } ) {
+	async findBiscuitById( data: FindBiscuitByIdParamsType ) {
+		const { id } = data
+
 		return biscuits.find( b => b.id === id )
 	}
 
-	async createBiscuit( data: CreateBiscuitParams ) {
+	async createBiscuit( data: CreateBiscuitParamsType ) {
 		const biscuit: Biscuit = {
 			...data,
 			id: crypto.randomUUID(),
@@ -35,7 +53,9 @@ export class MockBiscuitRepository implements BiscuitRepositoryPort {
 		return biscuit
 	}
 
-	async updateBiscuit( { id, biscuit }: UpdateBiscuitParams ) {
+	async updateBiscuit( data: UpdateBiscuitParamsType ) {
+		const { id, biscuit } = data
+
 		const existingBiscuit = biscuits.find( b => b.id === id )
 		if ( !existingBiscuit ) {throw new Error( "Biscuit not found" )}
 
@@ -49,7 +69,9 @@ export class MockBiscuitRepository implements BiscuitRepositoryPort {
 		return updatedBiscuit
 	}
 
-	async deleteBiscuit( { id }: { id: BiscuitId } ) {
+	async deleteBiscuit( data: DeleteBiscuitParamsType ) {
+		const { id } = data
+
 		const index = biscuits.findIndex( b => b.id === id )
 		if ( index === -1 ) {return undefined}
 
@@ -59,7 +81,7 @@ export class MockBiscuitRepository implements BiscuitRepositoryPort {
 		return deleted
 	}
 
-	async setBiscuitDisabled( { id, isDisabled }: DisableBiscuitParams ) {
+	async setBiscuitDisabled( { id, isDisabled }: DisableBiscuitParamsType ) {
 		const biscuit = biscuits.find( b => b.id === id )
 		if ( !biscuit ) {throw new Error( "Biscuit not found" )}
 

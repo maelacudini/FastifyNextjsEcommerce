@@ -3,14 +3,14 @@ import { api } from "../client";
 const findAllUsers = () => {
     return api.useQuery(
     "get",
-    "/users"
+    "/user"
   );
 }
 
 const findOneUser = (id: string) => {
     return api.useQuery(
     "get",
-    "/users/{id}",
+    "/user/{id}",
     {
       params: {
         path: { 

@@ -26,7 +26,6 @@ import type {
 	UpdateUserRoleReturnType
 } from "@/user/types.js"
 
-
 export interface UserRepositoryPort {
   findAllUsers(): FindAllUsersReturnType;
 	findUserById( data: FindUserByIdParamsType ): FindUserByIdReturnType;

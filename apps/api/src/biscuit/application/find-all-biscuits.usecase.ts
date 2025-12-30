@@ -1,4 +1,4 @@
-import type { BiscuitRepositoryPort } from "../domain/buiscuit.repository.ports.js"
+import type { BiscuitRepositoryPort } from "../domain/biscuit.repository.ports.js"
 
 export class FindAllBiscuitsUseCase {
 	constructor( private readonly biscuitRepo: BiscuitRepositoryPort ) {}

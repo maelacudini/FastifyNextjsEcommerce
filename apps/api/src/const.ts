@@ -1,4 +1,4 @@
-// Common schemas
+// Shared schemas
 export const notFoundSchema = {
 	description: "No resource found.",
 	type: "object",
@@ -31,3 +31,17 @@ export const errorSchemas = {
 	401: unauthorizedSchema,
 	500: serverErrorSchema,
 }
+
+export const paginationMetaSchema = {
+	type: "object",
+	properties: {
+		page: { type: "number" },
+		limit: { type: "number" },
+		total: { type: "number" },
+		totalPages: { type: "number" },
+	},
+	required: ["page", "limit", "total", "totalPages"],
+} as const
+
+// Shared pagination params
+export const paginationDefaultLimit = 10

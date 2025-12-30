@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-    "/users": {
+    "/user": {
         parameters: {
             query?: never;
             header?: never;
@@ -20,28 +20,42 @@ export interface paths {
             };
             requestBody?: never;
             responses: {
-                /** @description Find all users success response. */
+                /** @description Find all users paginated response. */
                 200: {
                     headers: {
                         [name: string]: unknown;
                     };
                     content: {
                         "application/json": {
-                            address?: {
-                                city: string;
-                                country: string;
-                                postalCode: string;
-                                street: string;
-                            };
-                            email: string;
-                            favorites?: string[];
-                            id: string;
-                            marketingOptIn?: boolean;
-                            phone?: string;
-                            /** @enum {string} */
-                            role: "admin" | "customer";
-                            username?: string;
-                        }[];
+                            items: {
+                                address?: {
+                                    city: string;
+                                    country: string;
+                                    postalCode: string;
+                                    street: string;
+                                };
+                                cart?: string[];
+                                createdAt: string;
+                                email: string;
+                                favorites?: string[];
+                                id: string;
+                                isDisabled: boolean;
+                                isVerified: boolean;
+                                lastLoginAt?: string;
+                                lastPasswordChangeAt?: string;
+                                marketingOptIn?: boolean;
+                                phone?: string;
+                                refreshTokenVersion: number;
+                                /** @enum {string} */
+                                role: "admin" | "customer";
+                                updatedAt?: string;
+                                username?: string;
+                            }[];
+                            page: number;
+                            limit: number;
+                            total: number;
+                            totalPages: number;
+                        };
                     };
                 };
                 /** @description Unauthorized. */
@@ -112,13 +126,21 @@ export interface paths {
                                 postalCode: string;
                                 street: string;
                             };
+                            cart?: string[];
+                            createdAt: string;
                             email: string;
                             favorites?: string[];
                             id: string;
+                            isDisabled: boolean;
+                            isVerified: boolean;
+                            lastLoginAt?: string;
+                            lastPasswordChangeAt?: string;
                             marketingOptIn?: boolean;
                             phone?: string;
+                            refreshTokenVersion: number;
                             /** @enum {string} */
                             role: "admin" | "customer";
+                            updatedAt?: string;
                             username?: string;
                         };
                     };
@@ -164,7 +186,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/users/{id}": {
+    "/user/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -195,13 +217,21 @@ export interface paths {
                                 postalCode: string;
                                 street: string;
                             };
+                            cart?: string[];
+                            createdAt: string;
                             email: string;
                             favorites?: string[];
                             id: string;
+                            isDisabled: boolean;
+                            isVerified: boolean;
+                            lastLoginAt?: string;
+                            lastPasswordChangeAt?: string;
                             marketingOptIn?: boolean;
                             phone?: string;
+                            refreshTokenVersion: number;
                             /** @enum {string} */
                             role: "admin" | "customer";
+                            updatedAt?: string;
                             username?: string;
                         };
                     };
@@ -250,25 +280,19 @@ export interface paths {
                 };
                 cookie?: never;
             };
-            /** @description Update user params. */
+            /** @description Update user body. */
             requestBody: {
                 content: {
                     "application/json": {
-                        user: {
-                            address?: {
-                                city: string;
-                                country: string;
-                                postalCode: string;
-                                street: string;
-                            };
-                            email: string;
-                            favorites?: string[];
-                            marketingOptIn?: boolean;
-                            phone?: string;
-                            /** @enum {string} */
-                            role: "admin" | "customer";
-                            username?: string;
+                        address?: {
+                            city: string;
+                            country: string;
+                            postalCode: string;
+                            street: string;
                         };
+                        email: string;
+                        phone?: string;
+                        username?: string;
                     };
                 };
             };
@@ -286,13 +310,21 @@ export interface paths {
                                 postalCode: string;
                                 street: string;
                             };
+                            cart?: string[];
+                            createdAt: string;
                             email: string;
                             favorites?: string[];
                             id: string;
+                            isDisabled: boolean;
+                            isVerified: boolean;
+                            lastLoginAt?: string;
+                            lastPasswordChangeAt?: string;
                             marketingOptIn?: boolean;
                             phone?: string;
+                            refreshTokenVersion: number;
                             /** @enum {string} */
                             role: "admin" | "customer";
+                            updatedAt?: string;
                             username?: string;
                         };
                     };
@@ -357,13 +389,21 @@ export interface paths {
                                 postalCode: string;
                                 street: string;
                             };
+                            cart?: string[];
+                            createdAt: string;
                             email: string;
                             favorites?: string[];
                             id: string;
+                            isDisabled: boolean;
+                            isVerified: boolean;
+                            lastLoginAt?: string;
+                            lastPasswordChangeAt?: string;
                             marketingOptIn?: boolean;
                             phone?: string;
+                            refreshTokenVersion: number;
                             /** @enum {string} */
                             role: "admin" | "customer";
+                            updatedAt?: string;
                             username?: string;
                         };
                     };
@@ -408,7 +448,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/users/email/{email}": {
+    "/user/email/{email}": {
         parameters: {
             query?: never;
             header?: never;
@@ -439,13 +479,21 @@ export interface paths {
                                 postalCode: string;
                                 street: string;
                             };
+                            cart?: string[];
+                            createdAt: string;
                             email: string;
                             favorites?: string[];
                             id: string;
+                            isDisabled: boolean;
+                            isVerified: boolean;
+                            lastLoginAt?: string;
+                            lastPasswordChangeAt?: string;
                             marketingOptIn?: boolean;
                             phone?: string;
+                            refreshTokenVersion: number;
                             /** @enum {string} */
                             role: "admin" | "customer";
+                            updatedAt?: string;
                             username?: string;
                         };
                     };
@@ -493,7 +541,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/users/{id}/password": {
+    "/user/{id}/password": {
         parameters: {
             query?: never;
             header?: never;
@@ -532,13 +580,622 @@ export interface paths {
                                 postalCode: string;
                                 street: string;
                             };
+                            cart?: string[];
+                            createdAt: string;
                             email: string;
                             favorites?: string[];
                             id: string;
+                            isDisabled: boolean;
+                            isVerified: boolean;
+                            lastLoginAt?: string;
+                            lastPasswordChangeAt?: string;
                             marketingOptIn?: boolean;
                             phone?: string;
+                            refreshTokenVersion: number;
                             /** @enum {string} */
                             role: "admin" | "customer";
+                            updatedAt?: string;
+                            username?: string;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/user/{id}/isVerified": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            /** @description Update user is verified body. */
+            requestBody: {
+                content: {
+                    "application/json": {
+                        isVerified: boolean;
+                    };
+                };
+            };
+            responses: {
+                /** @description Successful response. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            address?: {
+                                city: string;
+                                country: string;
+                                postalCode: string;
+                                street: string;
+                            };
+                            cart?: string[];
+                            createdAt: string;
+                            email: string;
+                            favorites?: string[];
+                            id: string;
+                            isDisabled: boolean;
+                            isVerified: boolean;
+                            lastLoginAt?: string;
+                            lastPasswordChangeAt?: string;
+                            marketingOptIn?: boolean;
+                            phone?: string;
+                            refreshTokenVersion: number;
+                            /** @enum {string} */
+                            role: "admin" | "customer";
+                            updatedAt?: string;
+                            username?: string;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/user/{id}/isDisabled": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            /** @description Update user is disabled body. */
+            requestBody: {
+                content: {
+                    "application/json": {
+                        isDisabled: boolean;
+                    };
+                };
+            };
+            responses: {
+                /** @description Successful response. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            address?: {
+                                city: string;
+                                country: string;
+                                postalCode: string;
+                                street: string;
+                            };
+                            cart?: string[];
+                            createdAt: string;
+                            email: string;
+                            favorites?: string[];
+                            id: string;
+                            isDisabled: boolean;
+                            isVerified: boolean;
+                            lastLoginAt?: string;
+                            lastPasswordChangeAt?: string;
+                            marketingOptIn?: boolean;
+                            phone?: string;
+                            refreshTokenVersion: number;
+                            /** @enum {string} */
+                            role: "admin" | "customer";
+                            updatedAt?: string;
+                            username?: string;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/user/{id}/role": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            /** @description Update user role body. */
+            requestBody: {
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        role: "admin" | "customer";
+                    };
+                };
+            };
+            responses: {
+                /** @description Successful response. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            address?: {
+                                city: string;
+                                country: string;
+                                postalCode: string;
+                                street: string;
+                            };
+                            cart?: string[];
+                            createdAt: string;
+                            email: string;
+                            favorites?: string[];
+                            id: string;
+                            isDisabled: boolean;
+                            isVerified: boolean;
+                            lastLoginAt?: string;
+                            lastPasswordChangeAt?: string;
+                            marketingOptIn?: boolean;
+                            phone?: string;
+                            refreshTokenVersion: number;
+                            /** @enum {string} */
+                            role: "admin" | "customer";
+                            updatedAt?: string;
+                            username?: string;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/user/{id}/marketingOptIn": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            /** @description Update user marketingOptIn body. */
+            requestBody: {
+                content: {
+                    "application/json": {
+                        marketingOptIn: boolean;
+                    };
+                };
+            };
+            responses: {
+                /** @description Successful response. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            address?: {
+                                city: string;
+                                country: string;
+                                postalCode: string;
+                                street: string;
+                            };
+                            cart?: string[];
+                            createdAt: string;
+                            email: string;
+                            favorites?: string[];
+                            id: string;
+                            isDisabled: boolean;
+                            isVerified: boolean;
+                            lastLoginAt?: string;
+                            lastPasswordChangeAt?: string;
+                            marketingOptIn?: boolean;
+                            phone?: string;
+                            refreshTokenVersion: number;
+                            /** @enum {string} */
+                            role: "admin" | "customer";
+                            updatedAt?: string;
+                            username?: string;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/user/{id}/favorites": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            /** @description Update user favorites body. */
+            requestBody: {
+                content: {
+                    "application/json": {
+                        favorites: string[];
+                    };
+                };
+            };
+            responses: {
+                /** @description Successful response. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            address?: {
+                                city: string;
+                                country: string;
+                                postalCode: string;
+                                street: string;
+                            };
+                            cart?: string[];
+                            createdAt: string;
+                            email: string;
+                            favorites?: string[];
+                            id: string;
+                            isDisabled: boolean;
+                            isVerified: boolean;
+                            lastLoginAt?: string;
+                            lastPasswordChangeAt?: string;
+                            marketingOptIn?: boolean;
+                            phone?: string;
+                            refreshTokenVersion: number;
+                            /** @enum {string} */
+                            role: "admin" | "customer";
+                            updatedAt?: string;
+                            username?: string;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/user/{id}/cart": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            /** @description Update user cart body. */
+            requestBody: {
+                content: {
+                    "application/json": {
+                        cart: string[];
+                    };
+                };
+            };
+            responses: {
+                /** @description Successful response. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            address?: {
+                                city: string;
+                                country: string;
+                                postalCode: string;
+                                street: string;
+                            };
+                            cart?: string[];
+                            createdAt: string;
+                            email: string;
+                            favorites?: string[];
+                            id: string;
+                            isDisabled: boolean;
+                            isVerified: boolean;
+                            lastLoginAt?: string;
+                            lastPasswordChangeAt?: string;
+                            marketingOptIn?: boolean;
+                            phone?: string;
+                            refreshTokenVersion: number;
+                            /** @enum {string} */
+                            role: "admin" | "customer";
+                            updatedAt?: string;
                             username?: string;
                         };
                     };
