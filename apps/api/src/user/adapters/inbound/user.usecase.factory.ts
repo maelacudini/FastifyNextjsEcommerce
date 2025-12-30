@@ -14,6 +14,7 @@ import { UpdateUserFavoritesUseCase } from "@/user/application/update-user-favor
 import { UpdateUserCartUseCase } from "@/user/application/update-user-cart.usecase.js"
 
 const userRepo = new MockUserRepository()
+
 const findAllUsersUseCase = new FindAllUsersUseCase( userRepo )
 const findUserByIdUseCase = new FindUserByIdUseCase( userRepo )
 const findUserByEmailUseCase = new FindUserByEmailUseCase( userRepo )

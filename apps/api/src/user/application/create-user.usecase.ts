@@ -1,7 +1,6 @@
 import type { UserRepositoryPort } from "@/user/domain/user.repository.port.js"
 import type { CreateUserParamsType } from "@/user/types.js"
 
-
 export class CreateUserUseCase {
 	constructor( private readonly userRepo: UserRepositoryPort ) {}
 

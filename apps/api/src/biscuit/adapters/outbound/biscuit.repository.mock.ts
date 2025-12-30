@@ -1,92 +1,40 @@
-import type { Biscuit } from "@/biscuit/domain/biscuit.entity.js"
-import type { BiscuitRepositoryPort } from "../../domain/biscuit.repository.ports.js"
-import type { CreateBiscuitParamsType, DeleteBiscuitParamsType, DisableBiscuitParamsType, FindActiveBiscuitByIdParamsType, FindBiscuitByIdParamsType, UpdateBiscuitParamsType } from "../../types.js"
-import { paginationDefaultLimit } from "@/const.js"
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// TODO: IMPLEMENT ALL METHODS
 
-const biscuits: Biscuit[] = []
+import type { BiscuitRepositoryPort } from "../../domain/biscuit.repository.ports.js"
+import type { CreateBiscuitParamsType, CreateBiscuitReturnType, DeleteBiscuitParamsType, DeleteBiscuitReturnType, DisableBiscuitParamsType, FindActiveBiscuitByIdParamsType, FindActiveBiscuitByIdReturnType, FindAllActiveBiscuitsReturnType, FindAllBiscuitsReturnType, FindBiscuitByIdParamsType, FindBiscuitByIdReturnType, SetBiscuitDisabledReturnType, UpdateBiscuitParamsType, UpdateBiscuitReturnType } from "../../types.js"
 
 export class MockBiscuitRepository implements BiscuitRepositoryPort {
 
-	async findAllActiveBiscuits() {
-		const activeBiscuits = biscuits.filter( b => !b.isDisabled )
-
-		return {
-			items: activeBiscuits,
-			page: 1,
-			limit: paginationDefaultLimit,
-			total: activeBiscuits.length,
-			totalPages: Math.round( paginationDefaultLimit / activeBiscuits.length )
-		}
+	async findAllActiveBiscuits(): FindAllActiveBiscuitsReturnType {
+		throw new Error( "Method not implemented." )
 	}
 
-	async findActiveBiscuitById( data: FindActiveBiscuitByIdParamsType ) {
-		const { id } = data
-
-		return biscuits.find( b => b.id === id && !b.isDisabled )
+	async findActiveBiscuitById( data: FindActiveBiscuitByIdParamsType ): FindActiveBiscuitByIdReturnType {
+		throw new Error( "Method not implemented." )
 	}
 
-	async findAllBiscuits() {
-		return {
-			items: biscuits,
-			page: 1,
-			limit: paginationDefaultLimit,
-			total: biscuits.length,
-			totalPages: Math.round( paginationDefaultLimit / biscuits.length )
-		}
+	async findAllBiscuits(): FindAllBiscuitsReturnType {
+		throw new Error( "Method not implemented." )
 	}
 
-	async findBiscuitById( data: FindBiscuitByIdParamsType ) {
-		const { id } = data
-
-		return biscuits.find( b => b.id === id )
+	async findBiscuitById( data: FindBiscuitByIdParamsType ): FindBiscuitByIdReturnType {
+		throw new Error( "Method not implemented." )
 	}
 
-	async createBiscuit( data: CreateBiscuitParamsType ) {
-		const biscuit: Biscuit = {
-			...data,
-			id: crypto.randomUUID(),
-			updatedAt: data.createdAt,
-			isDisabled: false,
-		}
-
-		biscuits.push( biscuit )
-		return biscuit
+	async createBiscuit( data: CreateBiscuitParamsType ): CreateBiscuitReturnType {
+		throw new Error( "Method not implemented." )
 	}
 
-	async updateBiscuit( data: UpdateBiscuitParamsType ) {
-		const { id, biscuit } = data
-
-		const existingBiscuit = biscuits.find( b => b.id === id )
-		if ( !existingBiscuit ) {throw new Error( "Biscuit not found" )}
-
-		const updatedBiscuit: Biscuit = {
-			...biscuit,
-			id: existingBiscuit.id,
-			createdAt: existingBiscuit.createdAt,
-			updatedAt: new Date().toISOString()
-		}
-
-		return updatedBiscuit
+	async updateBiscuit( data: UpdateBiscuitParamsType ): UpdateBiscuitReturnType {
+		throw new Error( "Method not implemented." )
 	}
 
-	async deleteBiscuit( data: DeleteBiscuitParamsType ) {
-		const { id } = data
-
-		const index = biscuits.findIndex( b => b.id === id )
-		if ( index === -1 ) {return undefined}
-
-		const deleted = biscuits[index]
-		biscuits.splice( index, 1 )
-
-		return deleted
+	async deleteBiscuit( data: DeleteBiscuitParamsType ): DeleteBiscuitReturnType {
+		throw new Error( "Method not implemented." )
 	}
 
-	async setBiscuitDisabled( { id, isDisabled }: DisableBiscuitParamsType ) {
-		const biscuit = biscuits.find( b => b.id === id )
-		if ( !biscuit ) {throw new Error( "Biscuit not found" )}
-
-		biscuit.isDisabled = isDisabled
-		biscuit.updatedAt = new Date().toISOString()
-		return biscuit
+	async setBiscuitDisabled( data: DisableBiscuitParamsType ): SetBiscuitDisabledReturnType {
+		throw new Error( "Method not implemented." )
 	}
 }

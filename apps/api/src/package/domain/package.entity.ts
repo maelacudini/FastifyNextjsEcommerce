@@ -13,6 +13,7 @@ export type Package = {
   createdAt: string
   images: string[]
   packagingPrice: number
+  isDisabled: boolean
   updatedAt?: string
   tags?: string[]
   weight?: number

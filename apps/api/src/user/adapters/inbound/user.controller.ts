@@ -25,6 +25,7 @@ export async function userController( app: FastifyInstance ) {
 
 	// PUBLIC - FIND ALL USERS
 	app.get<{ Reply: FindAllUsersReplyType }>( "/user", { schema: {
+		tags: ["User"],
 		response: {
 			200: schemas.findAllUsersSuccessReturnSchema,
 			...errorSchemas
@@ -40,6 +41,7 @@ export async function userController( app: FastifyInstance ) {
 		Params: FromSchema<typeof schemas.findUserByIdParamsSchema>,
 		Reply: FindUserByIdReplyType
 	}>( "/user/:id", { schema: {
+		tags: ["User"],
 		params: schemas.findUserByIdParamsSchema,
 		response: {
 			200: schemas.findUserByIdSuccessReturnSchema,
@@ -62,6 +64,7 @@ export async function userController( app: FastifyInstance ) {
 		Params: FromSchema<typeof schemas.findUserByEmailParamsSchema>,
 		Reply: FindUserByEmailReplyType
 	}>( "/user/email/:email", { schema: {
+		tags: ["User"],
 		params: schemas.findUserByEmailParamsSchema,
 		response: {
 			200: schemas.findUserByEmailSuccessReturnSchema,
@@ -84,6 +87,7 @@ export async function userController( app: FastifyInstance ) {
 		Body: FromSchema<typeof schemas.createUserBodySchema>,
 		Reply: CreateUserReplyType
 	}>( "/user", { schema: {
+		tags: ["User"],
 		body: schemas.createUserBodySchema,
 		response: {
 			200: schemas.createUserSuccessReturnSchema,
@@ -108,6 +112,7 @@ export async function userController( app: FastifyInstance ) {
 		Params: FromSchema<typeof schemas.deleteUserParamsSchema>,
 		Reply: DeleteUserReplyType
 	}>( "/user/:id", { schema: {
+		tags: ["User"],
 		params: schemas.deleteUserParamsSchema,
 		response: {
 			200: schemas.deleteUserSuccessReturnSchema,
@@ -136,6 +141,7 @@ export async function userController( app: FastifyInstance ) {
 		Body: FromSchema<typeof schemas.updateUserBodySchema>,
 		Reply: UpdateUserReplyType
 	}>( "/user/:id",{ schema: {
+		tags: ["User"],
 		params: schemas.updateUserParamsSchema,
 		body: schemas.updateUserBodySchema,
 		response: {
@@ -163,6 +169,7 @@ export async function userController( app: FastifyInstance ) {
 		Body: FromSchema<typeof schemas.updateUserPasswordBodySchema>,
 		Reply: UpdateUserPasswordReplyType
 	 }>( "/user/:id/password", { schema: {
+	 	tags: ["User"],
 	 	params: schemas.updateUserPasswordParamsSchema,
 	 	body: schemas.updateUserPasswordBodySchema,
 	 	response: {
@@ -190,6 +197,7 @@ export async function userController( app: FastifyInstance ) {
 		Body: FromSchema<typeof schemas.updateUserIsVerifiedBodySchema>,
 		Reply: UpdateUserIsVerifiedReplyType
 	}>( "/user/:id/isVerified", { schema: {
+		tags: ["User"],
 		params: schemas.updateUserIsVerifiedParamsSchema,
 		body: schemas.updateUserIsVerifiedBodySchema,
 		response: {
@@ -217,6 +225,7 @@ export async function userController( app: FastifyInstance ) {
 		Body: FromSchema<typeof schemas.updateUserIsDisabledBodySchema>,
 		Reply: UpdateUserIsDisabledReplyType
 	}>( "/user/:id/isDisabled", { schema: {
+		tags: ["User"],
 		params: schemas.updateUserIsDisabledParamsSchema,
 		body: schemas.updateUserIsDisabledBodySchema,
 		response: {
@@ -244,6 +253,7 @@ export async function userController( app: FastifyInstance ) {
 		Body: FromSchema<typeof schemas.updateUserRoleBodySchema>,
 		Reply: UpdateUserRoleReplyType
 	}>( "/user/:id/role", { schema: {
+		tags: ["User"],
 		params: schemas.updateUserRoleParamsSchema,
 		body: schemas.updateUserRoleBodySchema,
 		response: {
@@ -271,6 +281,7 @@ export async function userController( app: FastifyInstance ) {
 		Body: FromSchema<typeof schemas.updateUserMarketingOptInBodySchema>,
 		Reply: UpdateUserMarketingOptInReplyType
 	}>( "/user/:id/marketingOptIn", { schema: {
+		tags: ["User"],
 		params: schemas.updateUserMarketingOptInParamsSchema,
 		body: schemas.updateUserMarketingOptInBodySchema,
 		response: {
@@ -298,6 +309,7 @@ export async function userController( app: FastifyInstance ) {
 		Body: FromSchema<typeof schemas.updateUserFavoritesBodySchema>,
 		Reply: UpdateUserFavoritesReplyType
 	}>( "/user/:id/favorites", { schema: {
+		tags: ["User"],
 		params: schemas.updateUserFavoritesParamsSchema,
 		body: schemas.updateUserFavoritesBodySchema,
 		response: {
@@ -325,6 +337,7 @@ export async function userController( app: FastifyInstance ) {
 		Body: FromSchema<typeof schemas.updateUserCartBodySchema>,
 		Reply: UpdateUserCartReplyType
 	}>( "/user/:id/cart", { schema: {
+		tags: ["User"],
 		params: schemas.updateUserCartParamsSchema,
 		body: schemas.updateUserCartBodySchema,
 		response: {

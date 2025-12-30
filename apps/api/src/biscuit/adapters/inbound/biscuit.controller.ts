@@ -18,6 +18,7 @@ export async function biscuitController( app: FastifyInstance ) {
 
 	// PUBLIC - FIND ALL ACTIVE BISCUITS
 	app.get<{ Reply: FindAllActiveBiscuitsReplyType }>( "/biscuit", { schema: {
+		tags: ["Biscuit"],
 		response: {
 			200: schemas.findAllActiveBiscuitsSuccessReturnSchema,
 			...errorSchemas
@@ -33,6 +34,7 @@ export async function biscuitController( app: FastifyInstance ) {
 		Params: FromSchema<typeof schemas.findActiveBiscuitByIdParamsSchema>,
 		Reply: FindActiveBiscuitByIdReplyType
 	}>( "/biscuit/active/:id", { schema: {
+		tags: ["Biscuit"],
 		params: schemas.findActiveBiscuitByIdParamsSchema,
 		response: {
 			200: schemas.findActiveBiscuitByIdSuccessReturnSchema,
@@ -50,8 +52,9 @@ export async function biscuitController( app: FastifyInstance ) {
 		return reply.code( 200 ).send( biscuit )
 	} )
 
-	// PUBLIC - FIND ALL BISCUITS
+	// PRIVATE - FIND ALL BISCUITS (ACTIVE AND NON ACTIVE)
 	app.get<{ Reply: FindAllBiscuitsReplyType }>( "/biscuit/all", { schema: {
+		tags: ["Biscuit"],
 		response: {
 			200: schemas.findAllBiscuitsSuccessReturnSchema,
 			...errorSchemas
@@ -62,11 +65,12 @@ export async function biscuitController( app: FastifyInstance ) {
 		return reply.code( 200 ).send( data )
 	} )
 
-	// PUBLIC - FIND BISCUIT BY ID
+	// PRIVATE - FIND BISCUIT BY ID (ACTIVE AND NON ACTIVE)
 	app.get<{
 		Params: FromSchema<typeof schemas.findBiscuitByIdParamsSchema>,
 		Reply: FindBiscuitByIdReplyType
 	}>( "/biscuit/:id", { schema: {
+		tags: ["Biscuit"],
 		params: schemas.findBiscuitByIdParamsSchema,
 		response: {
 			200: schemas.findBiscuitByIdSuccessReturnSchema,
@@ -89,6 +93,7 @@ export async function biscuitController( app: FastifyInstance ) {
 		Body: FromSchema<typeof schemas.createBiscuitParamsSchema>,
 		Reply: CreateBiscuitReplyType
 	}>( "/biscuit", { schema: {
+		tags: ["Biscuit"],
 		body: schemas.createBiscuitParamsSchema,
 		response: {
 			200: schemas.createBiscuitSuccessReturnSchema,
@@ -110,16 +115,20 @@ export async function biscuitController( app: FastifyInstance ) {
 
 	// PRIVATE - UPDATE BISCUIT
 	app.put<{
-		Body: FromSchema<typeof schemas.updateBiscuitParamsSchema>,
+		Params: FromSchema<typeof schemas.updateBiscuParamsSchema>,
+		Body: FromSchema<typeof schemas.updateBiscuitBodySchema>,
 		Reply: UpdateBiscuitReplyType
-	}>( "/biscuit", { schema: {
-		body: schemas.updateBiscuitParamsSchema,
+	}>( "/biscuit/:id", { schema: {
+		tags: ["Biscuit"],
+		params: schemas.updateBiscuParamsSchema,
+		body: schemas.updateBiscuitBodySchema,
 		response: {
 			200: schemas.updateBiscuitSuccessReturnSchema,
 			...errorSchemas
 		}
 	} }, async ( req, reply ) => {
-		const { id, biscuit } = req.body
+		const { id } = req.params
+		const { biscuit } = req.body
 
 		try {
 			const updated = await usecasesFactory.updateBiscuit.execute( { id, biscuit } )
@@ -137,6 +146,7 @@ export async function biscuitController( app: FastifyInstance ) {
 		Params: FromSchema<typeof schemas.deleteBiscuitParamsSchema>,
 		Reply: DeleteBiscuitReplyType
 	}>( "/biscuit/:id", { schema: {
+		tags: ["Biscuit"],
 		params: schemas.deleteBiscuitParamsSchema,
 		response: {
 			200: schemas.deleteBiscuitSuccessReturnSchema,
@@ -162,16 +172,20 @@ export async function biscuitController( app: FastifyInstance ) {
 
 	// PRIVATE - SET BISCUIT DISABLED
 	app.put<{
-		Body: FromSchema<typeof schemas.setDisableBiscuitParamsSchema>,
+		Params: FromSchema<typeof schemas.setDisableBiscuitParamsSchema>,
+		Body: FromSchema<typeof schemas.setDisableBiscuitBodySchema>,
 		Reply: SetBiscuitDisabledReplyType
-	}>( "/biscuit/disabled", { schema: {
-		body: schemas.setDisableBiscuitParamsSchema,
+	}>( "/biscuit/:id/disabled", { schema: {
+		tags: ["Biscuit"],
+		params: schemas.setDisableBiscuitParamsSchema,
+		body: schemas.setDisableBiscuitBodySchema,
 		response: {
 			200: schemas.setBiscuitDisabledSuccessReturnSchema,
 			...errorSchemas
 		}
 	} }, async ( req, reply ) => {
-		const { id, isDisabled } = req.body
+		const { id } = req.params
+		const { isDisabled } = req.body
 
 		try {
 			const biscuit = await usecasesFactory.setBiscuitDisabled.execute( { id, isDisabled } )

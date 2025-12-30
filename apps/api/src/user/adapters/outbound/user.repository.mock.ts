@@ -1,94 +1,60 @@
-import { randomUUID } from "crypto"
-import type { User } from "@/user/domain/user.entity.js"
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// TODO: IMPLEMENT ALL METHODS
+
 import type { UserRepositoryPort } from "@/user/domain/user.repository.port.js"
-import type {
-	CreateUserParamsType,
-	DeleteUserParamsType,
-	FindUserByEmailParamsType,
-	FindUserByIdParamsType,
-	UpdateUserCartParamsType,
-	UpdateUserFavoritesParamsType,
-	UpdateUserIsDisabledParamsType,
-	UpdateUserIsVerifiedParamsType,
-	UpdateUserMarketingOptInParamsType,
-	UpdateUserParamsType,
-	UpdateUserPasswordParamsType,
-	UpdateUserRoleParamsType,
-	UserRole
-} from "@/user/types.js"
-import { paginationDefaultLimit } from "@/const.js"
-
-
-const mockUsers: User[] = [
-	{ id: "1", email: "john@example.com", password: "123", role: "admin", createdAt: new Date().toString(), updatedAt: new Date().toString(), isDisabled: false, isVerified: false, refreshTokenVersion: 123 },
-	{ id: "2", email: "jane@example.com", password: "123", role: "admin", createdAt: new Date().toString(), updatedAt: new Date().toString(), isDisabled: false, isVerified: false, refreshTokenVersion: 123 },
-]
+import type { CreateUserParamsType, CreateUserReturnType, DeleteUserParamsType, DeleteUserReturnType, FindAllUsersReturnType, FindUserByEmailParamsType, FindUserByEmailReturnType, FindUserByIdParamsType, FindUserByIdReturnType, UpdateUserCartParamsType, UpdateUserCartReturnType, UpdateUserFavoritesParamsType, UpdateUserFavoritesReturnType, UpdateUserIsDisabledParamsType, UpdateUserIsDisabledReturnType, UpdateUserIsVerifiedParamsType, UpdateUserIsVerifiedReturnType, UpdateUserMarketingOptInParamsType, UpdateUserMarketingOptInReturnType, UpdateUserParamsType, UpdateUserPasswordParamsType, UpdateUserPasswordReturnType, UpdateUserReturnType, UpdateUserRoleParamsType, UpdateUserRoleReturnType } from "@/user/types.js"
 
 export class MockUserRepository implements UserRepositoryPort {
 
-	async findAllUsers() {
-		return {
-			items: mockUsers,
-			page: 1,
-			limit: paginationDefaultLimit,
-			total: mockUsers.length,
-			totalPages: Math.round( paginationDefaultLimit / mockUsers.length )
-		}
+	async findAllUsers(): FindAllUsersReturnType {
+		throw new Error( "Method not implemented." )
 	}
 
-	async findUserById( data: FindUserByIdParamsType ) {
-		return mockUsers.find( user => user.id === data.id )
+	async findUserById( data: FindUserByIdParamsType ): FindUserByIdReturnType {
+		throw new Error( "Method not implemented." )
 	}
 
-	async createUser( data: CreateUserParamsType ) {
-		const newUser: User = { ...data, id: randomUUID(), createdAt: new Date().toString(), updatedAt: new Date().toString(), isDisabled: false, isVerified: false, refreshTokenVersion: 123 }
-		mockUsers.push( newUser )
-
-		return newUser
+	async findUserByEmail( data: FindUserByEmailParamsType ): FindUserByEmailReturnType {
+		throw new Error( "Method not implemented." )
 	}
 
-	async deleteUser( data: DeleteUserParamsType ) {
-		const idx = mockUsers.findIndex( ( u ) => u.id === data.id )
-		if ( idx === -1 ) {
-			return undefined
-		}
-		const [deleted] = mockUsers.splice( idx, 1 )
-		return deleted
+	async createUser( data: CreateUserParamsType ): CreateUserReturnType {
+		throw new Error( "Method not implemented." )
 	}
 
-	async findUserByEmail( data: FindUserByEmailParamsType ) {
-		return mockUsers.find( user => user.email === data.email )
+	async deleteUser( data: DeleteUserParamsType ): DeleteUserReturnType {
+		throw new Error( "Method not implemented." )
 	}
 
-	async updateUser( data: UpdateUserParamsType ) {
-		return { id: data.id, email: data.user.email, role: "admin" as UserRole, createdAt: new Date().toString(), updatedAt: new Date().toString(), isDisabled: false, isVerified: false, refreshTokenVersion: 123 }
+	async updateUser( data: UpdateUserParamsType ): UpdateUserReturnType {
+		throw new Error( "Method not implemented." )
 	}
 
-	async updateUserPassword( data: UpdateUserPasswordParamsType ) {
-		return { id: data.id, email: "test@gmail.com", role: "customer" as UserRole, createdAt: new Date().toString(), updatedAt: new Date().toString(), isDisabled: false, isVerified: false, refreshTokenVersion: 123 }
+	async updateUserPassword( data: UpdateUserPasswordParamsType ): UpdateUserPasswordReturnType {
+		throw new Error( "Method not implemented." )
 	}
 
-	async updateUserFavorites( data: UpdateUserFavoritesParamsType ) {
-		return { id: data.id, email: "test@gmail.com", role: "admin" as UserRole, createdAt: new Date().toString(), updatedAt: new Date().toString(), isDisabled: false, isVerified: false, refreshTokenVersion: 123 }
+	async updateUserFavorites( data: UpdateUserFavoritesParamsType ): UpdateUserFavoritesReturnType {
+		throw new Error( "Method not implemented." )
 	}
 
-	async updateUserIsDisabled( data: UpdateUserIsDisabledParamsType ) {
-		return { id: data.id, email: "test@gmail.com", role: "admin" as UserRole, createdAt: new Date().toString(), updatedAt: new Date().toString(), isDisabled: false, isVerified: false, refreshTokenVersion: 123 }
+	async updateUserIsDisabled( data: UpdateUserIsDisabledParamsType ): UpdateUserIsDisabledReturnType {
+		throw new Error( "Method not implemented." )
 	}
 
-	async updateUserIsVerified( data: UpdateUserIsVerifiedParamsType ) {
-		return { id: data.id, email: "test@gmail.com", role: "admin" as UserRole, createdAt: new Date().toString(), updatedAt: new Date().toString(), isDisabled: false, isVerified: false, refreshTokenVersion: 123 }
+	async updateUserIsVerified( data: UpdateUserIsVerifiedParamsType ): UpdateUserIsVerifiedReturnType {
+		throw new Error( "Method not implemented." )
 	}
 
-	async updateUserMarketingOptIn( data: UpdateUserMarketingOptInParamsType ) {
-		return { id: data.id, email: "test@gmail.com", role: "admin" as UserRole, createdAt: new Date().toString(), updatedAt: new Date().toString(), isDisabled: false, isVerified: false, refreshTokenVersion: 123 }
+	async updateUserRole( data: UpdateUserRoleParamsType ): UpdateUserRoleReturnType {
+		throw new Error( "Method not implemented." )
 	}
 
-	async updateUserRole( data: UpdateUserRoleParamsType ) {
-		return { id: data.id, email: "test@gmail.com", role: "admin" as UserRole, createdAt: new Date().toString(), updatedAt: new Date().toString(), isDisabled: false, isVerified: false, refreshTokenVersion: 123 }
+	async updateUserMarketingOptIn( data: UpdateUserMarketingOptInParamsType ): UpdateUserMarketingOptInReturnType {
+		throw new Error( "Method not implemented." )
 	}
 
-	async updateUserCart( data: UpdateUserCartParamsType ) {
-		return { id: data.id, email: "test@gmail.com", role: "admin" as UserRole, createdAt: new Date().toString(), updatedAt: new Date().toString(), isDisabled: false, isVerified: false, refreshTokenVersion: 123 }
+	async updateUserCart( data: UpdateUserCartParamsType ): UpdateUserCartReturnType {
+		throw new Error( "Method not implemented." )
 	}
 }

@@ -1,7 +1,6 @@
 import type { UserRepositoryPort } from "@/user/domain/user.repository.port.js"
 import type { DeleteUserParamsType } from "@/user/types.js"
 
-
 export class DeleteUserUseCase {
 	constructor( private readonly userRepo: UserRepositoryPort ) {}
 

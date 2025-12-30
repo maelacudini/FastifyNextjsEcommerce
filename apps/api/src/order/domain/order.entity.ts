@@ -12,6 +12,10 @@ export type ShippingAddress = {
   postalCode: string
 }
 
+export type PaymentStatusType = "pending" | "paid" | "failed"
+
+export type FulfillmentStatusType = "unfulfilled" | "processing" | "shipped" | "delivered" | "cancelled"
+
 export type Order = {
   id: string
   userId: string
@@ -20,8 +24,8 @@ export type Order = {
   shippingCost: number
   total: number
   shippingAddress: ShippingAddress
-  paymentStatus: "pending" | "paid" | "failed"
-  fulfillmentStatus: "unfulfilled" | "processing" | "shipped" | "delivered" | "cancelled"
+  paymentStatus: PaymentStatusType
+  fulfillmentStatus: FulfillmentStatusType
   createdAt: string
   updatedAt?: string
   discountTotal?: number

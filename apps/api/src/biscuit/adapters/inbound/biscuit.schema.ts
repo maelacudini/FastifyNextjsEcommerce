@@ -233,7 +233,7 @@ const createBiscuitParamsSchema = {
 
 const createBiscuitSuccessReturnSchema = biscuitSchema
 
-const updateBiscuitParamsSchema = {
+const updateBiscuitBodySchema = {
 	description: "Update biscuit payload schema.",
 	properties: {
 		biscuit: {
@@ -325,13 +325,15 @@ const updateBiscuitParamsSchema = {
 	type: "object"
 } as const
 
+const updateBiscuParamsSchema = biscuitIdSchema
+
 const updateBiscuitSuccessReturnSchema = biscuitSchema
 
 const deleteBiscuitParamsSchema = biscuitIdSchema
 
 const deleteBiscuitSuccessReturnSchema = biscuitSchema
 
-const setDisableBiscuitParamsSchema = {
+const setDisableBiscuitBodySchema = {
 	description: "Disable biscuit payload schema.",
 	properties: {
 		id: {
@@ -348,6 +350,8 @@ const setDisableBiscuitParamsSchema = {
 	type: "object"
 } as const
 
+const setDisableBiscuitParamsSchema = biscuitIdSchema
+
 const setBiscuitDisabledSuccessReturnSchema = biscuitSchema
 
 export default {
@@ -356,10 +360,12 @@ export default {
 	findAllActiveBiscuitsSuccessReturnSchema,
 	createBiscuitParamsSchema,
 	createBiscuitSuccessReturnSchema,
+	setDisableBiscuitBodySchema,
 	setDisableBiscuitParamsSchema,
 	setBiscuitDisabledSuccessReturnSchema,
 	nutritionalValuesSchema,
-	updateBiscuitParamsSchema,
+	updateBiscuitBodySchema,
+	updateBiscuParamsSchema,
 	updateBiscuitSuccessReturnSchema,
 	findActiveBiscuitByIdParamsSchema,
 	findActiveBiscuitByIdSuccessReturnSchema,

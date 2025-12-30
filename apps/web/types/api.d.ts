@@ -4,6 +4,2051 @@
  */
 
 export interface paths {
+    "/biscuit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Find all active biscuits, these are the available ones to the clients. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            items: {
+                                createdAt: string;
+                                description: string;
+                                id: string;
+                                images: string[];
+                                ingredients: string;
+                                isDisabled?: boolean;
+                                name: string;
+                                nutritionalValues: {
+                                    carbohydrates: number;
+                                    energy: number;
+                                    fats: number;
+                                    protein: number;
+                                    salt: number;
+                                    saturatedFats: number;
+                                    sugarCarbohydrates: number;
+                                };
+                                price: string;
+                                tags?: string[];
+                                updatedAt?: string;
+                            }[];
+                            page: number;
+                            limit: number;
+                            total: number;
+                            totalPages: number;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            /** @description Create biscuit payload schema. */
+            requestBody: {
+                content: {
+                    "application/json": {
+                        createdAt: string;
+                        description: string;
+                        images: string[];
+                        ingredients: string;
+                        name: string;
+                        nutritionalValues: {
+                            carbohydrates: number;
+                            energy: number;
+                            fats: number;
+                            protein: number;
+                            salt: number;
+                            saturatedFats: number;
+                            sugarCarbohydrates: number;
+                        };
+                        price: string;
+                    };
+                };
+            };
+            responses: {
+                /** @description Biscuit entity schema. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            createdAt: string;
+                            description: string;
+                            id: string;
+                            images: string[];
+                            ingredients: string;
+                            isDisabled?: boolean;
+                            name: string;
+                            nutritionalValues: {
+                                carbohydrates: number;
+                                energy: number;
+                                fats: number;
+                                protein: number;
+                                salt: number;
+                                saturatedFats: number;
+                                sugarCarbohydrates: number;
+                            };
+                            price: string;
+                            tags?: string[];
+                            updatedAt?: string;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/biscuit/active/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Biscuit entity schema. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            createdAt: string;
+                            description: string;
+                            id: string;
+                            images: string[];
+                            ingredients: string;
+                            isDisabled?: boolean;
+                            name: string;
+                            nutritionalValues: {
+                                carbohydrates: number;
+                                energy: number;
+                                fats: number;
+                                protein: number;
+                                salt: number;
+                                saturatedFats: number;
+                                sugarCarbohydrates: number;
+                            };
+                            price: string;
+                            tags?: string[];
+                            updatedAt?: string;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/biscuit/all": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Find all biscuits. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            items: {
+                                createdAt: string;
+                                description: string;
+                                id: string;
+                                images: string[];
+                                ingredients: string;
+                                isDisabled?: boolean;
+                                name: string;
+                                nutritionalValues: {
+                                    carbohydrates: number;
+                                    energy: number;
+                                    fats: number;
+                                    protein: number;
+                                    salt: number;
+                                    saturatedFats: number;
+                                    sugarCarbohydrates: number;
+                                };
+                                price: string;
+                                tags?: string[];
+                                updatedAt?: string;
+                            }[];
+                            page: number;
+                            limit: number;
+                            total: number;
+                            totalPages: number;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/biscuit/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Biscuit entity schema. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            createdAt: string;
+                            description: string;
+                            id: string;
+                            images: string[];
+                            ingredients: string;
+                            isDisabled?: boolean;
+                            name: string;
+                            nutritionalValues: {
+                                carbohydrates: number;
+                                energy: number;
+                                fats: number;
+                                protein: number;
+                                salt: number;
+                                saturatedFats: number;
+                                sugarCarbohydrates: number;
+                            };
+                            price: string;
+                            tags?: string[];
+                            updatedAt?: string;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            /** @description Update biscuit payload schema. */
+            requestBody: {
+                content: {
+                    "application/json": {
+                        biscuit: {
+                            description: string;
+                            images: string[];
+                            ingredients: string;
+                            isDisabled?: boolean;
+                            name: string;
+                            nutritionalValues: {
+                                carbohydrates: number;
+                                energy: number;
+                                fats: number;
+                                protein: number;
+                                salt: number;
+                                saturatedFats: number;
+                                sugarCarbohydrates: number;
+                            };
+                            price: string;
+                            tags?: string[];
+                            updatedAt?: string;
+                        };
+                        id: string;
+                    };
+                };
+            };
+            responses: {
+                /** @description Biscuit entity schema. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            createdAt: string;
+                            description: string;
+                            id: string;
+                            images: string[];
+                            ingredients: string;
+                            isDisabled?: boolean;
+                            name: string;
+                            nutritionalValues: {
+                                carbohydrates: number;
+                                energy: number;
+                                fats: number;
+                                protein: number;
+                                salt: number;
+                                saturatedFats: number;
+                                sugarCarbohydrates: number;
+                            };
+                            price: string;
+                            tags?: string[];
+                            updatedAt?: string;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Biscuit entity schema. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            createdAt: string;
+                            description: string;
+                            id: string;
+                            images: string[];
+                            ingredients: string;
+                            isDisabled?: boolean;
+                            name: string;
+                            nutritionalValues: {
+                                carbohydrates: number;
+                                energy: number;
+                                fats: number;
+                                protein: number;
+                                salt: number;
+                                saturatedFats: number;
+                                sugarCarbohydrates: number;
+                            };
+                            price: string;
+                            tags?: string[];
+                            updatedAt?: string;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/biscuit/{id}/disabled": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            /** @description Disable biscuit payload schema. */
+            requestBody: {
+                content: {
+                    "application/json": {
+                        id: string;
+                        isDisabled: boolean;
+                    };
+                };
+            };
+            responses: {
+                /** @description Biscuit entity schema. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            createdAt: string;
+                            description: string;
+                            id: string;
+                            images: string[];
+                            ingredients: string;
+                            isDisabled?: boolean;
+                            name: string;
+                            nutritionalValues: {
+                                carbohydrates: number;
+                                energy: number;
+                                fats: number;
+                                protein: number;
+                                salt: number;
+                                saturatedFats: number;
+                                sugarCarbohydrates: number;
+                            };
+                            price: string;
+                            tags?: string[];
+                            updatedAt?: string;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/order": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Find all orders (paginated) */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            items: {
+                                createdAt: string;
+                                discountTotal?: number;
+                                /** @enum {string} */
+                                fulfillmentStatus: "cancelled" | "delivered" | "processing" | "shipped" | "unfulfilled";
+                                id: string;
+                                items: {
+                                    name: string;
+                                    productId: string;
+                                    quantity: number;
+                                    totalPrice: number;
+                                }[];
+                                /** @enum {string} */
+                                paymentStatus: "failed" | "paid" | "pending";
+                                shippingAddress: {
+                                    city: string;
+                                    country: string;
+                                    postalCode: string;
+                                    street: string;
+                                };
+                                shippingCost: number;
+                                subtotal: number;
+                                total: number;
+                                updatedAt?: string;
+                                userId: string;
+                            }[];
+                            page: number;
+                            limit: number;
+                            total: number;
+                            totalPages: number;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        createdAt: string;
+                        discountTotal?: number;
+                        /** @enum {string} */
+                        fulfillmentStatus: "cancelled" | "delivered" | "processing" | "shipped" | "unfulfilled";
+                        items: {
+                            name: string;
+                            productId: string;
+                            quantity: number;
+                            totalPrice: number;
+                        }[];
+                        /** @enum {string} */
+                        paymentStatus: "failed" | "paid" | "pending";
+                        shippingAddress: {
+                            city: string;
+                            country: string;
+                            postalCode: string;
+                            street: string;
+                        };
+                        shippingCost: number;
+                        subtotal: number;
+                        total: number;
+                        userId: string;
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            createdAt: string;
+                            discountTotal?: number;
+                            /** @enum {string} */
+                            fulfillmentStatus: "cancelled" | "delivered" | "processing" | "shipped" | "unfulfilled";
+                            id: string;
+                            items: {
+                                name: string;
+                                productId: string;
+                                quantity: number;
+                                totalPrice: number;
+                            }[];
+                            /** @enum {string} */
+                            paymentStatus: "failed" | "paid" | "pending";
+                            shippingAddress: {
+                                city: string;
+                                country: string;
+                                postalCode: string;
+                                street: string;
+                            };
+                            shippingCost: number;
+                            subtotal: number;
+                            total: number;
+                            updatedAt?: string;
+                            userId: string;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/order/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            createdAt: string;
+                            discountTotal?: number;
+                            /** @enum {string} */
+                            fulfillmentStatus: "cancelled" | "delivered" | "processing" | "shipped" | "unfulfilled";
+                            id: string;
+                            items: {
+                                name: string;
+                                productId: string;
+                                quantity: number;
+                                totalPrice: number;
+                            }[];
+                            /** @enum {string} */
+                            paymentStatus: "failed" | "paid" | "pending";
+                            shippingAddress: {
+                                city: string;
+                                country: string;
+                                postalCode: string;
+                                street: string;
+                            };
+                            shippingCost: number;
+                            subtotal: number;
+                            total: number;
+                            updatedAt?: string;
+                            userId: string;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        id: string;
+                        order: {
+                            createdAt: string;
+                            discountTotal?: number;
+                            /** @enum {string} */
+                            fulfillmentStatus: "cancelled" | "delivered" | "processing" | "shipped" | "unfulfilled";
+                            id: string;
+                            items: {
+                                name: string;
+                                productId: string;
+                                quantity: number;
+                                totalPrice: number;
+                            }[];
+                            /** @enum {string} */
+                            paymentStatus: "failed" | "paid" | "pending";
+                            shippingAddress: {
+                                city: string;
+                                country: string;
+                                postalCode: string;
+                                street: string;
+                            };
+                            shippingCost: number;
+                            subtotal: number;
+                            total: number;
+                            updatedAt?: string;
+                            userId: string;
+                        };
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            createdAt: string;
+                            discountTotal?: number;
+                            /** @enum {string} */
+                            fulfillmentStatus: "cancelled" | "delivered" | "processing" | "shipped" | "unfulfilled";
+                            id: string;
+                            items: {
+                                name: string;
+                                productId: string;
+                                quantity: number;
+                                totalPrice: number;
+                            }[];
+                            /** @enum {string} */
+                            paymentStatus: "failed" | "paid" | "pending";
+                            shippingAddress: {
+                                city: string;
+                                country: string;
+                                postalCode: string;
+                                street: string;
+                            };
+                            shippingCost: number;
+                            subtotal: number;
+                            total: number;
+                            updatedAt?: string;
+                            userId: string;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            createdAt: string;
+                            discountTotal?: number;
+                            /** @enum {string} */
+                            fulfillmentStatus: "cancelled" | "delivered" | "processing" | "shipped" | "unfulfilled";
+                            id: string;
+                            items: {
+                                name: string;
+                                productId: string;
+                                quantity: number;
+                                totalPrice: number;
+                            }[];
+                            /** @enum {string} */
+                            paymentStatus: "failed" | "paid" | "pending";
+                            shippingAddress: {
+                                city: string;
+                                country: string;
+                                postalCode: string;
+                                street: string;
+                            };
+                            shippingCost: number;
+                            subtotal: number;
+                            total: number;
+                            updatedAt?: string;
+                            userId: string;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/order/{id}/payment-status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        id: string;
+                        /** @enum {string} */
+                        paymentStatus: "failed" | "paid" | "pending";
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            createdAt: string;
+                            discountTotal?: number;
+                            /** @enum {string} */
+                            fulfillmentStatus: "cancelled" | "delivered" | "processing" | "shipped" | "unfulfilled";
+                            id: string;
+                            items: {
+                                name: string;
+                                productId: string;
+                                quantity: number;
+                                totalPrice: number;
+                            }[];
+                            /** @enum {string} */
+                            paymentStatus: "failed" | "paid" | "pending";
+                            shippingAddress: {
+                                city: string;
+                                country: string;
+                                postalCode: string;
+                                street: string;
+                            };
+                            shippingCost: number;
+                            subtotal: number;
+                            total: number;
+                            updatedAt?: string;
+                            userId: string;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/order/{id}/fulfillment-status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        id: string;
+                        /** @enum {string} */
+                        fulfillmentStatus: "cancelled" | "delivered" | "processing" | "shipped" | "unfulfilled";
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            createdAt: string;
+                            discountTotal?: number;
+                            /** @enum {string} */
+                            fulfillmentStatus: "cancelled" | "delivered" | "processing" | "shipped" | "unfulfilled";
+                            id: string;
+                            items: {
+                                name: string;
+                                productId: string;
+                                quantity: number;
+                                totalPrice: number;
+                            }[];
+                            /** @enum {string} */
+                            paymentStatus: "failed" | "paid" | "pending";
+                            shippingAddress: {
+                                city: string;
+                                country: string;
+                                postalCode: string;
+                                street: string;
+                            };
+                            shippingCost: number;
+                            subtotal: number;
+                            total: number;
+                            updatedAt?: string;
+                            userId: string;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/package": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            items: {
+                                createdAt: string;
+                                description: string;
+                                discountPercent?: number;
+                                id: string;
+                                images: string[];
+                                isDisabled: boolean;
+                                items: {
+                                    id: string;
+                                    quantity: number;
+                                }[];
+                                name: string;
+                                packagingPrice: number;
+                                tags?: string[];
+                                updatedAt?: string;
+                                weight?: number;
+                            }[];
+                            limit: number;
+                            page: number;
+                            total: number;
+                            totalPages: number;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        description: string;
+                        discountPercent?: number;
+                        images: string[];
+                        isDisabled: boolean;
+                        items: {
+                            id: string;
+                            quantity: number;
+                        }[];
+                        name: string;
+                        packagingPrice: number;
+                        tags?: string[];
+                        weight?: number;
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            createdAt: string;
+                            description: string;
+                            discountPercent?: number;
+                            id: string;
+                            images: string[];
+                            isDisabled: boolean;
+                            items: {
+                                id: string;
+                                quantity: number;
+                            }[];
+                            name: string;
+                            packagingPrice: number;
+                            tags?: string[];
+                            updatedAt?: string;
+                            weight?: number;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/package/active": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            items: {
+                                createdAt: string;
+                                description: string;
+                                discountPercent?: number;
+                                id: string;
+                                images: string[];
+                                isDisabled: boolean;
+                                items: {
+                                    id: string;
+                                    quantity: number;
+                                }[];
+                                name: string;
+                                packagingPrice: number;
+                                tags?: string[];
+                                updatedAt?: string;
+                                weight?: number;
+                            }[];
+                            limit: number;
+                            page: number;
+                            total: number;
+                            totalPages: number;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/package/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            createdAt: string;
+                            description: string;
+                            discountPercent?: number;
+                            id: string;
+                            images: string[];
+                            isDisabled: boolean;
+                            items: {
+                                id: string;
+                                quantity: number;
+                            }[];
+                            name: string;
+                            packagingPrice: number;
+                            tags?: string[];
+                            updatedAt?: string;
+                            weight?: number;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                    package: {
+                        description?: string;
+                        discountPercent?: number;
+                        images?: string[];
+                        isDisabled?: boolean;
+                        items?: {
+                            id: string;
+                            quantity: number;
+                        }[];
+                        name?: string;
+                        packagingPrice?: number;
+                        tags?: string[];
+                        weight?: number;
+                    };
+                };
+                cookie?: never;
+            };
+            /** @description Update package body schema. */
+            requestBody: {
+                content: {
+                    "application/json": {
+                        package: {
+                            description: string;
+                            discountPercent?: number;
+                            images: string[];
+                            isDisabled: boolean;
+                            items: {
+                                id: string;
+                                quantity: number;
+                            }[];
+                            name: string;
+                            packagingPrice: number;
+                            tags?: string[];
+                            weight?: number;
+                        };
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            createdAt: string;
+                            description: string;
+                            discountPercent?: number;
+                            id: string;
+                            images: string[];
+                            isDisabled: boolean;
+                            items: {
+                                id: string;
+                                quantity: number;
+                            }[];
+                            name: string;
+                            packagingPrice: number;
+                            tags?: string[];
+                            updatedAt?: string;
+                            weight?: number;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            createdAt: string;
+                            description: string;
+                            discountPercent?: number;
+                            id: string;
+                            images: string[];
+                            isDisabled: boolean;
+                            items: {
+                                id: string;
+                                quantity: number;
+                            }[];
+                            name: string;
+                            packagingPrice: number;
+                            tags?: string[];
+                            updatedAt?: string;
+                            weight?: number;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/package/{id}/isDisabled": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            /** @description Set is package disabled body schema. */
+            requestBody: {
+                content: {
+                    "application/json": {
+                        isDisabled: boolean;
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            createdAt: string;
+                            description: string;
+                            discountPercent?: number;
+                            id: string;
+                            images: string[];
+                            isDisabled: boolean;
+                            items: {
+                                id: string;
+                                quantity: number;
+                            }[];
+                            name: string;
+                            packagingPrice: number;
+                            tags?: string[];
+                            updatedAt?: string;
+                            weight?: number;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/user": {
         parameters: {
             query?: never;
