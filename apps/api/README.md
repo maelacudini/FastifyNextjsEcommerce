@@ -187,3 +187,49 @@ npx typescript-json-schema tsconfig.json FindUserByEmailParamsType --required > 
 ```
 
 Then, from the generated file, pick the part of the schema you're interested in and use it wherever you're defining schemas (e.g. user.schemas.ts, the schema generated with the command right above from FindUserByEmailParamsType would be the 200 response schema).
+
+
+
+# Check out all available APIs
+
+## Find out about all available APIs
+
+This project uses SwaggerUI to browse and test the API. Start the API server (default port 3000) and open the Swagger UI at:
+http://localhost:80/docs
+(if your project uses a different route or port, check the Fastify swagger registration in server code)
+
+Grouping routes in Swagger UI
+- Ensure each route schema includes a tag: { schema: { tags: ['FeatureName'], ... } } — routes with the same tag appear grouped.
+- Optionally add tag metadata to the swagger/openapi options so groups show descriptions.
+
+Example: add a tag to a route
+```typescript
+app.get('/user', {
+  schema: {
+    tags: ['User'],
+    response: {
+      200: schemas.findAllUsersSuccessReturnSchema,
+      ...errorSchemas
+    }
+  }
+}, handler)
+```
+
+Example: register Fastify swagger with tag metadata (adjust to your plugin and config)
+```typescript
+fastify.register(fastifySwagger, {
+  openapi: {
+    info: { title: 'API', version: '1.0.0' },
+    tags: [
+      { name: 'User', description: 'User endpoints' },
+      { name: 'Package', description: 'Package endpoints' },
+      { name: 'Biscuit', description: 'Biscuit endpoints' }
+    ]
+  },
+  routePrefix: '/documentation',
+  uiConfig: { docExpansion: 'list' },
+  exposeRoute: true
+})
+```
+
+Now restart the server — Swagger UI will display routes grouped by the tag names you provided.
