@@ -10,7 +10,7 @@ export async function registerPlugins( fastify: FastifyInstance ) {
 
 	// TODO: EXPLORE PLUGIN USAGE, SET RATE LIMITS ETC ETC
 	await fastify.register( fastifyPostgres, {
-		connectionString: `postgres://${process.env.POSTGRES_USER_NAME}:${process.env.POSTGRES_DB_PSW}@${process.env.POSTGRES_DB_HOST}/${process.env.POSTGRES_DB_NAME}`,
+		connectionString: `postgres://${process.env.POSTGRES_USER_NAME}:${process.env.POSTGRES_DB_PSW}@${process.env.POSTGRES_DB_HOST}:${process.env.POSTGRES_DB_PORT}/${process.env.POSTGRES_DB_NAME}`,
 	} )
 
 	await fastify.register( fastifyJwt, {

@@ -2,6 +2,8 @@
 Fullstack app with a Fastify backend and a Next.js frontend wired using hexagonal (ports & adapters) architecture.
 This README is a short tutorial / composition guide that illustrates, step‑by‑step, how the example project applies hexagonal (ports & adapters) architecture to expose an API with Fastify. It explains the role of each layer and shows minimal example code to implement each piece. It also shows how to start the project both locally and with Docker.
 
+
+
 # Example: how to work with Hexagonal Architecture
 
 ## 1️⃣ Define your domain model
@@ -233,3 +235,17 @@ fastify.register(fastifySwagger, {
 ```
 
 Now restart the server — Swagger UI will display routes grouped by the tag names you provided.
+
+
+
+## Environment variables
+
+These are the environment variables needed to run the project smoothly: add them in your .env file and don't share them with anyone, not even your best friend.
+
+- PORT — port for the API used by the server
+- POSTGRES_DB_PSW — Postgres database password
+- POSTGRES_DB_HOST — Postgres database host, e.g. localhost
+- POSTGRES_DB_PORT — Postgres database port, usually 5432
+- POSTGRES_DB_NAME — Postgres database name
+- POSTGRES_USER_NAME — Postgres username
+- JWT_SECRET — JWT secret

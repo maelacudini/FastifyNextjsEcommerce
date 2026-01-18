@@ -37,14 +37,7 @@ You can run the apps independently or start them together via Docker Compose.
   - Open a separate terminal
   - cd apps/web
   - npm install
-  - Provide the API base URL so the frontend knows where the backend is. Create `apps/web/.env.local` (or set environment variables in your shell). Examples:
-    - For local development (no Docker):
-      - NEXT_PUBLIC_WEB_URL=http://localhost:3000
-      - NEXT_PUBLIC_API_URL=http://localhost:80
-      - API_INTERNAL_URL=http://localhost:80
-    - For Docker Compose (services communicate using service names):
-      - NEXT_PUBLIC_API_URL=http://localhost:80
-      - API_INTERNAL_URL=http://backend:80
+  - Provide the API base URL so the frontend knows where the backend is. Create a .env file and set the environment variables (or set them in your shell).
   - Start Next.js in development:
     - npm run dev
 
@@ -54,14 +47,16 @@ You can run the apps independently or start them together via Docker Compose.
 
 This repository provides a compose setup. There are two typical modes: development (with live-reload) and production.
 
-1. Development (watch)
+1. Set up environment variables.
+
+2. Development (watch)
   - Make sure the compose file uses the development Dockerfile for each service (the repository uses `Dockerfile.dev` naming convention in the compose service build config).
   - Then run:
     - docker compose up --watch
   - This will build the images (using the dev Dockerfiles which are typically configured for file-watch / live reload) and run the services. When you are done:
     - docker compose down
 
-2. Production
+3. Production
   - Configure the compose file to use `Dockerfile.prod` (or ensure the production build steps are used).
   - Build and start in detached mode:
     - docker compose up --build -d
@@ -94,20 +89,24 @@ Notes:
 ## Environment variables
 
 - client:
-  - NEXT_PUBLIC_WEB_URL — public URL where the Next.js app is served (e.g. `http://localhost:3000`).
   - NEXT_PUBLIC_API_URL — base URL used by browser-side code to call the backend.
     - Local dev example: `http://localhost:80`
     - Docker Compose example: `http://localhost:80`
   - API_INTERNAL_URL — internal backend URL used by server-side code or services inside Docker.
     - Local dev example: `http://localhost:80`
     - Docker Compose example: `http://backend:80`
-  - Use a `.env.local` file in `apps/web/` for Next.js environment variables.
 
 - server:
   - PORT — port for the API used by the server.
+  - POSTGRES_DB_PSW — Postgres database password
+  - POSTGRES_DB_HOST — Postgres database host, e.g. localhost
+  - POSTGRES_DB_PORT — Postgres database port, usually 5432
+  - POSTGRES_DB_NAME — Postgres database name
+  - POSTGRES_USER_NAME — Postgres username
+  - JWT_SECRET — JWT secret
 
 - docker:
-  - If you are using Docker, always remember to set both backend and frontend environment variables inside the `compose.yaml` file.
+  - If you are using Docker, always remember to set both backend and frontend environment variables inside the `compose.yaml` file, or use secrets for sensitive env vars.
 
 
 

@@ -44,7 +44,6 @@ npm run start
 The client uses environment variables to determine the backend API URL and other runtime settings.
 
 Recommended vars:
-- NEXT_PUBLIC_WEB_URL — public URL where the Next.js app is served (e.g. `http://localhost:3000`).
 - NEXT_PUBLIC_API_URL — base URL used by browser-side code to call the backend.
   - Local dev example: `http://localhost:80`
   - Docker Compose example: `http://localhost:80`
