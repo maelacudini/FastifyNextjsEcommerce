@@ -55,11 +55,17 @@ const userSchema = {
 			},
 			type: "array"
 		},
+		firstName: {
+			type: "string"
+		},
 		id: {
 			type: "string"
 		},
 		isDisabled: {
 			type: "boolean"
+		},
+		lastName: {
+			type: "string"
 		},
 		marketingOptIn: {
 			type: "boolean"

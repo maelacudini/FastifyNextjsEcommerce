@@ -5,6 +5,7 @@ import fastifyRateLimit from "@fastify/rate-limit"
 import fastifySwagger from "@fastify/swagger"
 import fastifySwaggerUi from "@fastify/swagger-ui"
 import type { FastifyInstance } from "fastify"
+import jwtPlugin from "./plugins/jwtPlugin.js"
 
 export async function registerPlugins( fastify: FastifyInstance ) {
 
@@ -17,6 +18,7 @@ export async function registerPlugins( fastify: FastifyInstance ) {
 		secret: `${process.env.JWT_SECRET}`
 	} )
 
+	await fastify.register( jwtPlugin )
 
 	await fastify.register( fastifyCors, {
 		origin: "http://localhost:3000"

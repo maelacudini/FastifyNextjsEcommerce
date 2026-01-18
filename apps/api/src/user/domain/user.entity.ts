@@ -12,6 +12,8 @@ export interface User {
     postalCode: string
   }
   phone?: string
+  firstName?: string
+  lastName?: string
   favorites?: string[]
   cart?: string[]
   marketingOptIn?: boolean

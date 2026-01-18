@@ -17,14 +17,17 @@ export async function authController( fastify: FastifyInstance ) {
 	fastify.get<{
 		Params: FromSchema<typeof schemas.findByIdParamsSchema>,
 		Reply: ReplyType<FindByIdReturnType>
-	}>( "/auth/:id", { schema: {
-		tags: ["Auth"],
-		params: schemas.findByIdParamsSchema,
-		response: {
-			200: schemas.findByIdSuccessReturnSchema,
-			...errorSchemas
-		}
-	} }, async ( req, reply ) => {
+	}>( "/auth/:id", {
+		schema: {
+			tags: ["Auth"],
+			params: schemas.findByIdParamsSchema,
+			response: {
+				200: schemas.findByIdSuccessReturnSchema,
+				...errorSchemas
+			}
+		},
+		onRequest: [fastify.jwtAuth, fastify.hasRole( "admin" )]
+	}, async ( req, reply ) => {
 		const { id } = req.params
 
 		const data = await usecasesFactory.findByIdUseCase.execute( { id } )
@@ -36,6 +39,23 @@ export async function authController( fastify: FastifyInstance ) {
 	// PRIVATE - FIND BY USERNAME
 	// PRIVATE - INCREMENT REFRESH TOKEN VERSION
 	// PRIVATE - LOGIN
+	fastify.post(
+		"/login",
+		async ( req, reply ) => {
+			// TODO: IMPLEMENT METHOD
+
+			const token = fastify.jwt.sign( {
+				payload: {
+					firstName: "Mario",
+					lastName: "Rossi",
+					email: "mariorossi@gmail.com",
+					role: "admin"
+				}
+			} )
+
+			reply.send( token )
+		}
+	)
 	// PRIVATE - LOGOUT
 	// PRIVATE - UPDATE EMAIL VERIFIED
 	// PRIVATE - UPDATE LAST LOGIN
