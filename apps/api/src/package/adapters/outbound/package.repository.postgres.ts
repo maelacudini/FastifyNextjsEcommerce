@@ -3,34 +3,37 @@
 
 import type { PackageRepositoryPort } from "@/package/domain/package.repository.ports.js"
 import type { CreatePackageParamsType, CreatePackageReturnType, DeletePackageParamsType, DeletePackageReturnType, FindAllActivePackagesReturnType, FindAllPackagesReturnType, FindPackageByIdParamsType, FindPackageByIdReturnType, SetIsPackageDisabledParamsType, SetIsPackageDisabledReturnType, UpdatePackageParamsType, UpdatePackageReturnType } from "@/package/types.js"
+import type { FastifyInstance } from "fastify"
 
-export class MockPackageRepository implements PackageRepositoryPort {
+export class PostgresPackageRepository implements PackageRepositoryPort {
 
-	async findAllPackages(): FindAllPackagesReturnType {
+	constructor( private fastify: FastifyInstance ) {}
+
+	async findAllPackages(): Promise<FindAllPackagesReturnType> {
 		throw new Error( "Method not implemented." )
 	}
 
-	async findAllActivePackages(): FindAllActivePackagesReturnType {
+	async findAllActivePackages(): Promise<FindAllActivePackagesReturnType> {
 		throw new Error( "Method not implemented." )
 	}
 
-	async findPackageById( data: FindPackageByIdParamsType ): FindPackageByIdReturnType {
+	async findPackageById( data: FindPackageByIdParamsType ): Promise<FindPackageByIdReturnType> {
 		throw new Error( "Method not implemented." )
 	}
 
-	async createPackage( data: CreatePackageParamsType ): CreatePackageReturnType {
+	async createPackage( data: CreatePackageParamsType ): Promise<CreatePackageReturnType> {
 		throw new Error( "Method not implemented." )
 	}
 
-	async updatePackage( data: UpdatePackageParamsType ): UpdatePackageReturnType {
+	async updatePackage( data: UpdatePackageParamsType ): Promise<UpdatePackageReturnType> {
 		throw new Error( "Method not implemented." )
 	}
 
-	async deletePackage( data: DeletePackageParamsType ): DeletePackageReturnType {
+	async deletePackage( data: DeletePackageParamsType ): Promise<DeletePackageReturnType> {
 		throw new Error( "Method not implemented." )
 	}
 
-	async setIsPackageDisabled( data: SetIsPackageDisabledParamsType ): SetIsPackageDisabledReturnType {
+	async setIsPackageDisabled( data: SetIsPackageDisabledParamsType ): Promise<SetIsPackageDisabledReturnType> {
 		throw new Error( "Method not implemented." )
 	}
 }

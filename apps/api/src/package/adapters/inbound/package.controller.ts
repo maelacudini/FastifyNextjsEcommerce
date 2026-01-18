@@ -1,21 +1,27 @@
 import schemas from "./package.schema.js"
 import type { FastifyInstance } from "fastify"
 import type { FromSchema } from "json-schema-to-ts"
-import usecasesFactory from "./package.usecase.factory.js"
 import type {
-	FindAllPackagesReplyType,
-	FindAllActivePackagesReplyType,
-	DeletePackageReplyType,
-	FindPackageByIdReplyType,
-	SetIsPackageDisabledReplyType,
-	CreatePackageReplyType,
-	UpdatePackageReplyType
+	FindAllPackagesReturnType,
+	FindAllActivePackagesReturnType,
+	FindPackageByIdReturnType,
+	CreatePackageReturnType,
+	UpdatePackageReturnType,
+	DeletePackageReturnType,
+	SetIsPackageDisabledReturnType
 } from "@/package/types.js"
 import { errorSchemas } from "@/const.js"
+import createPackageUsecases from "./package.usecase.factory.js"
+import type { ReplyType } from "@/types.js"
 
-export async function packageController( app: FastifyInstance ) {
+// The controller never queries the DB directly.
+// The controller never contains business logic — it just maps HTTP ↔ Use Case.
+
+export async function packageController( fastify: FastifyInstance ) {
+	const usecasesFactory = createPackageUsecases( fastify )
+
 	// PUBLIC - FIND ALL PACKAGES
-	app.get<{ Reply: FindAllPackagesReplyType }>( "/package", { schema: {
+	fastify.get<{ Reply: ReplyType<FindAllPackagesReturnType> }>( "/package", { schema: {
 		tags: ["Package"],
 		response: {
 			200: schemas.findAllPackagesReturnSuccessSchema,
@@ -28,7 +34,7 @@ export async function packageController( app: FastifyInstance ) {
 	} )
 
 	// PUBLIC - FIND ALL ACTIVE PACKAGES
-	app.get<{ Reply: FindAllActivePackagesReplyType }>( "/package/active", { schema: {
+	fastify.get<{ Reply: ReplyType<FindAllActivePackagesReturnType> }>( "/package/active", { schema: {
 		tags: ["Package"],
 		response: {
 			200: schemas.findAllActivePackagesReturnSuccessSchema,
@@ -41,9 +47,9 @@ export async function packageController( app: FastifyInstance ) {
 	} )
 
 	// PUBLIC - FIND PACKAGE BY ID
-	app.get<{
+	fastify.get<{
         Params: FromSchema<typeof schemas.findPackageByIdParamsSchema>,
-        Reply: FindPackageByIdReplyType
+        Reply: ReplyType<FindPackageByIdReturnType>
     }>( "/package/:id", { schema: {
     	tags: ["Package"],
     	params: schemas.findPackageByIdParamsSchema,
@@ -64,9 +70,9 @@ export async function packageController( app: FastifyInstance ) {
     } )
 
 	// PRIVATE - CREATE PACKAGE
-	app.post<{
+	fastify.post<{
 	      Body: FromSchema<typeof schemas.createPackageBodySchema>,
-	      Reply: CreatePackageReplyType
+	      Reply: ReplyType<CreatePackageReturnType>
 	  }>( "/package", { schema: {
 	  	tags: ["Package"],
 	  	body: schemas.createPackageBodySchema,
@@ -89,10 +95,10 @@ export async function packageController( app: FastifyInstance ) {
 	  } )
 
 	// PRIVATE - UPDATE PACKAGE
-	app.put<{
+	fastify.put<{
 	      Params: FromSchema<typeof schemas.updatePackageParamsSchema>,
 	      Body: FromSchema<typeof schemas.updatePackageBodySchema>,
-	      Reply: UpdatePackageReplyType
+	      Reply: ReplyType<UpdatePackageReturnType>
 	  }>( "/package/:id",{ schema: {
 	  	tags: ["Package"],
 	  	params: schemas.updatePackageParamsSchema,
@@ -117,9 +123,9 @@ export async function packageController( app: FastifyInstance ) {
 	  } )
 
 	// PRIVATE - DELETE PACKAGE
-	app.delete<{
+	fastify.delete<{
         Params: FromSchema<typeof schemas.deletePackageParamsSchema>,
-        Reply: DeletePackageReplyType
+        Reply: ReplyType<DeletePackageReturnType>
     }>( "/package/:id", { schema: {
     	tags: ["Package"],
     	params: schemas.deletePackageParamsSchema,
@@ -145,10 +151,10 @@ export async function packageController( app: FastifyInstance ) {
     } )
 
 	// PRIVATE - SET ISDISABLED
-	app.put<{
+	fastify.put<{
 	      Params: FromSchema<typeof schemas.setIsPackageDisabledParamsSchema>,
 	      Body: FromSchema<typeof schemas.setIsPackageDisabledBodySchema>,
-	      Reply: SetIsPackageDisabledReplyType
+	      Reply: ReplyType<SetIsPackageDisabledReturnType>
 	  }>( "/package/:id/isDisabled", { schema: {
 	  	tags: ["Package"],
 	  	params: schemas.setIsPackageDisabledParamsSchema,

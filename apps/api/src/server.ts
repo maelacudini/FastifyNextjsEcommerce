@@ -1,8 +1,11 @@
 import Fastify from "fastify"
 import { registerRoutes } from "./routes.js"
 import { registerPlugins } from "./plugins.js"
+import dotenv from "dotenv"
 
 async function main() {
+	dotenv.config()
+
 	const fastify = Fastify( { logger: true } )
 
 	await registerPlugins( fastify )
@@ -19,16 +22,14 @@ async function main() {
 	}
 
 	// Graceful shutdown handlers
-	process.on( "SIGINT", async () => {
-		fastify.log.info( "Received SIGINT. Shutting down..." )
-		await fastify.close()
-		process.exit( 0 )
-	} )
+	const listeners = ["SIGINT", "SIGTERM"]
 
-	process.on( "SIGTERM", async () => {
-		fastify.log.info( "Received SIGTERM. Shutting down..." )
-		await fastify.close()
-		process.exit( 0 )
+	listeners.forEach( ( signal ) => {
+		process.on( signal, async () => {
+			fastify.log.info( `Received ${signal}. Shutting down...` )
+			await fastify.close()
+			process.exit( 0 )
+		} )
 	} )
 }
 

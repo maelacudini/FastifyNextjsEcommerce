@@ -6,7 +6,7 @@ export class CreateUserUseCase {
 
 	async execute( data: CreateUserParamsType ) {
 		// Basic validation (could later move to a validator)
-		if ( !data.email || !data.password ) {
+		if ( !data.email || !data.role ) {
 			throw new Error( "Name and email are required" )
 		}
 		const user = await this.userRepo.createUser( data )

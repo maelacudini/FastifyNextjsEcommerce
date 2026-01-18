@@ -1,22 +1,24 @@
 import { errorSchemas } from "@/const.js"
 import type { FastifyInstance } from "fastify"
 import type { FromSchema } from "json-schema-to-ts"
-import usecasesFactory from "./order.usecase.factory.js"
 import schemas from "./order.schema.js"
 import type {
-	FindAllOrdersReplyType,
-	FindOrderByIdReplyType,
-	CreateOrderReplyType,
-	UpdateOrderReplyType,
-	DeleteOrderReplyType,
-	UpdateOrderPaymentReplyType,
-	UpdateOrderFulfillmentReplyType
+	FindAllOrdersReturnType,
+	FindOrderByIdReturnType,
+	CreateOrderReturnType,
+	UpdateOrderReturnType,
+	UpdateOrderPaymentReturnType,
+	UpdateOrderFulfillmentReturnType,
+	DeleteOrderReturnType
 } from "../../types.js"
+import createOrderUsecases from "./order.usecase.factory.js"
+import type { ReplyType } from "@/types.js"
 
-export async function orderController( app: FastifyInstance ) {
+export async function orderController( fastify: FastifyInstance ) {
+	const usecasesFactory = createOrderUsecases( fastify )
 
 	// PUBLIC - FIND ALL ORDERS
-	app.get<{ Reply: FindAllOrdersReplyType }>( "/order", { schema: {
+	fastify.get<{ Reply: ReplyType<FindAllOrdersReturnType> }>( "/order", { schema: {
 		tags: ["Order"],
 		response: {
 			200: schemas.findAllOrdersSuccessReturnSchema,
@@ -29,9 +31,9 @@ export async function orderController( app: FastifyInstance ) {
 	} )
 
 	// PUBLIC - FIND ORDER BY ID
-	app.get<{
+	fastify.get<{
     Params: FromSchema<typeof schemas.findOrderByIdParamsSchema>,
-    Reply: FindOrderByIdReplyType
+    Reply: ReplyType<FindOrderByIdReturnType>
   }>( "/order/:id", { schema: {
   	tags: ["Order"],
   	params: schemas.findOrderByIdParamsSchema,
@@ -50,9 +52,9 @@ export async function orderController( app: FastifyInstance ) {
   } )
 
 	// PRIVATE - CREATE ORDER
-	app.post<{
+	fastify.post<{
     Body: FromSchema<typeof schemas.createOrderBodySchema>,
-    Reply: CreateOrderReplyType
+    Reply: ReplyType<CreateOrderReturnType>
   }>( "/order", { schema: {
   	tags: ["Order"],
   	body: schemas.createOrderBodySchema,
@@ -74,10 +76,10 @@ export async function orderController( app: FastifyInstance ) {
   } )
 
 	// PRIVATE - UPDATE ORDER
-	app.put<{
+	fastify.put<{
 		Params: FromSchema<typeof schemas.updateOrderParamsSchema>,
     Body: FromSchema<typeof schemas.updateOrderBodySchema>,
-    Reply: UpdateOrderReplyType
+    Reply: ReplyType<UpdateOrderReturnType>
   }>( "/order/:id", { schema: {
   	tags: ["Order"],
   	params: schemas.updateOrderParamsSchema,
@@ -101,10 +103,10 @@ export async function orderController( app: FastifyInstance ) {
   } )
 
 	// PRIVATE - UPDATE PAYMENT STATUS
-	app.put<{
+	fastify.put<{
 		Params: FromSchema<typeof schemas.updateOrderPaymentStatusParamsSchema>,
 		Body: FromSchema<typeof schemas.updateOrderPaymentStatusBodySchema>,
-		Reply: UpdateOrderPaymentReplyType
+		Reply: ReplyType<UpdateOrderPaymentReturnType>
 	}>( "/order/:id/payment-status", { schema: {
 		tags: ["Order"],
 		params: schemas.updateOrderPaymentStatusParamsSchema,
@@ -128,10 +130,10 @@ export async function orderController( app: FastifyInstance ) {
 	} )
 
 	// PRIVATE - UPDATE FULFILLMENT STATUS
-	app.put<{
+	fastify.put<{
 		Params: FromSchema<typeof schemas.updateOrderFulfillmentParamsSchema>,
 		Body: FromSchema<typeof schemas.updateOrderFulfillmentBodySchema>,
-		Reply: UpdateOrderFulfillmentReplyType
+		Reply: ReplyType<UpdateOrderFulfillmentReturnType>
 	}>( "/order/:id/fulfillment-status", { schema: {
 		tags: ["Order"],
 		params: schemas.updateOrderFulfillmentParamsSchema,
@@ -155,9 +157,9 @@ export async function orderController( app: FastifyInstance ) {
 	} )
 
 	// PRIVATE - DELETE ORDER
-	app.delete<{
+	fastify.delete<{
     Params: FromSchema<typeof schemas.deleteOrderParamsSchema>,
-    Reply: DeleteOrderReplyType
+    Reply: ReplyType<DeleteOrderReturnType>
   }>( "/order/:id", { schema: {
   	tags: ["Order"],
   	params: schemas.deleteOrderParamsSchema,

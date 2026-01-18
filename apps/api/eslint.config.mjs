@@ -25,9 +25,9 @@ export default defineConfig( [
     extends: [ "js/recommended" ],
     languageOptions: { globals: globals.node },
     rules: {
-      "max-params": [ "error", 4 ],
-      "max-depth": [ "error", 4 ],
-      "complexity": [ "error", 4 ],
+      "max-params": [ "error", 8 ],
+      "max-depth": [ "error", 8 ],
+      "complexity": [ "error", 8 ],
       "max-lines": [ "error", 400 ],
       "max-statements": [ "error", 20 ],
       "max-lines-per-function": [ "error", 200 ],

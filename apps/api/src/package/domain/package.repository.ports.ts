@@ -1,11 +1,11 @@
 import type { CreatePackageParamsType, CreatePackageReturnType, DeletePackageParamsType, DeletePackageReturnType, FindAllActivePackagesReturnType, FindAllPackagesReturnType, FindPackageByIdParamsType, FindPackageByIdReturnType, SetIsPackageDisabledParamsType, SetIsPackageDisabledReturnType, UpdatePackageParamsType, UpdatePackageReturnType } from "../types.js"
 
 export interface PackageRepositoryPort {
-	findAllPackages(): FindAllPackagesReturnType
-	findAllActivePackages(): FindAllActivePackagesReturnType
-	findPackageById( data: FindPackageByIdParamsType ): FindPackageByIdReturnType
-	createPackage( data: CreatePackageParamsType ): CreatePackageReturnType
-	updatePackage( data: UpdatePackageParamsType ): UpdatePackageReturnType
-	deletePackage( data: DeletePackageParamsType ): DeletePackageReturnType
-	setIsPackageDisabled( data: SetIsPackageDisabledParamsType ): SetIsPackageDisabledReturnType
+	findAllPackages(): Promise<FindAllPackagesReturnType>
+	findAllActivePackages(): Promise<FindAllActivePackagesReturnType>
+	findPackageById( data: FindPackageByIdParamsType ): Promise<FindPackageByIdReturnType>
+	createPackage( data: CreatePackageParamsType ): Promise<CreatePackageReturnType>
+	updatePackage( data: UpdatePackageParamsType ): Promise<UpdatePackageReturnType>
+	deletePackage( data: DeletePackageParamsType ): Promise<DeletePackageReturnType>
+	setIsPackageDisabled( data: SetIsPackageDisabledParamsType ): Promise<SetIsPackageDisabledReturnType>
 }

@@ -57,7 +57,7 @@ import { User } from "../../domain/user.entity";
 
 const mockUsers: User[] = [{ id: "1", name: "John", email: "john@example.com" }];
 
-export class MockUserRepository implements UserRepositoryPort {
+export class PostgresUserRepository implements UserRepositoryPort {
   async findUserById(id: string): Promise<User | null> {
     return mockUsers.find(u => u.id === id) || null;
   }
@@ -105,10 +105,10 @@ This connects your use case to the real world (HTTP, CLI, etc.). Here you check 
 // user.controller.ts
 import { FastifyInstance } from "fastify";
 import { GetUserUseCase } from "../../application/get-user.usecase";
-import { MockUserRepository } from "../outbound/user.repository.mock";
+import { PostgresUserRepository } from "../outbound/user.repository.mock";
 
 export async function userController(app: FastifyInstance) {
-  const userRepo = new MockUserRepository();
+  const userRepo = new PostgresUserRepository();
   const getUserUseCase = new GetUserUseCase(userRepo);
 
   app.get("/users/:id", async (req, reply) => {

@@ -16,3 +16,8 @@ export type PaginatedResultType<T> = {
   total: number,
   totalPages: number
 };
+
+// Shared reply type
+export type ReplyType<T> = ErrorSchemasTypes & {
+  200: T
+}

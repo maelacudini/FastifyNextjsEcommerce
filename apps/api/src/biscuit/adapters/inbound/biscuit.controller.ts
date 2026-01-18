@@ -1,23 +1,26 @@
 import { errorSchemas } from "@/const.js"
 import type { FastifyInstance } from "fastify"
 import type { FromSchema } from "json-schema-to-ts"
-import usecasesFactory from "./biscuit.usecase.factory.js"
 import schemas from "./biscuit.schema.js"
 import type {
-	FindAllActiveBiscuitsReplyType,
-	FindActiveBiscuitByIdReplyType,
-	FindAllBiscuitsReplyType,
-	FindBiscuitByIdReplyType,
-	CreateBiscuitReplyType,
-	UpdateBiscuitReplyType,
-	DeleteBiscuitReplyType,
-	SetBiscuitDisabledReplyType
+	FindAllActiveBiscuitsReturnType,
+	FindActiveBiscuitByIdReturnType,
+	FindAllBiscuitsReturnType,
+	FindBiscuitByIdReturnType,
+	CreateBiscuitReturnType,
+	UpdateBiscuitReturnType,
+	DeleteBiscuitReturnType,
+	SetBiscuitDisabledReturnType
 } from "@/biscuit/types.js"
+import createBiscuitUsecases from "./biscuit.usecase.factory.js"
+import type { ReplyType } from "@/types.js"
 
-export async function biscuitController( app: FastifyInstance ) {
+export async function biscuitController( fastify: FastifyInstance ) {
+
+	const usecasesFactory = createBiscuitUsecases( fastify )
 
 	// PUBLIC - FIND ALL ACTIVE BISCUITS
-	app.get<{ Reply: FindAllActiveBiscuitsReplyType }>( "/biscuit", { schema: {
+	fastify.get<{ Reply: ReplyType<FindAllActiveBiscuitsReturnType> }>( "/biscuit", { schema: {
 		tags: ["Biscuit"],
 		response: {
 			200: schemas.findAllActiveBiscuitsSuccessReturnSchema,
@@ -30,9 +33,9 @@ export async function biscuitController( app: FastifyInstance ) {
 	} )
 
 	// PUBLIC - FIND ACTIVE BISCUIT BY ID
-	app.get<{
+	fastify.get<{
 		Params: FromSchema<typeof schemas.findActiveBiscuitByIdParamsSchema>,
-		Reply: FindActiveBiscuitByIdReplyType
+		Reply: ReplyType<FindActiveBiscuitByIdReturnType>
 	}>( "/biscuit/active/:id", { schema: {
 		tags: ["Biscuit"],
 		params: schemas.findActiveBiscuitByIdParamsSchema,
@@ -53,7 +56,7 @@ export async function biscuitController( app: FastifyInstance ) {
 	} )
 
 	// PRIVATE - FIND ALL BISCUITS (ACTIVE AND NON ACTIVE)
-	app.get<{ Reply: FindAllBiscuitsReplyType }>( "/biscuit/all", { schema: {
+	fastify.get<{ Reply: ReplyType<FindAllBiscuitsReturnType> }>( "/biscuit/all", { schema: {
 		tags: ["Biscuit"],
 		response: {
 			200: schemas.findAllBiscuitsSuccessReturnSchema,
@@ -66,9 +69,9 @@ export async function biscuitController( app: FastifyInstance ) {
 	} )
 
 	// PRIVATE - FIND BISCUIT BY ID (ACTIVE AND NON ACTIVE)
-	app.get<{
+	fastify.get<{
 		Params: FromSchema<typeof schemas.findBiscuitByIdParamsSchema>,
-		Reply: FindBiscuitByIdReplyType
+		Reply: ReplyType<FindBiscuitByIdReturnType>
 	}>( "/biscuit/:id", { schema: {
 		tags: ["Biscuit"],
 		params: schemas.findBiscuitByIdParamsSchema,
@@ -89,9 +92,9 @@ export async function biscuitController( app: FastifyInstance ) {
 	} )
 
 	// PRIVATE - CREATE BISCUIT
-	app.post<{
+	fastify.post<{
 		Body: FromSchema<typeof schemas.createBiscuitParamsSchema>,
-		Reply: CreateBiscuitReplyType
+		Reply: ReplyType<CreateBiscuitReturnType>
 	}>( "/biscuit", { schema: {
 		tags: ["Biscuit"],
 		body: schemas.createBiscuitParamsSchema,
@@ -114,10 +117,10 @@ export async function biscuitController( app: FastifyInstance ) {
 	} )
 
 	// PRIVATE - UPDATE BISCUIT
-	app.put<{
+	fastify.put<{
 		Params: FromSchema<typeof schemas.updateBiscuParamsSchema>,
 		Body: FromSchema<typeof schemas.updateBiscuitBodySchema>,
-		Reply: UpdateBiscuitReplyType
+		Reply: ReplyType<UpdateBiscuitReturnType>
 	}>( "/biscuit/:id", { schema: {
 		tags: ["Biscuit"],
 		params: schemas.updateBiscuParamsSchema,
@@ -142,9 +145,9 @@ export async function biscuitController( app: FastifyInstance ) {
 	} )
 
 	// PRIVATE - DELETE BISCUIT
-	app.delete<{
+	fastify.delete<{
 		Params: FromSchema<typeof schemas.deleteBiscuitParamsSchema>,
-		Reply: DeleteBiscuitReplyType
+		Reply: ReplyType<DeleteBiscuitReturnType>
 	}>( "/biscuit/:id", { schema: {
 		tags: ["Biscuit"],
 		params: schemas.deleteBiscuitParamsSchema,
@@ -171,10 +174,10 @@ export async function biscuitController( app: FastifyInstance ) {
 	} )
 
 	// PRIVATE - SET BISCUIT DISABLED
-	app.put<{
+	fastify.put<{
 		Params: FromSchema<typeof schemas.setDisableBiscuitParamsSchema>,
 		Body: FromSchema<typeof schemas.setDisableBiscuitBodySchema>,
-		Reply: SetBiscuitDisabledReplyType
+		Reply: ReplyType<SetBiscuitDisabledReturnType>
 	}>( "/biscuit/:id/disabled", { schema: {
 		tags: ["Biscuit"],
 		params: schemas.setDisableBiscuitParamsSchema,

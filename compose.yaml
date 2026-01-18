@@ -1,3 +1,5 @@
+# TODO: FIX COMPOSE, NOT WORKING CURRENTLY
+
 services:
 
   backend:
@@ -9,6 +11,11 @@ services:
       - "80:80"
     environment:
       - PORT=80
+      - POSTGRES_DB_PSW=${POSTGRES_DB_PSW}
+      - POSTGRES_DB_HOST=${POSTGRES_DB_HOST}
+      - POSTGRES_DB_NAME=${POSTGRES_DB_NAME}
+      - POSTGRES_USER_NAME=${POSTGRES_USER_NAME}
+      - JWT_SECRET=${JWT_SECRET}
     develop:
       watch:
         - action: sync
@@ -39,3 +46,22 @@ services:
           ignore:
             - node_modules/
             - .next
+
+  postgres:
+    container_name: fastify_next_postgres_cont
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_DB_PSW}
+      - POSTGRES_DB=${POSTGRES_DB_NAME}
+      - POSTGRES_USER=${POSTGRES_USER_NAME}
+    ports:
+      - "5432:5432"
+
+  # pgadmin:
+  #   container_name: fastify_next_pgadmin_cont
+  #   image: dpage/pgadmin4
+  #   environment:
+  #     - PGADMIN_DEFAULT_EMAIL=
+  #     - PGADMIN_DEFAULT_PASSWORD=
+  #   ports:
+  #     - "5050:80"

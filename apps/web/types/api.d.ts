@@ -2085,16 +2085,11 @@ export interface paths {
                                 favorites?: string[];
                                 id: string;
                                 isDisabled: boolean;
-                                isVerified: boolean;
-                                lastLoginAt?: string;
-                                lastPasswordChangeAt?: string;
                                 marketingOptIn?: boolean;
                                 phone?: string;
-                                refreshTokenVersion: number;
                                 /** @enum {string} */
                                 role: "admin" | "customer";
                                 updatedAt?: string;
-                                username?: string;
                             }[];
                             page: number;
                             limit: number;
@@ -2151,14 +2146,13 @@ export interface paths {
                 content: {
                     "application/json": {
                         email: string;
-                        password: string;
                         /** @enum {string} */
                         role: "admin" | "customer";
                     };
                 };
             };
             responses: {
-                /** @description Successful response. */
+                /** @description Base user schema. */
                 200: {
                     headers: {
                         [name: string]: unknown;
@@ -2177,16 +2171,11 @@ export interface paths {
                             favorites?: string[];
                             id: string;
                             isDisabled: boolean;
-                            isVerified: boolean;
-                            lastLoginAt?: string;
-                            lastPasswordChangeAt?: string;
                             marketingOptIn?: boolean;
                             phone?: string;
-                            refreshTokenVersion: number;
                             /** @enum {string} */
                             role: "admin" | "customer";
                             updatedAt?: string;
-                            username?: string;
                         };
                     };
                 };
@@ -2249,7 +2238,7 @@ export interface paths {
             };
             requestBody?: never;
             responses: {
-                /** @description Successful response. */
+                /** @description Base user schema. */
                 200: {
                     headers: {
                         [name: string]: unknown;
@@ -2268,16 +2257,11 @@ export interface paths {
                             favorites?: string[];
                             id: string;
                             isDisabled: boolean;
-                            isVerified: boolean;
-                            lastLoginAt?: string;
-                            lastPasswordChangeAt?: string;
                             marketingOptIn?: boolean;
                             phone?: string;
-                            refreshTokenVersion: number;
                             /** @enum {string} */
                             role: "admin" | "customer";
                             updatedAt?: string;
-                            username?: string;
                         };
                     };
                 };
@@ -2337,12 +2321,11 @@ export interface paths {
                         };
                         email: string;
                         phone?: string;
-                        username?: string;
                     };
                 };
             };
             responses: {
-                /** @description Successful response. */
+                /** @description Base user schema. */
                 200: {
                     headers: {
                         [name: string]: unknown;
@@ -2361,16 +2344,11 @@ export interface paths {
                             favorites?: string[];
                             id: string;
                             isDisabled: boolean;
-                            isVerified: boolean;
-                            lastLoginAt?: string;
-                            lastPasswordChangeAt?: string;
                             marketingOptIn?: boolean;
                             phone?: string;
-                            refreshTokenVersion: number;
                             /** @enum {string} */
                             role: "admin" | "customer";
                             updatedAt?: string;
-                            username?: string;
                         };
                     };
                 };
@@ -2421,7 +2399,7 @@ export interface paths {
             };
             requestBody?: never;
             responses: {
-                /** @description Successful response. */
+                /** @description Base user schema. */
                 200: {
                     headers: {
                         [name: string]: unknown;
@@ -2440,16 +2418,11 @@ export interface paths {
                             favorites?: string[];
                             id: string;
                             isDisabled: boolean;
-                            isVerified: boolean;
-                            lastLoginAt?: string;
-                            lastPasswordChangeAt?: string;
                             marketingOptIn?: boolean;
                             phone?: string;
-                            refreshTokenVersion: number;
                             /** @enum {string} */
                             role: "admin" | "customer";
                             updatedAt?: string;
-                            username?: string;
                         };
                     };
                 };
@@ -2511,7 +2484,7 @@ export interface paths {
             };
             requestBody?: never;
             responses: {
-                /** @description Successful response. */
+                /** @description Base user schema. */
                 200: {
                     headers: {
                         [name: string]: unknown;
@@ -2530,16 +2503,11 @@ export interface paths {
                             favorites?: string[];
                             id: string;
                             isDisabled: boolean;
-                            isVerified: boolean;
-                            lastLoginAt?: string;
-                            lastPasswordChangeAt?: string;
                             marketingOptIn?: boolean;
                             phone?: string;
-                            refreshTokenVersion: number;
                             /** @enum {string} */
                             role: "admin" | "customer";
                             updatedAt?: string;
-                            username?: string;
                         };
                     };
                 };
@@ -2586,206 +2554,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/user/{id}/password": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            /** @description Update user password body. */
-            requestBody: {
-                content: {
-                    "application/json": {
-                        newPassword: string;
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            address?: {
-                                city: string;
-                                country: string;
-                                postalCode: string;
-                                street: string;
-                            };
-                            cart?: string[];
-                            createdAt: string;
-                            email: string;
-                            favorites?: string[];
-                            id: string;
-                            isDisabled: boolean;
-                            isVerified: boolean;
-                            lastLoginAt?: string;
-                            lastPasswordChangeAt?: string;
-                            marketingOptIn?: boolean;
-                            phone?: string;
-                            refreshTokenVersion: number;
-                            /** @enum {string} */
-                            role: "admin" | "customer";
-                            updatedAt?: string;
-                            username?: string;
-                        };
-                    };
-                };
-                /** @description Unauthorized. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            message: string;
-                        };
-                    };
-                };
-                /** @description No resource found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: string;
-                        };
-                    };
-                };
-                /** @description Server error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            message: string;
-                        };
-                    };
-                };
-            };
-        };
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/user/{id}/isVerified": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            /** @description Update user is verified body. */
-            requestBody: {
-                content: {
-                    "application/json": {
-                        isVerified: boolean;
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful response. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            address?: {
-                                city: string;
-                                country: string;
-                                postalCode: string;
-                                street: string;
-                            };
-                            cart?: string[];
-                            createdAt: string;
-                            email: string;
-                            favorites?: string[];
-                            id: string;
-                            isDisabled: boolean;
-                            isVerified: boolean;
-                            lastLoginAt?: string;
-                            lastPasswordChangeAt?: string;
-                            marketingOptIn?: boolean;
-                            phone?: string;
-                            refreshTokenVersion: number;
-                            /** @enum {string} */
-                            role: "admin" | "customer";
-                            updatedAt?: string;
-                            username?: string;
-                        };
-                    };
-                };
-                /** @description Unauthorized. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            message: string;
-                        };
-                    };
-                };
-                /** @description No resource found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: string;
-                        };
-                    };
-                };
-                /** @description Server error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            message: string;
-                        };
-                    };
-                };
-            };
-        };
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/user/{id}/isDisabled": {
         parameters: {
             query?: never;
@@ -2812,7 +2580,7 @@ export interface paths {
                 };
             };
             responses: {
-                /** @description Successful response. */
+                /** @description Base user schema. */
                 200: {
                     headers: {
                         [name: string]: unknown;
@@ -2831,16 +2599,11 @@ export interface paths {
                             favorites?: string[];
                             id: string;
                             isDisabled: boolean;
-                            isVerified: boolean;
-                            lastLoginAt?: string;
-                            lastPasswordChangeAt?: string;
                             marketingOptIn?: boolean;
                             phone?: string;
-                            refreshTokenVersion: number;
                             /** @enum {string} */
                             role: "admin" | "customer";
                             updatedAt?: string;
-                            username?: string;
                         };
                     };
                 };
@@ -2913,7 +2676,7 @@ export interface paths {
                 };
             };
             responses: {
-                /** @description Successful response. */
+                /** @description Base user schema. */
                 200: {
                     headers: {
                         [name: string]: unknown;
@@ -2932,16 +2695,11 @@ export interface paths {
                             favorites?: string[];
                             id: string;
                             isDisabled: boolean;
-                            isVerified: boolean;
-                            lastLoginAt?: string;
-                            lastPasswordChangeAt?: string;
                             marketingOptIn?: boolean;
                             phone?: string;
-                            refreshTokenVersion: number;
                             /** @enum {string} */
                             role: "admin" | "customer";
                             updatedAt?: string;
-                            username?: string;
                         };
                     };
                 };
@@ -3013,7 +2771,7 @@ export interface paths {
                 };
             };
             responses: {
-                /** @description Successful response. */
+                /** @description Base user schema. */
                 200: {
                     headers: {
                         [name: string]: unknown;
@@ -3032,16 +2790,11 @@ export interface paths {
                             favorites?: string[];
                             id: string;
                             isDisabled: boolean;
-                            isVerified: boolean;
-                            lastLoginAt?: string;
-                            lastPasswordChangeAt?: string;
                             marketingOptIn?: boolean;
                             phone?: string;
-                            refreshTokenVersion: number;
                             /** @enum {string} */
                             role: "admin" | "customer";
                             updatedAt?: string;
-                            username?: string;
                         };
                     };
                 };
@@ -3113,7 +2866,7 @@ export interface paths {
                 };
             };
             responses: {
-                /** @description Successful response. */
+                /** @description Base user schema. */
                 200: {
                     headers: {
                         [name: string]: unknown;
@@ -3132,16 +2885,11 @@ export interface paths {
                             favorites?: string[];
                             id: string;
                             isDisabled: boolean;
-                            isVerified: boolean;
-                            lastLoginAt?: string;
-                            lastPasswordChangeAt?: string;
                             marketingOptIn?: boolean;
                             phone?: string;
-                            refreshTokenVersion: number;
                             /** @enum {string} */
                             role: "admin" | "customer";
                             updatedAt?: string;
-                            username?: string;
                         };
                     };
                 };
@@ -3213,7 +2961,7 @@ export interface paths {
                 };
             };
             responses: {
-                /** @description Successful response. */
+                /** @description Base user schema. */
                 200: {
                     headers: {
                         [name: string]: unknown;
@@ -3232,16 +2980,11 @@ export interface paths {
                             favorites?: string[];
                             id: string;
                             isDisabled: boolean;
-                            isVerified: boolean;
-                            lastLoginAt?: string;
-                            lastPasswordChangeAt?: string;
                             marketingOptIn?: boolean;
                             phone?: string;
-                            refreshTokenVersion: number;
                             /** @enum {string} */
                             role: "admin" | "customer";
                             updatedAt?: string;
-                            username?: string;
                         };
                     };
                 };

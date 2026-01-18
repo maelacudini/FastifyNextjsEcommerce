@@ -11,8 +11,8 @@ const userIdSchema = {
 	required: ["id"]
 } as const
 
-const userWithoutPasswordSuccessReturnSchema = {
-	description: "Successful response.",
+const userSchema = {
+	description: "Base user schema.",
 	properties: {
 		address: {
 			properties: {
@@ -61,23 +61,11 @@ const userWithoutPasswordSuccessReturnSchema = {
 		isDisabled: {
 			type: "boolean"
 		},
-		isVerified: {
-			type: "boolean"
-		},
-		lastLoginAt: {
-			type: "string"
-		},
-		lastPasswordChangeAt: {
-			type: "string"
-		},
 		marketingOptIn: {
 			type: "boolean"
 		},
 		phone: {
 			type: "string"
-		},
-		refreshTokenVersion: {
-			type: "number"
 		},
 		role: {
 			enum: [
@@ -88,9 +76,6 @@ const userWithoutPasswordSuccessReturnSchema = {
 		},
 		updatedAt: {
 			type: "string"
-		},
-		username: {
-			type: "string"
 		}
 	},
 	required: [
@@ -98,8 +83,6 @@ const userWithoutPasswordSuccessReturnSchema = {
 		"email",
 		"id",
 		"isDisabled",
-		"isVerified",
-		"refreshTokenVersion",
 		"role"
 	],
 	type: "object"
@@ -111,7 +94,7 @@ export const findAllUsersSuccessReturnSchema = {
 	properties: {
 		items: {
 			type: "array",
-			items: userWithoutPasswordSuccessReturnSchema,
+			items: userSchema,
 		},
 		...paginationMetaSchema.properties
 	},
@@ -131,8 +114,7 @@ const findUserByIdParamsSchema = {
 	},
 	required: ["id"]
 } as const
-
-const findUserByIdSuccessReturnSchema = userWithoutPasswordSuccessReturnSchema
+const findUserByIdSuccessReturnSchema = userSchema
 
 const findUserByEmailParamsSchema = {
 	description: "Find user by email params.",
@@ -146,17 +128,13 @@ const findUserByEmailParamsSchema = {
 		"email"
 	],
 } as const
-
-const findUserByEmailSuccessReturnSchema = userWithoutPasswordSuccessReturnSchema
+const findUserByEmailSuccessReturnSchema = userSchema
 
 const createUserBodySchema = {
 	description: "Create user body.",
 	type: "object",
 	properties: {
 		email: {
-			type: "string"
-		},
-		password: {
 			type: "string"
 		},
 		role: {
@@ -169,16 +147,13 @@ const createUserBodySchema = {
 	},
 	required: [
 		"email",
-		"password",
 		"role"
 	]
 } as const
-
-const createUserSuccessReturnSchema = userWithoutPasswordSuccessReturnSchema
+const createUserSuccessReturnSchema = userSchema
 
 const deleteUserParamsSchema = findUserByIdParamsSchema
-
-const deleteUserSuccessReturnSchema = userWithoutPasswordSuccessReturnSchema
+const deleteUserSuccessReturnSchema = userSchema
 
 const updateUserBodySchema = {
 	description: "Update user body.",
@@ -211,9 +186,6 @@ const updateUserBodySchema = {
 		},
 		phone: {
 			type: "string"
-		},
-		username: {
-			type: "string"
 		}
 	},
 	required: [
@@ -221,47 +193,10 @@ const updateUserBodySchema = {
 	],
 	type: "object"
 } as const
-
 const updateUserParamsSchema = findUserByIdParamsSchema
-
-const updateUserSuccessReturnSchema = userWithoutPasswordSuccessReturnSchema
-
-const updateUserPasswordParamsSchema = userIdSchema
-
-const updateUserPasswordBodySchema = {
-	description: "Update user password body.",
-	properties: {
-		newPassword: {
-			type: "string"
-		}
-	},
-	required: [
-		"newPassword"
-	],
-	type: "object"
-} as const
-
-const updateUserPasswordSuccessReturnSchema = userWithoutPasswordSuccessReturnSchema
-
-const updateUserIsVerifiedParamsSchema = userIdSchema
-
-const updateUserIsVerifiedBodySchema = {
-	description: "Update user is verified body.",
-	properties: {
-		isVerified: {
-			type: "boolean"
-		}
-	},
-	required: [
-		"isVerified"
-	],
-	type: "object"
-} as const
-
-const updateUserIsVerifiedSuccessReturnSchema = userWithoutPasswordSuccessReturnSchema
+const updateUserSuccessReturnSchema = userSchema
 
 const updateUserIsDisabledParamsSchema = userIdSchema
-
 const updateUserIsDisabledBodySchema = {
 	description: "Update user is disabled body.",
 	properties: {
@@ -274,11 +209,9 @@ const updateUserIsDisabledBodySchema = {
 	],
 	type: "object"
 } as const
-
-const updateUserIsDisabledSuccessReturnSchema = userWithoutPasswordSuccessReturnSchema
+const updateUserIsDisabledSuccessReturnSchema = userSchema
 
 const updateUserRoleParamsSchema = userIdSchema
-
 const updateUserRoleBodySchema = {
 	description: "Update user role body.",
 	properties: {
@@ -295,11 +228,9 @@ const updateUserRoleBodySchema = {
 	],
 	type: "object"
 } as const
-
-const updateUserRoleSuccessReturnSchema = userWithoutPasswordSuccessReturnSchema
+const updateUserRoleSuccessReturnSchema = userSchema
 
 const updateUserMarketingOptInParamsSchema = userIdSchema
-
 const updateUserMarketingOptInBodySchema = {
 	description: "Update user marketingOptIn body.",
 	properties: {
@@ -312,11 +243,9 @@ const updateUserMarketingOptInBodySchema = {
 	],
 	type: "object"
 } as const
-
-const updateUserMarketingOptInSuccessReturnSchema = userWithoutPasswordSuccessReturnSchema
+const updateUserMarketingOptInSuccessReturnSchema = userSchema
 
 const updateUserFavoritesParamsSchema = userIdSchema
-
 const updateUserFavoritesBodySchema = {
 	description: "Update user favorites body.",
 	properties: {
@@ -332,11 +261,9 @@ const updateUserFavoritesBodySchema = {
 	],
 	type: "object"
 } as const
-
-const updateUserFavoritesSuccessReturnSchema = userWithoutPasswordSuccessReturnSchema
+const updateUserFavoritesSuccessReturnSchema = userSchema
 
 const updateUserCartParamsSchema = userIdSchema
-
 const updateUserCartBodySchema = {
 	description: "Update user cart body.",
 	properties: {
@@ -352,8 +279,7 @@ const updateUserCartBodySchema = {
 	],
 	type: "object"
 } as const
-
-const updateUserCartSuccessReturnSchema = userWithoutPasswordSuccessReturnSchema
+const updateUserCartSuccessReturnSchema = userSchema
 
 export default {
 	createUserBodySchema,
@@ -375,16 +301,10 @@ export default {
 	updateUserIsDisabledBodySchema,
 	updateUserIsDisabledParamsSchema,
 	updateUserIsDisabledSuccessReturnSchema,
-	updateUserIsVerifiedBodySchema,
-	updateUserIsVerifiedParamsSchema,
-	updateUserIsVerifiedSuccessReturnSchema,
 	updateUserMarketingOptInBodySchema,
 	updateUserMarketingOptInParamsSchema,
 	updateUserMarketingOptInSuccessReturnSchema,
 	updateUserParamsSchema,
-	updateUserPasswordBodySchema,
-	updateUserPasswordParamsSchema,
-	updateUserPasswordSuccessReturnSchema,
 	updateUserRoleBodySchema,
 	updateUserRoleParamsSchema,
 	updateUserRoleSuccessReturnSchema,

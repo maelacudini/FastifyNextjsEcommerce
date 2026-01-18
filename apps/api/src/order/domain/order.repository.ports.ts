@@ -15,11 +15,11 @@ import type {
 } from "../types.js"
 
 export interface OrderRepositoryPort {
-	findAllOrders(): FindAllOrdersReturnType
-	findOrderById( data: FindOrderByIdParamsType ): FindOrderByIdReturnType
-	createOrder( data: CreateOrderParamsType ): CreateOrderReturnType
-	updateOrder( data: UpdateOrderParams ): UpdateOrderReturnType
-	updateOrderPaymentStatus( data: UpdateOrderPaymentParamsType ): UpdateOrderPaymentReturnType
-	updateOrderFulfillmentStatus( data: UpdateOrderFulfillmentParamsType ): UpdateOrderFulfillmentReturnType
-	deleteOrder( data: DeleteOrderParamsType ): DeleteOrderReturnType
+	findAllOrders(): Promise<FindAllOrdersReturnType>
+	findOrderById( data: FindOrderByIdParamsType ): Promise<FindOrderByIdReturnType>
+	createOrder( data: CreateOrderParamsType ): Promise<CreateOrderReturnType>
+	updateOrder( data: UpdateOrderParams ): Promise<UpdateOrderReturnType>
+	updateOrderPaymentStatus( data: UpdateOrderPaymentParamsType ): Promise<UpdateOrderPaymentReturnType>
+	updateOrderFulfillmentStatus( data: UpdateOrderFulfillmentParamsType ): Promise<UpdateOrderFulfillmentReturnType>
+	deleteOrder( data: DeleteOrderParamsType ): Promise<DeleteOrderReturnType>
 }

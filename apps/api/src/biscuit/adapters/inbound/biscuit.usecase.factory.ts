@@ -7,25 +7,28 @@ import { FindAllActiveBiscuitsUseCase } from "@/biscuit/application/find-all-act
 import { FindAllBiscuitsUseCase } from "@/biscuit/application/find-all-biscuits.usecase.js"
 import { FindBiscuitByIdUseCase } from "@/biscuit/application/find-biscuit-by-id.usecase.js"
 import { SetBiscuitDisabledUseCase } from "@/biscuit/application/set-biscuit-disabled.usecase.js"
+import type { FastifyInstance } from "fastify"
 
-const biscuitRepo = new MockBiscuitRepository()
+export default function createBiscuitUsecases( fastify: FastifyInstance ) {
+	const biscuitRepo = new MockBiscuitRepository( fastify )
 
-const createBiscuit = new CreateBiscuitUseCase( biscuitRepo )
-const deleteBiscuit = new DeleteBiscuitUseCase( biscuitRepo )
-const updateBiscuit = new UpdateBiscuitUseCase( biscuitRepo )
-const findActiveBiscuitsById = new FindActiveBiscuitsByIdUseCase( biscuitRepo )
-const findAllActiveBiscuits = new FindAllActiveBiscuitsUseCase( biscuitRepo )
-const findAllBiscuits = new FindAllBiscuitsUseCase( biscuitRepo )
-const findBiscuitById = new FindBiscuitByIdUseCase( biscuitRepo )
-const setBiscuitDisabled = new SetBiscuitDisabledUseCase( biscuitRepo )
+	const createBiscuit = new CreateBiscuitUseCase( biscuitRepo )
+	const deleteBiscuit = new DeleteBiscuitUseCase( biscuitRepo )
+	const updateBiscuit = new UpdateBiscuitUseCase( biscuitRepo )
+	const findActiveBiscuitsById = new FindActiveBiscuitsByIdUseCase( biscuitRepo )
+	const findAllActiveBiscuits = new FindAllActiveBiscuitsUseCase( biscuitRepo )
+	const findAllBiscuits = new FindAllBiscuitsUseCase( biscuitRepo )
+	const findBiscuitById = new FindBiscuitByIdUseCase( biscuitRepo )
+	const setBiscuitDisabled = new SetBiscuitDisabledUseCase( biscuitRepo )
 
-export default {
-	createBiscuit,
-	deleteBiscuit,
-	updateBiscuit,
-	findActiveBiscuitsById,
-	findAllActiveBiscuits,
-	findAllBiscuits,
-	findBiscuitById,
-	setBiscuitDisabled
+	return {
+		createBiscuit,
+		deleteBiscuit,
+		updateBiscuit,
+		findActiveBiscuitsById,
+		findAllActiveBiscuits,
+		findAllBiscuits,
+		findBiscuitById,
+		setBiscuitDisabled
+	}
 }

@@ -1,7 +1,5 @@
-import type { ErrorSchemasTypes, PaginatedResultType } from "@/types.js"
+import type { PaginatedResultType } from "@/types.js"
 import type { FulfillmentStatusType, Order, PaymentStatusType } from "./domain/order.entity.js"
-import type { FromSchema } from "json-schema-to-ts"
-import schemas from "./adapters/inbound/order.schema.js"
 
 // Generic types
 export type OrderId = Order["id"]
@@ -15,39 +13,10 @@ export type UpdateOrderPaymentParamsType = { id: OrderId; paymentStatus: Payment
 export type UpdateOrderFulfillmentParamsType = { id: OrderId; fulfillmentStatus: FulfillmentStatusType }
 
 // Return types
-export type FindAllOrdersReturnType = Promise<PaginatedResultType<Order>>
-export type FindOrderByIdReturnType = Promise<Order | undefined>
-export type CreateOrderReturnType = Promise<Order>
-export type UpdateOrderReturnType = Promise<Order>
-export type DeleteOrderReturnType = Promise<Order | undefined>
-export type UpdateOrderPaymentReturnType = Promise<Order>
-export type UpdateOrderFulfillmentReturnType = Promise<Order>
-
-// Schemas types
-export type FindAllOrdersReplyType = ErrorSchemasTypes & {
-  200: FromSchema<typeof schemas.findAllOrdersSuccessReturnSchema>
-}
-
-export type FindOrderByIdReplyType = ErrorSchemasTypes & {
-  200: FromSchema<typeof schemas.findOrderByIdSuccessReturnSchema>
-}
-
-export type CreateOrderReplyType = ErrorSchemasTypes & {
-  200: FromSchema<typeof schemas.createOrderSuccessReturnSchema>
-}
-
-export type UpdateOrderReplyType = ErrorSchemasTypes & {
-  200: FromSchema<typeof schemas.updateOrderSuccessReturnSchema>
-}
-
-export type DeleteOrderReplyType = ErrorSchemasTypes & {
-  200: FromSchema<typeof schemas.deleteOrderSuccessReturnSchema>
-}
-
-export type UpdateOrderPaymentReplyType = ErrorSchemasTypes & {
-  200: FromSchema<typeof schemas.updateOrderPaymentSuccessReturnSchema>
-}
-
-export type UpdateOrderFulfillmentReplyType = ErrorSchemasTypes & {
-  200: FromSchema<typeof schemas.updateOrderFulfillmentSuccessReturnSchema>
-}
+export type FindAllOrdersReturnType = PaginatedResultType<Order>
+export type FindOrderByIdReturnType = Order | undefined
+export type CreateOrderReturnType = Order
+export type UpdateOrderReturnType = Order
+export type DeleteOrderReturnType = Order | undefined
+export type UpdateOrderPaymentReturnType = Order
+export type UpdateOrderFulfillmentReturnType = Order

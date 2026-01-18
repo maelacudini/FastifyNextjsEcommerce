@@ -1,10 +1,22 @@
 import fastifyCors from "@fastify/cors"
+import fastifyJwt from "@fastify/jwt"
+import fastifyPostgres from "@fastify/postgres"
 import fastifyRateLimit from "@fastify/rate-limit"
 import fastifySwagger from "@fastify/swagger"
 import fastifySwaggerUi from "@fastify/swagger-ui"
 import type { FastifyInstance } from "fastify"
 
 export async function registerPlugins( fastify: FastifyInstance ) {
+
+	// TODO: EXPLORE PLUGIN USAGE, SET RATE LIMITS ETC ETC
+	await fastify.register( fastifyPostgres, {
+		connectionString: `postgres://${process.env.POSTGRES_USER_NAME}:${process.env.POSTGRES_DB_PSW}@${process.env.POSTGRES_DB_HOST}/${process.env.POSTGRES_DB_NAME}`,
+	} )
+
+	await fastify.register( fastifyJwt, {
+		secret: `${process.env.JWT_SECRET}`
+	} )
+
 
 	await fastify.register( fastifyCors, {
 		origin: "http://localhost:3000"
