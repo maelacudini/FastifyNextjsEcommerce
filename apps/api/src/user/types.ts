@@ -1,5 +1,6 @@
 import type { User } from "@/user/domain/user.entity.js"
 import type { PaginatedResultType } from "@/types.js"
+import type { Auth } from "@/auth/domain/auth.entity.js"
 
 // Generic types
 export type UserId = User["id"]
@@ -12,7 +13,12 @@ export type FindUserByIdParamsType = {
 
 export type CreateUserParamsType = {
   email: User["email"],
-  role: User["role"]
+  role: User["role"],
+}
+
+export type CreateUserWithAuthParamsType = CreateUserParamsType & {
+  password: Auth["passwordHash"],
+  provider: Auth["provider"],
 }
 
 export type DeleteUserParamsType = {
