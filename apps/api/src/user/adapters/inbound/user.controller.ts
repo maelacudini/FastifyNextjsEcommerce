@@ -89,8 +89,7 @@ export async function userController( fastify: FastifyInstance ) {
 		return reply.code( 200 ).send( user )
 	} )
 
-	// PUBLIC - CREATE USER WITH AUTH
-	// TODO: UPDATE LOGIC TO INCLUDE CREATION OF USER WITH AUTH (fix schemas, logic, usecase, etc)
+	// PUBLIC - CREATE USER
 	fastify.post<{
 		Body: FromSchema<typeof schemas.createUserBodySchema>,
 		Reply: ReplyType<CreateUserReturnType>

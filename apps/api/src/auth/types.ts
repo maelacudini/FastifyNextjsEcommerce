@@ -9,6 +9,8 @@ export type FindByUserIdParamsType = {
   userId: string
 }
 
+export type CreateAuthParamsType =  Pick<Auth, "userId" | "passwordHash" | "provider">
+
 export type IncrementRefreshTokenVersionParamsType = {
   refreshTokenVersion: number
   id: string
@@ -46,6 +48,7 @@ export type LoginParamsType = {
 // Return types
 export type FindByIdReturnType = Auth
 export type FindByUserIdReturnType = Auth
+export type CreateAuthReturnType = Auth
 export type IncrementRefreshTokenVersionReturnType = Auth
 export type FindByUsernameReturnType = Auth
 export type UpdateUsernameReturnType = Auth

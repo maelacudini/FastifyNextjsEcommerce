@@ -1,7 +1,6 @@
 import type {
 	CreateUserParamsType,
 	CreateUserReturnType,
-	CreateUserWithAuthParamsType,
 	DeleteUserParamsType,
 	DeleteUserReturnType,
 	FindAllUsersReturnType,
@@ -28,7 +27,6 @@ export interface UserRepositoryPort {
 	findUserById( data: FindUserByIdParamsType ): Promise<FindUserByIdReturnType>;
 	findUserByEmail( data: FindUserByEmailParamsType ): Promise<FindUserByEmailReturnType>;
   createUser( data: CreateUserParamsType ): Promise<CreateUserReturnType>;
-	createUserWithAuth( data: CreateUserWithAuthParamsType ): Promise<CreateUserReturnType>;
   deleteUser( data: DeleteUserParamsType ): Promise<DeleteUserReturnType>;
 	updateUser( data: UpdateUserParamsType ): Promise<UpdateUserReturnType>;
 	updateUserFavorites( data: UpdateUserFavoritesParamsType ): Promise<UpdateUserFavoritesReturnType>;
