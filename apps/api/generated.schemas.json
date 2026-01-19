@@ -1,0 +1,37 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "allOf": [
+        {
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "role": {
+                    "enum": [
+                        "admin",
+                        "customer"
+                    ],
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "provider": {
+                    "enum": [
+                        "google",
+                        "local"
+                    ],
+                    "type": "string"
+                }
+            },
+            "required": [
+                "email",
+                "role",
+                "password",
+                "provider"
+            ],
+            "type": "object"
+        }
+    ]
+}
+

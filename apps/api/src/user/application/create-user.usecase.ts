@@ -5,11 +5,22 @@ export class CreateUserUseCase {
 	constructor( private readonly userRepo: UserRepositoryPort ) {}
 
 	async execute( data: CreateUserParamsType ) {
-		// Basic validation (could later move to a validator)
-		if ( !data.email || !data.role ) {
-			throw new Error( "Name and email are required" )
+		if ( !data ) {
+			throw new Error( "Email and role are needed" )
 		}
-		const user = await this.userRepo.createUser( data )
+
+		const email = data.email.trim().toLowerCase()
+
+		const existing = await this.userRepo.findUserByEmail( { email } )
+		if ( existing ) {
+			throw new Error( "User already exists" )
+		}
+
+		const user = await this.userRepo.createUser( {
+			...data,
+			email,
+			role: data.role
+		} )
 
 		return user
 	}

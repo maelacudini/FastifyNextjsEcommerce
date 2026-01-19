@@ -2,7 +2,7 @@
 // TODO: IMPLEMENT ALL METHODS
 
 import type { AuthRepositoryPort } from "@/auth/domain/auth.repository.port.js"
-import type { FindByIdParamsType, FindByIdReturnType, FindByUserIdParamsType, FindByUserIdReturnType, FindByUsernameParamsType, FindByUsernameReturnType, IncrementRefreshTokenVersionParamsType, IncrementRefreshTokenVersionReturnType, LoginParamsType, LoginReturnType, LogoutReturnType, UpdateEmailVerifiedAtParamsType, UpdateEmailVerifiedAtReturnType, UpdateLastLoginAtParamsType, UpdateLastLoginAtReturnType, UpdatePasswordParamsType, UpdatePasswordReturnType, UpdateUsernameParamsType, UpdateUsernameReturnType } from "@/auth/types.js"
+import type { CreateAuthParamsType, CreateAuthReturnType, FindByIdParamsType, FindByIdReturnType, FindByUserIdParamsType, FindByUserIdReturnType, FindByUsernameParamsType, FindByUsernameReturnType, IncrementRefreshTokenVersionParamsType, IncrementRefreshTokenVersionReturnType, LoginParamsType, LoginReturnType, LogoutReturnType, UpdateEmailVerifiedAtParamsType, UpdateEmailVerifiedAtReturnType, UpdateLastLoginAtParamsType, UpdateLastLoginAtReturnType, UpdatePasswordParamsType, UpdatePasswordReturnType, UpdateUsernameParamsType, UpdateUsernameReturnType } from "@/auth/types.js"
 import type { FastifyInstance } from "fastify"
 
 export class PostgresAuthRepository implements AuthRepositoryPort {
@@ -13,6 +13,10 @@ export class PostgresAuthRepository implements AuthRepositoryPort {
 	}
 
 	async findByUserId( data: FindByUserIdParamsType ): Promise<FindByUserIdReturnType> {
+		throw new Error( "Method not implemented." )
+	}
+
+	async createAuth( data: CreateAuthParamsType ): Promise<CreateAuthReturnType> {
 		throw new Error( "Method not implemented." )
 	}
 

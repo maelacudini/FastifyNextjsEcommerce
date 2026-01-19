@@ -3,7 +3,7 @@
 
 import type { User } from "@/user/domain/user.entity.js"
 import type { UserRepositoryPort } from "@/user/domain/user.repository.port.js"
-import type { CreateUserParamsType, CreateUserReturnType, DeleteUserParamsType, DeleteUserReturnType, FindAllUsersReturnType, FindUserByEmailParamsType, FindUserByEmailReturnType, FindUserByIdParamsType, FindUserByIdReturnType, UpdateUserCartParamsType, UpdateUserCartReturnType, UpdateUserFavoritesParamsType, UpdateUserFavoritesReturnType, UpdateUserIsDisabledParamsType, UpdateUserIsDisabledReturnType, UpdateUserMarketingOptInParamsType, UpdateUserMarketingOptInReturnType, UpdateUserParamsType, UpdateUserReturnType, UpdateUserRoleParamsType, UpdateUserRoleReturnType } from "@/user/types.js"
+import type { CreateUserParamsType, CreateUserReturnType, CreateUserWithAuthParamsType, DeleteUserParamsType, DeleteUserReturnType, FindAllUsersReturnType, FindUserByEmailParamsType, FindUserByEmailReturnType, FindUserByIdParamsType, FindUserByIdReturnType, UpdateUserCartParamsType, UpdateUserCartReturnType, UpdateUserFavoritesParamsType, UpdateUserFavoritesReturnType, UpdateUserIsDisabledParamsType, UpdateUserIsDisabledReturnType, UpdateUserMarketingOptInParamsType, UpdateUserMarketingOptInReturnType, UpdateUserParamsType, UpdateUserReturnType, UpdateUserRoleParamsType, UpdateUserRoleReturnType } from "@/user/types.js"
 import type { FastifyInstance } from "fastify"
 
 export class PostgresUserRepository implements UserRepositoryPort {
@@ -35,10 +35,45 @@ export class PostgresUserRepository implements UserRepositoryPort {
 	}
 
 	async findUserByEmail( data: FindUserByEmailParamsType ): Promise<FindUserByEmailReturnType> {
-		throw new Error( "Method not implemented." )
+		const client = await this.fastify.pg.connect()
+
+		try {
+			const { rows } = await client.query<User>( `
+					SELECT *
+					FROM users
+					WHERE email = $1
+					LIMIT 1
+				`, [data.email]
+			)
+
+			return rows[0] || undefined
+		} finally {
+			client.release()
+		}
 	}
 
 	async createUser( data: CreateUserParamsType ): Promise<CreateUserReturnType> {
+		const client = await this.fastify.pg.connect()
+
+		try {
+			const { rows } = await client.query<CreateUserReturnType>( `
+					INSERT INTO users (email, role, is_disabled, created_at)
+					VALUES ($1, $2, $3, NOW())
+					RETURNING *
+				`, [data.email, data.role, false]
+			)
+
+			if ( !rows[0] ) {
+				throw new Error( "Failed to create user" )
+			}
+
+			return rows[0]
+		} finally {
+			client.release()
+		}
+	}
+
+	async createUserWithAuth( data: CreateUserWithAuthParamsType ): Promise<CreateUserReturnType> {
 		throw new Error( "Method not implemented." )
 	}
 

@@ -10,12 +10,14 @@ import { UpdateUsernameUseCase } from "@/auth/application/update-username.usecas
 import { UpdatePasswordUseCase } from "@/auth/application/update-password.usecase.js"
 import { UpdateUserEmailVerifiedAtUseCase } from "@/auth/application/update-email-verified-at.usecase.js"
 import { UpdateLastLoginAtUseCase } from "@/auth/application/update-last-login-at.usecase.js"
+import { CreateAuthUseCase } from "@/auth/application/create-auth.usecase.js"
 
 export default function createAuthUsecases( fastify: FastifyInstance ) {
 	const authRepo = new PostgresAuthRepository( fastify )
 
 	const findByIdUseCase = new FindByIdUseCase( authRepo )
 	const findByUserIdUseCase = new FindByUserIdUseCase( authRepo )
+	const createAuthUseCase = new CreateAuthUseCase( authRepo )
 	const incrementRefreshTokenVersionUseCase = new IncrementRefreshTokenVersionUseCase( authRepo )
 	const findByUsernameUseCase = new FindByUsernameUseCase( authRepo )
 	const updateUsernameUseCase = new UpdateUsernameUseCase( authRepo )
@@ -28,6 +30,7 @@ export default function createAuthUsecases( fastify: FastifyInstance ) {
 	return {
 		findByIdUseCase,
 		findByUserIdUseCase,
+		createAuthUseCase,
 		incrementRefreshTokenVersionUseCase,
 		findByUsernameUseCase,
 		updateUsernameUseCase,

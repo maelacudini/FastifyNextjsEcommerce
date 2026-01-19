@@ -1,0 +1,9 @@
+- not too happy about the placement of this file apps\api\src\plugins\jwtPlugin.ts, the folder Plugin gets a little lost between all 
+  entities folders inside apps\api\src
+
+- where should i put apps\api\src\auth\application\bcrypt-password-hasher.usecase.ts and apps\api\src\auth\domain\password-hasher.port.ts?
+- should i keep the use of bcrypt separate? i'm thinking: If a thing can change independently,
+  it gets an interface. Hashing algorithms change, libraries change, security requirements change.
+
+- is it correct to keep password in auth and separate from the user entity?
+- does it mean that i'll have two different tables in my database for auth and user entities?
