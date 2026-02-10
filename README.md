@@ -1,6 +1,7 @@
 # Introduction
 
-This repository contains two main folders:
+This is a small e-commerce based on Fastify, Postgres and Next.js.
+This repository is organized in two main folders:
 - `apps/api` — Fastify (Fastify, TypeScript-ready).
 - `apps/web` — Next.js (React -Next.js-, TypeScript-ready).
 
@@ -17,7 +18,7 @@ This repository contains two main folders:
 ## Quick overview
 
 - Client: located in `apps/web/` — Next.js app.
-- Server: located in `app/server/` — Fastify app.
+- Server: located in `app/api/` — Fastify app.
 
 You can run the apps independently or start them together via Docker Compose.
 
@@ -26,18 +27,20 @@ You can run the apps independently or start them together via Docker Compose.
 ## Run locally (recommended for development)
 
 1. Start the server:
+  - Set up .env with correct variables
   - Open a terminal
   - cd into the server folder and install dependencies:
-    - cd server
+    - cd apps/api
     - npm install
   - Start the server in watch/dev mode:
     - npm run dev
 
 2. Start the client:
-  - Open a separate terminal
-  - cd apps/web
-  - npm install
-  - Provide the API base URL so the frontend knows where the backend is. Create a .env file and set the environment variables (or set them in your shell).
+  - Set up .env with correct variables
+  - Open a terminal
+  - cd into the server folder and install dependencies:
+    - cd apps/web
+    - npm install
   - Start Next.js in development:
     - npm run dev
 
@@ -71,6 +74,7 @@ Notes:
 ## Build for production (locally)
 
 - Client:
+  - set up variables in .env
   - cd client
   - npm install
   - npm run build
@@ -78,7 +82,8 @@ Notes:
   - By default `next start` serves the production build on port 3000 (use `PORT` env var to override).
 
 - Server:
-  - cd server
+  - set up variables in .env
+  - cd api
   - npm install
   - npm run build
   - npm run start
@@ -95,6 +100,7 @@ Notes:
   - API_INTERNAL_URL — internal backend URL used by server-side code or services inside Docker.
     - Local dev example: `http://localhost:80`
     - Docker Compose example: `http://backend:80`
+  - NEXT_TELEMETRY_DISABLED — set to 1 to disable telemetry, optional.
 
 - server:
   - PORT — port for the API used by the server.
