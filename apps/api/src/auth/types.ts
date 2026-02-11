@@ -1,3 +1,6 @@
+
+import type { User } from "@/user/domain/user.entity.js"
+
 import type { Auth } from "./domain/auth.entity.js"
 
 // Request params types
@@ -45,10 +48,18 @@ export type LoginParamsType = {
   password: string
 }
 
+export type CreateUserWithAuthParamsType = {
+  email: User["email"]
+  role: User["role"]
+  provider: Auth["provider"]
+  password?: string
+}
+
 // Return types
 export type FindByIdReturnType = Auth
 export type FindByUserIdReturnType = Auth
 export type CreateAuthReturnType = Auth
+export type CreateUserWithAuthReturnType = { user: User, auth: Auth }
 export type IncrementRefreshTokenVersionReturnType = Auth
 export type FindByUsernameReturnType = Auth
 export type UpdateUsernameReturnType = Auth

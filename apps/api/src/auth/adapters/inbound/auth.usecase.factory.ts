@@ -11,9 +11,14 @@ import { UpdatePasswordUseCase } from "@/auth/application/update-password.usecas
 import { UpdateUserEmailVerifiedAtUseCase } from "@/auth/application/update-email-verified-at.usecase.js"
 import { UpdateLastLoginAtUseCase } from "@/auth/application/update-last-login-at.usecase.js"
 import { CreateAuthUseCase } from "@/auth/application/create-auth.usecase.js"
+import { PostgresUserRepository } from "@/user/adapters/outbound/user.repository.postgres.js"
+import { BcryptPasswordHasher } from "@/auth/application/bcrypt-password-hasher.usecase.js"
+import { CreateUserWithAuthUseCase } from "@/auth/application/create-user-with-auth.usecase.js"
 
 export default function createAuthUsecases( fastify: FastifyInstance ) {
 	const authRepo = new PostgresAuthRepository( fastify )
+	const userRepo = new PostgresUserRepository( fastify )
+	const passwordHasher = new BcryptPasswordHasher()
 
 	const findByIdUseCase = new FindByIdUseCase( authRepo )
 	const findByUserIdUseCase = new FindByUserIdUseCase( authRepo )
@@ -26,6 +31,7 @@ export default function createAuthUsecases( fastify: FastifyInstance ) {
 	const updateLastLoginAtUseCase = new UpdateLastLoginAtUseCase( authRepo )
 	const loginUseCase = new LoginUseCase( authRepo )
 	const logoutUseCase = new LogoutUseCase( authRepo )
+	const createUserWithAuthUseCase = new CreateUserWithAuthUseCase( userRepo, authRepo, passwordHasher )
 
 	return {
 		findByIdUseCase,
@@ -38,6 +44,7 @@ export default function createAuthUsecases( fastify: FastifyInstance ) {
 		updateUserEmailVerifiedAtUseCase,
 		updateLastLoginAtUseCase,
 		loginUseCase,
-		logoutUseCase
+		logoutUseCase,
+		createUserWithAuthUseCase,
 	}
 }
