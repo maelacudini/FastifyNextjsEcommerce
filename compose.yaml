@@ -2,9 +2,9 @@ services:
   postgres:
     container_name: fastify_next_postgres_cont
     image: postgres:16-alpine
-    restart: unless-stopped
+    restart: no
     environment:
-      POSTGRES_DB: ${POSTGRES_NAME:-fastifynext}
+      POSTGRES_DB: ${POSTGRES_NAME:-postgres}
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
     secrets:
@@ -14,7 +14,7 @@ services:
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_NAME:-fastifynext}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_NAME:-postgres}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -24,14 +24,14 @@ services:
     build:
       context: ./apps/api
       dockerfile: Dockerfile.dev
-    restart: unless-stopped
+    restart: no
     env_file:
       - ./apps/api/.env
     environment:
       PORT: ${PORT:-80}
       POSTGRES_HOST: postgres
       POSTGRES_PORT: ${POSTGRES_PORT:-5432}
-      POSTGRES_NAME: ${POSTGRES_NAME:-fastifynext}
+      POSTGRES_NAME: ${POSTGRES_NAME:-postgres}
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
     secrets:
       - postgres_password
@@ -62,7 +62,7 @@ services:
     build:
       context: ./apps/web
       dockerfile: Dockerfile.dev
-    restart: unless-stopped
+    restart: no
     env_file:
       - ./apps/web/.env
     environment:
@@ -86,7 +86,7 @@ services:
   pgadmin:
     container_name: fastify_next_pgadmin_cont
     image: dpage/pgadmin4:8
-    restart: unless-stopped
+    restart: no
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@local.dev}
       PGADMIN_DEFAULT_PASSWORD_FILE: /run/secrets/pgadmin_password
