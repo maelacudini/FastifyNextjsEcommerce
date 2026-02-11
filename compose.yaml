@@ -9,13 +9,14 @@ services:
       dockerfile: Dockerfile.dev
     ports:
       - "80:80"
-    environment:
-      - PORT=80
-      - POSTGRES_DB_PSW=${POSTGRES_DB_PSW}
-      - POSTGRES_DB_HOST=${POSTGRES_DB_HOST}
-      - POSTGRES_DB_NAME=${POSTGRES_DB_NAME}
-      - POSTGRES_USER_NAME=${POSTGRES_USER_NAME}
-      - JWT_SECRET=${JWT_SECRET}
+    env_file: ./apps/api/.env
+    # environment:
+    #   - PORT=80
+    #   - POSTGRES_PSW=${POSTGRES_PSW}
+    #   - POSTGRES_HOST=${POSTGRES_HOST}
+    #   - POSTGRES_NAME=${POSTGRES_NAME}
+    #   - POSTGRES_USER=${POSTGRES_USER}
+    #   - JWT_SECRET=${JWT_SECRET}
     develop:
       watch:
         - action: sync
@@ -26,6 +27,7 @@ services:
             - dist/
 
   frontend:
+    env_file: ./apps/web/.env
     container_name: fastify_next_client_cont
     build:
       context: ./apps/web
@@ -34,10 +36,10 @@ services:
       - "3000:3000"
     depends_on:
       - backend
-    environment:
-      - NEXT_PUBLIC_API_URL=http://localhost:80
-      - API_INTERNAL_URL=http://backend:80
-      - NEXT_TELEMETRY_DISABLED=1
+    # environment:
+    #   - NEXT_PUBLIC_API_URL=http://localhost:80
+    #   - API_INTERNAL_URL=http://backend:80
+    #   - NEXT_TELEMETRY_DISABLED=1
     develop:
       watch:
         - action: sync
@@ -48,12 +50,13 @@ services:
             - .next
 
   postgres:
+    env_file: ./apps/api/.env
     container_name: fastify_next_postgres_cont
     image: postgres
-    environment:
-      - POSTGRES_PASSWORD=${POSTGRES_DB_PSW}
-      - POSTGRES_DB=${POSTGRES_DB_NAME}
-      - POSTGRES_USER=${POSTGRES_USER_NAME}
+    # environment:
+    #   - POSTGRES_PASSWORD=${POSTGRES_PSW}
+    #   - POSTGRES_DB=${POSTGRES_NAME}
+    #   - POSTGRES_USER=${POSTGRES_USER}
     ports:
       - "5432:5432"
 

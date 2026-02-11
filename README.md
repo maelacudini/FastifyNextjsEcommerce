@@ -104,11 +104,11 @@ Notes:
 
 - server:
   - PORT — port for the API used by the server.
-  - POSTGRES_DB_PSW — Postgres database password
-  - POSTGRES_DB_HOST — Postgres database host, e.g. localhost
-  - POSTGRES_DB_PORT — Postgres database port, usually 5432
-  - POSTGRES_DB_NAME — Postgres database name
-  - POSTGRES_USER_NAME — Postgres username
+  - POSTGRES_PSW — Postgres database password
+  - POSTGRES_HOST — Postgres database host, e.g. localhost
+  - POSTGRES_PORT — Postgres database port, usually 5432
+  - POSTGRES_NAME — Postgres database name
+  - POSTGRES_USER — Postgres username
   - JWT_SECRET — JWT secret
 
 - docker:
