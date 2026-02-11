@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // TODO: IMPLEMENT ALL METHODS
 
-import type { CreateUserWithAuthParamsType } from "@/application/types.js"
 import type { User } from "@/user/domain/user.entity.js"
 import type { UserRepositoryPort } from "@/user/domain/user.repository.port.js"
 import type { CreateUserParamsType, CreateUserReturnType, DeleteUserParamsType, DeleteUserReturnType, FindAllUsersReturnType, FindUserByEmailParamsType, FindUserByEmailReturnType, FindUserByIdParamsType, FindUserByIdReturnType, UpdateUserCartParamsType, UpdateUserCartReturnType, UpdateUserFavoritesParamsType, UpdateUserFavoritesReturnType, UpdateUserIsDisabledParamsType, UpdateUserIsDisabledReturnType, UpdateUserMarketingOptInParamsType, UpdateUserMarketingOptInReturnType, UpdateUserParamsType, UpdateUserReturnType, UpdateUserRoleParamsType, UpdateUserRoleReturnType } from "@/user/types.js"
@@ -92,9 +91,6 @@ export class PostgresUserRepository implements UserRepositoryPort {
 		}
 	}
 
-	async createUserWithAuth( data: CreateUserWithAuthParamsType ): Promise<CreateUserReturnType> {
-		throw new Error( "Method not implemented." )
-	}
 
 	async deleteUser( data: DeleteUserParamsType ): Promise<DeleteUserReturnType> {
 		throw new Error( "Method not implemented." )

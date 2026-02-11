@@ -49,8 +49,43 @@ const authSchema = {
 	type: "object"
 } as const
 
+const userSchema = {
+	properties: {
+		createdAt: {
+			type: "string"
+		},
+		email: {
+			type: "string"
+		},
+		id: {
+			type: "string"
+		},
+		isDisabled: {
+			type: "boolean"
+		},
+		role: {
+			enum: [
+				"admin",
+				"customer"
+			],
+			type: "string"
+		},
+		updatedAt: {
+			type: "string"
+		}
+	},
+	required: [
+		"createdAt",
+		"email",
+		"id",
+		"isDisabled",
+		"role"
+	],
+	type: "object"
+} as const
+
 const findByIdParamsSchema = {
-	description: "Biscuit ID schema.",
+	description: "Auth ID schema.",
 	type: "object",
 	properties: {
 		id: { type: "string" }
@@ -59,7 +94,61 @@ const findByIdParamsSchema = {
 } as const
 const findByIdSuccessReturnSchema = authSchema
 
+const createUserWithAuthBodySchema = {
+	description: "Create user with auth body.",
+	type: "object",
+	properties: {
+		email: {
+			type: "string"
+		},
+		password: {
+			type: "string"
+		},
+		provider: {
+			type: "string",
+			enum: [
+				"local",
+				"google"
+			]
+		},
+		role: {
+			type: "string",
+			enum: [
+				"admin",
+				"customer"
+			]
+		}
+	},
+	required: [
+		"email",
+		"provider",
+		"role"
+	],
+	allOf: [
+		{
+			if: {
+				properties: { provider: { const: "local" } },
+				required: ["provider"]
+			},
+			then: {
+				required: ["password"]
+			}
+		}
+	]
+} as const
+
+const createUserWithAuthSuccessReturnSchema = {
+	type: "object",
+	properties: {
+		user: userSchema,
+		auth: authSchema
+	},
+	required: ["user", "auth"]
+} as const
+
 export default {
 	findByIdParamsSchema,
-	findByIdSuccessReturnSchema
+	findByIdSuccessReturnSchema,
+	createUserWithAuthBodySchema,
+	createUserWithAuthSuccessReturnSchema,
 }
