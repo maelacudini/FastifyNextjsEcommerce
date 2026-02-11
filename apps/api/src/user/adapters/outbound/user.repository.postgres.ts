@@ -15,7 +15,13 @@ export class PostgresUserRepository implements UserRepositoryPort {
 
 		try {
 			const { rows } = await client.query<User>( `
-					SELECT *
+					SELECT
+						id,
+						email,
+						role,
+						is_disabled AS "isDisabled",
+						created_at AS "createdAt",
+						updated_at AS "updatedAt"
 					FROM users
 				` )
 
@@ -40,7 +46,13 @@ export class PostgresUserRepository implements UserRepositoryPort {
 
 		try {
 			const { rows } = await client.query<User>( `
-					SELECT *
+					SELECT 
+						id,
+						email,
+						role,
+						is_disabled AS "isDisabled",
+						created_at AS "createdAt",
+						updated_at AS "updatedAt"
 					FROM users
 					WHERE email = $1
 					LIMIT 1
@@ -60,7 +72,13 @@ export class PostgresUserRepository implements UserRepositoryPort {
 			const { rows } = await client.query<CreateUserReturnType>( `
 					INSERT INTO users (email, role, is_disabled, created_at)
 					VALUES ($1, $2, $3, NOW())
-					RETURNING *
+					RETURNING
+						id,
+						email,
+						role,
+						is_disabled AS "isDisabled",
+						created_at AS "createdAt",
+						updated_at AS "updatedAt"
 				`, [data.email, data.role, false]
 			)
 
