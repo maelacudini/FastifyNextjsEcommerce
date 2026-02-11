@@ -48,26 +48,48 @@ You can run the apps independently or start them together via Docker Compose.
 
 ## Run with Docker Compose
 
-This repository provides a compose setup. There are two typical modes: development (with live-reload) and production.
+The compose setup includes four services:
+- `postgres` (database)
+- `backend` (Fastify API)
+- `frontend` (Next.js)
+- `pgadmin` (database administration UI)
 
-1. Set up environment variables.
+### 1) Prepare env files
 
-2. Development (watch)
-  - Make sure the compose file uses the development Dockerfile for each service (the repository uses `Dockerfile.dev` naming convention in the compose service build config).
-  - Then run:
-    - docker compose up --watch
-  - This will build the images (using the dev Dockerfiles which are typically configured for file-watch / live reload) and run the services. When you are done:
-    - docker compose down
+- Backend runtime variables in `apps/api/.env`.
+- Frontend runtime variables in `apps/web/.env`.
 
-3. Production
-  - Configure the compose file to use `Dockerfile.prod` (or ensure the production build steps are used).
-  - Build and start in detached mode:
-    - docker compose up --build -d
-  - Stop:
-    - docker compose down
+### 2) Prepare Docker secrets
 
-Notes:
-- The exact compose service names and Dockerfile names are in `compose.yaml` in the repo — adjust as needed.
+This setup uses Compose secrets for sensitive values (`POSTGRES_PSW`, `JWT_SECRET`, pgAdmin password).
+
+Create the secret files from the examples:
+
+```bash
+cp secrets/postgres_password.txt.example secrets/postgres_password.txt
+cp secrets/jwt_secret.txt.example secrets/jwt_secret.txt
+cp secrets/pgadmin_password.txt.example secrets/pgadmin_password.txt
+```
+
+Then replace the example values with real credentials.
+
+### 3) Start in development mode (watch)
+
+```bash
+docker compose up --watch
+```
+
+### 4) Stop services
+
+```bash
+docker compose down
+```
+
+### Access URLs
+
+- Frontend: `http://localhost:3000`
+- Backend: `http://localhost:80`
+- pgAdmin: `http://localhost:5050`
 
 
 
@@ -111,8 +133,13 @@ Notes:
   - POSTGRES_USER — Postgres username
   - JWT_SECRET — JWT secret
 
-- docker:
-  - If you are using Docker, always remember to set both backend and frontend environment variables inside the `compose.yaml` file, or use secrets for sensitive env vars.
+- docker compose:
+  - Non-sensitive values can stay in `.env` files and be loaded with `env_file`.
+  - Sensitive values are provided through Docker secrets files mounted at `/run/secrets/*`.
+  - In this repo:
+    - `POSTGRES_PSW` is read from `secrets/postgres_password.txt`
+    - `JWT_SECRET` is read from `secrets/jwt_secret.txt`
+    - `PGADMIN_DEFAULT_PASSWORD` is read from `secrets/pgadmin_password.txt`
 
 
 

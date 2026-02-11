@@ -31,3 +31,6 @@ compose.env
 
 # typescript
 *.tsbuildinfo
+# docker secrets
+secrets/*.txt
+!secrets/*.txt.example
