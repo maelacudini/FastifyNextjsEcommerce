@@ -3,7 +3,7 @@
 
 import type { User } from "@/user/domain/user.entity.js"
 import type { UserRepositoryPort } from "@/user/domain/user.repository.port.js"
-import type { CreateUserParamsType, CreateUserReturnType, CreateUserWithAuthParamsType, DeleteUserParamsType, DeleteUserReturnType, FindAllUsersReturnType, FindUserByEmailParamsType, FindUserByEmailReturnType, FindUserByIdParamsType, FindUserByIdReturnType, UpdateUserCartParamsType, UpdateUserCartReturnType, UpdateUserFavoritesParamsType, UpdateUserFavoritesReturnType, UpdateUserIsDisabledParamsType, UpdateUserIsDisabledReturnType, UpdateUserMarketingOptInParamsType, UpdateUserMarketingOptInReturnType, UpdateUserParamsType, UpdateUserReturnType, UpdateUserRoleParamsType, UpdateUserRoleReturnType } from "@/user/types.js"
+import type { CreateUserParamsType, CreateUserReturnType, DeleteUserParamsType, DeleteUserReturnType, FindAllUsersReturnType, FindUserByEmailParamsType, FindUserByEmailReturnType, FindUserByIdParamsType, FindUserByIdReturnType, UpdateUserCartParamsType, UpdateUserCartReturnType, UpdateUserFavoritesParamsType, UpdateUserFavoritesReturnType, UpdateUserIsDisabledParamsType, UpdateUserIsDisabledReturnType, UpdateUserMarketingOptInParamsType, UpdateUserMarketingOptInReturnType, UpdateUserParamsType, UpdateUserReturnType, UpdateUserRoleParamsType, UpdateUserRoleReturnType } from "@/user/types.js"
 import type { FastifyInstance } from "fastify"
 
 export class PostgresUserRepository implements UserRepositoryPort {
@@ -14,7 +14,13 @@ export class PostgresUserRepository implements UserRepositoryPort {
 
 		try {
 			const { rows } = await client.query<User>( `
-					SELECT *
+					SELECT
+						id,
+						email,
+						role,
+						is_disabled AS "isDisabled",
+						created_at AS "createdAt",
+						updated_at AS "updatedAt"
 					FROM users
 				` )
 
@@ -39,7 +45,13 @@ export class PostgresUserRepository implements UserRepositoryPort {
 
 		try {
 			const { rows } = await client.query<User>( `
-					SELECT *
+					SELECT
+						id,
+						email,
+						role,
+						is_disabled AS "isDisabled",
+						created_at AS "createdAt",
+						updated_at AS "updatedAt"
 					FROM users
 					WHERE email = $1
 					LIMIT 1
@@ -59,7 +71,13 @@ export class PostgresUserRepository implements UserRepositoryPort {
 			const { rows } = await client.query<CreateUserReturnType>( `
 					INSERT INTO users (email, role, is_disabled, created_at)
 					VALUES ($1, $2, $3, NOW())
-					RETURNING *
+					RETURNING
+						id,
+						email,
+						role,
+						is_disabled AS "isDisabled",
+						created_at AS "createdAt",
+						updated_at AS "updatedAt"
 				`, [data.email, data.role, false]
 			)
 
@@ -73,9 +91,6 @@ export class PostgresUserRepository implements UserRepositoryPort {
 		}
 	}
 
-	async createUserWithAuth( data: CreateUserWithAuthParamsType ): Promise<CreateUserReturnType> {
-		throw new Error( "Method not implemented." )
-	}
 
 	async deleteUser( data: DeleteUserParamsType ): Promise<DeleteUserReturnType> {
 		throw new Error( "Method not implemented." )

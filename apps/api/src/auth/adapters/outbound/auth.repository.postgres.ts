@@ -17,7 +17,34 @@ export class PostgresAuthRepository implements AuthRepositoryPort {
 	}
 
 	async createAuth( data: CreateAuthParamsType ): Promise<CreateAuthReturnType> {
-		throw new Error( "Method not implemented." )
+		const client = await this.fastify.pg.connect()
+
+		try {
+			const { rows } = await client.query<CreateAuthReturnType>( `
+					INSERT INTO auths (user_id, provider, password_hash, refresh_token_version, created_at)
+					VALUES ($1, $2, $3, $4, NOW())
+					RETURNING
+						id,
+						user_id AS "userId",
+						provider,
+						refresh_token_version AS "refreshTokenVersion",
+						username,
+						password_hash AS "passwordHash",
+						email_verified_at AS "emailVerifiedAt",
+						last_login_at AS "lastLoginAt",
+						last_password_change_at AS "lastPasswordChangeAt",
+						created_at AS "createdAt"
+				`, [data.userId, data.provider, data.passwordHash ?? null, 0]
+			)
+
+			if ( !rows[0] ) {
+				throw new Error( "Failed to create auth record" )
+			}
+
+			return rows[0]
+		} finally {
+			client.release()
+		}
 	}
 
 	async incrementRefreshTokenVersion( data: IncrementRefreshTokenVersionParamsType ): Promise<IncrementRefreshTokenVersionReturnType> {
