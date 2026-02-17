@@ -314,13 +314,9 @@ const updateBiscuitBodySchema = {
 			],
 			type: "object"
 		},
-		id: {
-			type: "string"
-		}
 	},
 	required: [
 		"biscuit",
-		"id"
 	],
 	type: "object"
 } as const
@@ -336,15 +332,11 @@ const deleteBiscuitSuccessReturnSchema = biscuitSchema
 const setDisableBiscuitBodySchema = {
 	description: "Disable biscuit payload schema.",
 	properties: {
-		id: {
-			type: "string"
-		},
 		isDisabled: {
 			type: "boolean"
 		}
 	},
 	required: [
-		"id",
 		"isDisabled"
 	],
 	type: "object"

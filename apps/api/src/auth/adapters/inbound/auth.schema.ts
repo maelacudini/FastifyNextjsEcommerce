@@ -1,3 +1,5 @@
+import userSchema from "@/user/adapters/inbound/user.schema.js"
+
 const authSchema = {
 	properties: {
 		createdAt: {
@@ -49,41 +51,6 @@ const authSchema = {
 	type: "object"
 } as const
 
-const userSchema = {
-	properties: {
-		createdAt: {
-			type: "string"
-		},
-		email: {
-			type: "string"
-		},
-		id: {
-			type: "string"
-		},
-		isDisabled: {
-			type: "boolean"
-		},
-		role: {
-			enum: [
-				"admin",
-				"customer"
-			],
-			type: "string"
-		},
-		updatedAt: {
-			type: "string"
-		}
-	},
-	required: [
-		"createdAt",
-		"email",
-		"id",
-		"isDisabled",
-		"role"
-	],
-	type: "object"
-} as const
-
 const findByIdParamsSchema = {
 	description: "Auth ID schema.",
 	type: "object",
@@ -98,9 +65,7 @@ const createUserWithAuthBodySchema = {
 	description: "Create user with auth body.",
 	type: "object",
 	properties: {
-		email: {
-			type: "string"
-		},
+		...userSchema.createUserBodySchema.properties,
 		password: {
 			type: "string"
 		},
@@ -111,13 +76,6 @@ const createUserWithAuthBodySchema = {
 				"google"
 			]
 		},
-		role: {
-			type: "string",
-			enum: [
-				"admin",
-				"customer"
-			]
-		}
 	},
 	required: [
 		"email",

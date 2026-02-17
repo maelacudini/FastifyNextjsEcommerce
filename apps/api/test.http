@@ -1,7 +1,9 @@
-POST http://localhost:80/user HTTP/1.1
+POST http://localhost:80/signup HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "mario@gmail.com",
-  "role": "admin"
+  "email": "peach@gmail.com",
+  "role": "admin",
+  "provider": "local",
+  "password": "peach123"
 }

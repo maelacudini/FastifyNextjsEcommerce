@@ -33,3 +33,6 @@ yarn-error.log*
 
 # test
 test.http
+
+# generated schemas
+generated.schemas.json

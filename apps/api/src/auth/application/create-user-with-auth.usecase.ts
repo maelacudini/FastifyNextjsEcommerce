@@ -35,7 +35,7 @@ export class CreateUserWithAuthUseCase {
 			provider: data.provider,
 		}
 
-		if ( data.provider === "local" ) {
+		if ( data.provider === "local" && data.password ) {
 			authPayload.passwordHash = await this.passwordHasher.hash( data.password )
 		}
 
