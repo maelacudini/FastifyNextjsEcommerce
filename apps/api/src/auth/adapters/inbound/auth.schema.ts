@@ -1,3 +1,5 @@
+import userSchema from "@/user/adapters/inbound/user.schema.js"
+
 const authSchema = {
 	properties: {
 		createdAt: {
@@ -50,7 +52,7 @@ const authSchema = {
 } as const
 
 const findByIdParamsSchema = {
-	description: "Biscuit ID schema.",
+	description: "Auth ID schema.",
 	type: "object",
 	properties: {
 		id: { type: "string" }
@@ -59,7 +61,52 @@ const findByIdParamsSchema = {
 } as const
 const findByIdSuccessReturnSchema = authSchema
 
+const createUserWithAuthBodySchema = {
+	description: "Create user with auth body.",
+	type: "object",
+	properties: {
+		...userSchema.createUserBodySchema.properties,
+		password: {
+			type: "string"
+		},
+		provider: {
+			type: "string",
+			enum: [
+				"local",
+				"google"
+			]
+		},
+	},
+	required: [
+		"email",
+		"provider",
+		"role"
+	],
+	allOf: [
+		{
+			if: {
+				properties: { provider: { const: "local" } },
+				required: ["provider"]
+			},
+			then: {
+				required: ["password"]
+			}
+		}
+	]
+} as const
+
+const createUserWithAuthSuccessReturnSchema = {
+	type: "object",
+	properties: {
+		user: userSchema,
+		auth: authSchema
+	},
+	required: ["user", "auth"]
+} as const
+
 export default {
 	findByIdParamsSchema,
-	findByIdSuccessReturnSchema
+	findByIdSuccessReturnSchema,
+	createUserWithAuthBodySchema,
+	createUserWithAuthSuccessReturnSchema,
 }

@@ -12,7 +12,7 @@ export type FindUserByIdParamsType = {
 
 export type CreateUserParamsType = {
   email: User["email"],
-  role: User["role"]
+  role: User["role"],
 }
 
 export type DeleteUserParamsType = {

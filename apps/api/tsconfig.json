@@ -45,5 +45,5 @@
     "skipLibCheck": true,
   },
   "include": ["src/**/*", "fastify.d.ts", "fastify-jwt.d.ts"],
-  "exclude": ["node_modules", "../../node_modules", "../web", "web"]
+  "exclude": ["node_modules", "../../node_modules", "../web", "web", "dist", "test.http"]
 }

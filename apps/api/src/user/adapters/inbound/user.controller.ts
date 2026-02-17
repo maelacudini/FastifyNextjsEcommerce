@@ -24,13 +24,16 @@ export async function userController( fastify: FastifyInstance ) {
 	const usecasesFactory = createUserUsecases( fastify )
 
 	// PUBLIC - FIND ALL USERS
-	fastify.get<{ Reply: ReplyType<FindAllUsersReturnType> }>( "/user", { schema: {
-		tags: ["User"],
-		response: {
-			200: schemas.findAllUsersSuccessReturnSchema,
-			...errorSchemas
-		}
-	} }, async ( req, reply ) => {
+	fastify.get<{
+		Reply: ReplyType<FindAllUsersReturnType>
+	}>( "/user", {
+		schema: {
+			tags: ["User"],
+			response: {
+				200: schemas.findAllUsersSuccessReturnSchema,
+				...errorSchemas
+			}
+		} }, async ( req, reply ) => {
 		const data = await usecasesFactory.findAllUsersUseCase.execute()
 
 		return reply.code( 200 ).send( data )
@@ -40,14 +43,16 @@ export async function userController( fastify: FastifyInstance ) {
 	fastify.get<{
 		Params: FromSchema<typeof schemas.findUserByIdParamsSchema>,
 		Reply: ReplyType<FindUserByIdReturnType>
-	}>( "/user/:id", { schema: {
-		tags: ["User"],
-		params: schemas.findUserByIdParamsSchema,
-		response: {
-			200: schemas.findUserByIdSuccessReturnSchema,
-			...errorSchemas
+	}>( "/user/:id", {
+		schema: {
+			tags: ["User"],
+			params: schemas.findUserByIdParamsSchema,
+			response: {
+				200: schemas.findUserByIdSuccessReturnSchema,
+				...errorSchemas
+			}
 		}
-	} }, async ( req, reply ) => {
+	}, async ( req, reply ) => {
 		const { id } = req.params
 
 		const user = await usecasesFactory.findUserByIdUseCase.execute( { id: id } )
@@ -63,14 +68,16 @@ export async function userController( fastify: FastifyInstance ) {
 	fastify.get<{
 		Params: FromSchema<typeof schemas.findUserByEmailParamsSchema>,
 		Reply: ReplyType<FindUserByEmailReturnType>
-	}>( "/user/email/:email", { schema: {
-		tags: ["User"],
-		params: schemas.findUserByEmailParamsSchema,
-		response: {
-			200: schemas.findUserByEmailSuccessReturnSchema,
-			...errorSchemas
+	}>( "/user/:email/email", {
+		schema: {
+			tags: ["User"],
+			params: schemas.findUserByEmailParamsSchema,
+			response: {
+				200: schemas.findUserByEmailSuccessReturnSchema,
+				...errorSchemas
+			}
 		}
-	} }, async ( req, reply ) => {
+	}, async ( req, reply ) => {
 		const { email } = req.params
 
 		const user = await usecasesFactory.findUserByEmailUseCase.execute( { email: email } )
@@ -86,14 +93,16 @@ export async function userController( fastify: FastifyInstance ) {
 	fastify.post<{
 		Body: FromSchema<typeof schemas.createUserBodySchema>,
 		Reply: ReplyType<CreateUserReturnType>
-	}>( "/user", { schema: {
-		tags: ["User"],
-		body: schemas.createUserBodySchema,
-		response: {
-			200: schemas.createUserSuccessReturnSchema,
-			...errorSchemas
+	}>( "/user", {
+		schema: {
+			tags: ["User"],
+			body: schemas.createUserBodySchema,
+			response: {
+				200: schemas.createUserSuccessReturnSchema,
+				...errorSchemas
+			}
 		}
-	} }, async ( req, reply ) => {
+	}, async ( req, reply ) => {
 		const data = req.body
 
 		try {
@@ -111,14 +120,16 @@ export async function userController( fastify: FastifyInstance ) {
 	fastify.delete<{
 		Params: FromSchema<typeof schemas.deleteUserParamsSchema>,
 		Reply: ReplyType<DeleteUserReturnType>
-	}>( "/user/:id", { schema: {
-		tags: ["User"],
-		params: schemas.deleteUserParamsSchema,
-		response: {
-			200: schemas.deleteUserSuccessReturnSchema,
-			...errorSchemas
+	}>( "/user/:id", {
+		schema: {
+			tags: ["User"],
+			params: schemas.deleteUserParamsSchema,
+			response: {
+				200: schemas.deleteUserSuccessReturnSchema,
+				...errorSchemas
+			}
 		}
-	} }, async ( req, reply ) => {
+	}, async ( req, reply ) => {
 		const { id } = req.params
 
 		try {
@@ -140,15 +151,17 @@ export async function userController( fastify: FastifyInstance ) {
 		Params: FromSchema<typeof schemas.updateUserParamsSchema>,
 		Body: FromSchema<typeof schemas.updateUserBodySchema>,
 		Reply: ReplyType<UpdateUserReturnType>
-	}>( "/user/:id",{ schema: {
-		tags: ["User"],
-		params: schemas.updateUserParamsSchema,
-		body: schemas.updateUserBodySchema,
-		response: {
-			200: schemas.updateUserSuccessReturnSchema,
-			...errorSchemas
+	}>( "/user/:id",{
+		schema: {
+			tags: ["User"],
+			params: schemas.updateUserParamsSchema,
+			body: schemas.updateUserBodySchema,
+			response: {
+				200: schemas.updateUserSuccessReturnSchema,
+				...errorSchemas
+			}
 		}
-	} }, async ( req, reply ) => {
+	}, async ( req, reply ) => {
 		const { id } = req.params
 		const user = req.body
 
@@ -168,15 +181,17 @@ export async function userController( fastify: FastifyInstance ) {
 		Params: FromSchema<typeof schemas.updateUserIsDisabledParamsSchema>,
 		Body: FromSchema<typeof schemas.updateUserIsDisabledBodySchema>,
 		Reply: ReplyType<UpdateUserIsDisabledReturnType>
-	}>( "/user/:id/isDisabled", { schema: {
-		tags: ["User"],
-		params: schemas.updateUserIsDisabledParamsSchema,
-		body: schemas.updateUserIsDisabledBodySchema,
-		response: {
-			200: schemas.updateUserIsDisabledSuccessReturnSchema,
-			...errorSchemas
+	}>( "/user/:id/isDisabled", {
+		schema: {
+			tags: ["User"],
+			params: schemas.updateUserIsDisabledParamsSchema,
+			body: schemas.updateUserIsDisabledBodySchema,
+			response: {
+				200: schemas.updateUserIsDisabledSuccessReturnSchema,
+				...errorSchemas
+			}
 		}
-	} }, async ( req, reply ) => {
+	}, async ( req, reply ) => {
 		const { id } = req.params
 		const { isDisabled } = req.body
 
@@ -196,15 +211,17 @@ export async function userController( fastify: FastifyInstance ) {
 		Params: FromSchema<typeof schemas.updateUserRoleParamsSchema>,
 		Body: FromSchema<typeof schemas.updateUserRoleBodySchema>,
 		Reply: ReplyType<UpdateUserRoleReturnType>
-	}>( "/user/:id/role", { schema: {
-		tags: ["User"],
-		params: schemas.updateUserRoleParamsSchema,
-		body: schemas.updateUserRoleBodySchema,
-		response: {
-			200: schemas.updateUserRoleSuccessReturnSchema,
-			...errorSchemas
+	}>( "/user/:id/role", {
+		schema: {
+			tags: ["User"],
+			params: schemas.updateUserRoleParamsSchema,
+			body: schemas.updateUserRoleBodySchema,
+			response: {
+				200: schemas.updateUserRoleSuccessReturnSchema,
+				...errorSchemas
+			}
 		}
-	} }, async ( req, reply ) => {
+	}, async ( req, reply ) => {
 		const { id } = req.params
 		const { role } = req.body
 
@@ -224,15 +241,17 @@ export async function userController( fastify: FastifyInstance ) {
 		Params: FromSchema<typeof schemas.updateUserMarketingOptInParamsSchema>,
 		Body: FromSchema<typeof schemas.updateUserMarketingOptInBodySchema>,
 		Reply: ReplyType<UpdateUserMarketingOptInReturnType>
-	}>( "/user/:id/marketingOptIn", { schema: {
-		tags: ["User"],
-		params: schemas.updateUserMarketingOptInParamsSchema,
-		body: schemas.updateUserMarketingOptInBodySchema,
-		response: {
-			200: schemas.updateUserMarketingOptInSuccessReturnSchema,
-			...errorSchemas
+	}>( "/user/:id/marketingOptIn", {
+		schema: {
+			tags: ["User"],
+			params: schemas.updateUserMarketingOptInParamsSchema,
+			body: schemas.updateUserMarketingOptInBodySchema,
+			response: {
+				200: schemas.updateUserMarketingOptInSuccessReturnSchema,
+				...errorSchemas
+			}
 		}
-	} }, async ( req, reply ) => {
+	}, async ( req, reply ) => {
 		const { id } = req.params
 		const { marketingOptIn } = req.body
 
@@ -252,15 +271,17 @@ export async function userController( fastify: FastifyInstance ) {
 		Params: FromSchema<typeof schemas.updateUserFavoritesParamsSchema>,
 		Body: FromSchema<typeof schemas.updateUserFavoritesBodySchema>,
 		Reply: ReplyType<UpdateUserFavoritesReturnType>
-	}>( "/user/:id/favorites", { schema: {
-		tags: ["User"],
-		params: schemas.updateUserFavoritesParamsSchema,
-		body: schemas.updateUserFavoritesBodySchema,
-		response: {
-			200: schemas.updateUserFavoritesSuccessReturnSchema,
-			...errorSchemas
+	}>( "/user/:id/favorites", {
+		schema: {
+			tags: ["User"],
+			params: schemas.updateUserFavoritesParamsSchema,
+			body: schemas.updateUserFavoritesBodySchema,
+			response: {
+				200: schemas.updateUserFavoritesSuccessReturnSchema,
+				...errorSchemas
+			}
 		}
-	} }, async ( req, reply ) => {
+	}, async ( req, reply ) => {
 		const { id } = req.params
 		const { favorites } = req.body
 
@@ -280,15 +301,17 @@ export async function userController( fastify: FastifyInstance ) {
 		Params: FromSchema<typeof schemas.updateUserCartParamsSchema>,
 		Body: FromSchema<typeof schemas.updateUserCartBodySchema>,
 		Reply: ReplyType<UpdateUserCartReturnType>
-	}>( "/user/:id/cart", { schema: {
-		tags: ["User"],
-		params: schemas.updateUserCartParamsSchema,
-		body: schemas.updateUserCartBodySchema,
-		response: {
-			200: schemas.updateUserCartSuccessReturnSchema,
-			...errorSchemas
+	}>( "/user/:id/cart", {
+		schema: {
+			tags: ["User"],
+			params: schemas.updateUserCartParamsSchema,
+			body: schemas.updateUserCartBodySchema,
+			response: {
+				200: schemas.updateUserCartSuccessReturnSchema,
+				...errorSchemas
+			}
 		}
-	} }, async ( req, reply ) => {
+	}, async ( req, reply ) => {
 		const { id } = req.params
 		const { cart } = req.body
 

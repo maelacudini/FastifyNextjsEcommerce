@@ -14,7 +14,13 @@ export class PostgresUserRepository implements UserRepositoryPort {
 
 		try {
 			const { rows } = await client.query<User>( `
-					SELECT *
+					SELECT
+						id,
+						email,
+						role,
+						is_disabled AS "isDisabled",
+						created_at AS "createdAt",
+						updated_at AS "updatedAt"
 					FROM users
 				` )
 
@@ -35,12 +41,56 @@ export class PostgresUserRepository implements UserRepositoryPort {
 	}
 
 	async findUserByEmail( data: FindUserByEmailParamsType ): Promise<FindUserByEmailReturnType> {
-		throw new Error( "Method not implemented." )
+		const client = await this.fastify.pg.connect()
+
+		try {
+			const { rows } = await client.query<User>( `
+					SELECT 
+						id,
+						email,
+						role,
+						is_disabled AS "isDisabled",
+						created_at AS "createdAt",
+						updated_at AS "updatedAt"
+					FROM users
+					WHERE email = $1
+					LIMIT 1
+				`, [data.email]
+			)
+
+			return rows[0] || undefined
+		} finally {
+			client.release()
+		}
 	}
 
 	async createUser( data: CreateUserParamsType ): Promise<CreateUserReturnType> {
-		throw new Error( "Method not implemented." )
+		const client = await this.fastify.pg.connect()
+
+		try {
+			const { rows } = await client.query<CreateUserReturnType>( `
+					INSERT INTO users (email, role, is_disabled, created_at)
+					VALUES ($1, $2, $3, NOW())
+					RETURNING
+						id,
+						email,
+						role,
+						is_disabled AS "isDisabled",
+						created_at AS "createdAt",
+						updated_at AS "updatedAt"
+				`, [data.email, data.role, false]
+			)
+
+			if ( !rows[0] ) {
+				throw new Error( "Failed to create user" )
+			}
+
+			return rows[0]
+		} finally {
+			client.release()
+		}
 	}
+
 
 	async deleteUser( data: DeleteUserParamsType ): Promise<DeleteUserReturnType> {
 		throw new Error( "Method not implemented." )

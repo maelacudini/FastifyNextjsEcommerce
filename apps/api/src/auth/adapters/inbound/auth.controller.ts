@@ -2,7 +2,7 @@
 import type { FastifyInstance } from "fastify"
 import createAuthUsecases from "./auth.usecase.factory.js"
 import type { ReplyType } from "@/types.js"
-import type { FindByIdReturnType } from "@/auth/types.js"
+import type { CreateUserWithAuthReturnType, FindByIdReturnType } from "@/auth/types.js"
 import schemas from "./auth.schema.js"
 import { errorSchemas } from "@/const.js"
 import type { FromSchema } from "json-schema-to-ts"
@@ -33,6 +33,29 @@ export async function authController( fastify: FastifyInstance ) {
 		const data = await usecasesFactory.findByIdUseCase.execute( { id } )
 
 		return reply.code( 200 ).send( data )
+	} )
+
+	// PUBLIC - REGISTER USER WITH AUTH
+	fastify.post<{
+		Body: FromSchema<typeof schemas.createUserWithAuthBodySchema>,
+		Reply: ReplyType<CreateUserWithAuthReturnType>
+	}>( "/signup", {
+		schema: {
+			tags: ["Auth"],
+			body: schemas.createUserWithAuthBodySchema,
+			response: {
+				200: schemas.createUserWithAuthSuccessReturnSchema,
+				...errorSchemas,
+			}
+		}
+	}, async ( req, reply ) => {
+		try {
+			const data = await usecasesFactory.createUserWithAuthUseCase.execute( req.body )
+			return reply.code( 200 ).send( data )
+		} catch ( err: unknown ) {
+			const errorMessage = err instanceof Error ? err.message : "Unknown error"
+			return reply.code( 500 ).send( { message: errorMessage } )
+		}
 	} )
 
 	// PRIVATE - FIND BY USER ID

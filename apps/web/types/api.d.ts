@@ -4,6 +4,125 @@
  */
 
 export interface paths {
+    "/auth/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            /** Format: date-time */
+                            createdAt: string;
+                            /** Format: date-time */
+                            emailVerifiedAt?: string;
+                            id: string;
+                            /** Format: date-time */
+                            lastLoginAt?: string;
+                            /** Format: date-time */
+                            lastPasswordChangeAt?: string;
+                            passwordHash?: string;
+                            /** @enum {string} */
+                            provider: "google" | "local";
+                            refreshTokenVersion: number;
+                            userId: string;
+                            username?: string;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/biscuit": {
         parameters: {
             query?: never;
@@ -2083,8 +2202,10 @@ export interface paths {
                                 createdAt: string;
                                 email: string;
                                 favorites?: string[];
+                                firstName?: string;
                                 id: string;
                                 isDisabled: boolean;
+                                lastName?: string;
                                 marketingOptIn?: boolean;
                                 phone?: string;
                                 /** @enum {string} */
@@ -2169,8 +2290,10 @@ export interface paths {
                             createdAt: string;
                             email: string;
                             favorites?: string[];
+                            firstName?: string;
                             id: string;
                             isDisabled: boolean;
+                            lastName?: string;
                             marketingOptIn?: boolean;
                             phone?: string;
                             /** @enum {string} */
@@ -2255,8 +2378,10 @@ export interface paths {
                             createdAt: string;
                             email: string;
                             favorites?: string[];
+                            firstName?: string;
                             id: string;
                             isDisabled: boolean;
+                            lastName?: string;
                             marketingOptIn?: boolean;
                             phone?: string;
                             /** @enum {string} */
@@ -2342,8 +2467,10 @@ export interface paths {
                             createdAt: string;
                             email: string;
                             favorites?: string[];
+                            firstName?: string;
                             id: string;
                             isDisabled: boolean;
+                            lastName?: string;
                             marketingOptIn?: boolean;
                             phone?: string;
                             /** @enum {string} */
@@ -2416,8 +2543,10 @@ export interface paths {
                             createdAt: string;
                             email: string;
                             favorites?: string[];
+                            firstName?: string;
                             id: string;
                             isDisabled: boolean;
+                            lastName?: string;
                             marketingOptIn?: boolean;
                             phone?: string;
                             /** @enum {string} */
@@ -2466,7 +2595,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/user/email/{email}": {
+    "/user/{email}/email": {
         parameters: {
             query?: never;
             header?: never;
@@ -2501,8 +2630,10 @@ export interface paths {
                             createdAt: string;
                             email: string;
                             favorites?: string[];
+                            firstName?: string;
                             id: string;
                             isDisabled: boolean;
+                            lastName?: string;
                             marketingOptIn?: boolean;
                             phone?: string;
                             /** @enum {string} */
@@ -2597,8 +2728,10 @@ export interface paths {
                             createdAt: string;
                             email: string;
                             favorites?: string[];
+                            firstName?: string;
                             id: string;
                             isDisabled: boolean;
+                            lastName?: string;
                             marketingOptIn?: boolean;
                             phone?: string;
                             /** @enum {string} */
@@ -2693,8 +2826,10 @@ export interface paths {
                             createdAt: string;
                             email: string;
                             favorites?: string[];
+                            firstName?: string;
                             id: string;
                             isDisabled: boolean;
+                            lastName?: string;
                             marketingOptIn?: boolean;
                             phone?: string;
                             /** @enum {string} */
@@ -2788,8 +2923,10 @@ export interface paths {
                             createdAt: string;
                             email: string;
                             favorites?: string[];
+                            firstName?: string;
                             id: string;
                             isDisabled: boolean;
+                            lastName?: string;
                             marketingOptIn?: boolean;
                             phone?: string;
                             /** @enum {string} */
@@ -2883,8 +3020,10 @@ export interface paths {
                             createdAt: string;
                             email: string;
                             favorites?: string[];
+                            firstName?: string;
                             id: string;
                             isDisabled: boolean;
+                            lastName?: string;
                             marketingOptIn?: boolean;
                             phone?: string;
                             /** @enum {string} */
@@ -2978,8 +3117,10 @@ export interface paths {
                             createdAt: string;
                             email: string;
                             favorites?: string[];
+                            firstName?: string;
                             id: string;
                             isDisabled: boolean;
+                            lastName?: string;
                             marketingOptIn?: boolean;
                             phone?: string;
                             /** @enum {string} */

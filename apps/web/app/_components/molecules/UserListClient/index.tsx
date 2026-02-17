@@ -22,9 +22,9 @@ export const UserListClient = () => {
 	return (
 		<div>
 			<p className="text-2xl">{t("client_fetch")}</p>
-			{data.items.map((user) => (
+			{data.items.length > 0 ? data.items.map((user) => (
 				<p className="text-foreground" key={user.id}>{user.email}</p>
-			))}
+			)) : <p>No users.</p>}
 		</div>
 	);
 };

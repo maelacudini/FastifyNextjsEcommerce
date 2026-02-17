@@ -30,3 +30,9 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# test
+test.http
+
+# generated schemas
+generated.schemas.json
