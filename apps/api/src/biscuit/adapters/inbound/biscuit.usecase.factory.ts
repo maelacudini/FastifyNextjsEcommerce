@@ -1,5 +1,5 @@
 import { CreateBiscuitUseCase } from "@/biscuit/application/create-biscuit.usecase.js"
-import { MockBiscuitRepository } from "../outbound/biscuit.repository.mock.js"
+import { PostgresBiscuitRepository } from "../outbound/biscuit.repository.postgres.js"
 import { DeleteBiscuitUseCase } from "@/biscuit/application/delete-biscuit.usecase.js"
 import { UpdateBiscuitUseCase } from "@/biscuit/application/update-biscuit.usecase.js"
 import { FindActiveBiscuitsByIdUseCase } from "@/biscuit/application/find-active-biscuits-by-id.usecase.js"
@@ -10,7 +10,7 @@ import { SetBiscuitDisabledUseCase } from "@/biscuit/application/set-biscuit-dis
 import type { FastifyInstance } from "fastify"
 
 export default function createBiscuitUsecases( fastify: FastifyInstance ) {
-	const biscuitRepo = new MockBiscuitRepository( fastify )
+	const biscuitRepo = new PostgresBiscuitRepository( fastify )
 
 	const createBiscuit = new CreateBiscuitUseCase( biscuitRepo )
 	const deleteBiscuit = new DeleteBiscuitUseCase( biscuitRepo )

@@ -98,8 +98,8 @@ const createUserWithAuthBodySchema = {
 const createUserWithAuthSuccessReturnSchema = {
 	type: "object",
 	properties: {
-		user: userSchema,
-		auth: authSchema
+		user: userSchema.findUserByIdSuccessReturnSchema,
+		auth: authSchema.properties
 	},
 	required: ["user", "auth"]
 } as const

@@ -4,26 +4,34 @@ import type { FromSchema } from "json-schema-to-ts"
 import schemas from "./biscuit.schema.js"
 import createBiscuitUsecases from "./biscuit.usecase.factory.js"
 import type { ReplyType } from "@/types.js"
+import type {
+	CreateBiscuitReturnType,
+	DeleteBiscuitReturnType,
+	UpdateBiscuitReturnType,
+	FindAllBiscuitsReturnType,
+	FindBiscuitByIdReturnType,
+	SetBiscuitDisabledReturnType,
+	FindActiveBiscuitByIdReturnType,
+	FindAllActiveBiscuitsReturnType,
+} from "@/biscuit/types.js"
 
 export async function biscuitController( fastify: FastifyInstance ) {
 
 	const usecasesFactory = createBiscuitUsecases( fastify )
 
-	// TODO: CONSIDER USING SCHEMAS IN Reply TYPES DEFINITIONS INSTEAD OF DEFINING THEM HERE, TO AVOID DUPLICATION AND INCONSISTENCIES
-	// E.G. Reply: ReplyType<FromSchema<typeof schemas.findAllActiveBiscuitsSuccessReturnSchema>>
-
-	// TODO: FIND AND FIX INCONSISTENCIES IN PARAMS AND BODY SCHEMAS, SOME OF THEM HAVE ID IN PARAMS, OTHERS IN BODY, SOME IN BOTH, ETC...
-	// E.G. SHOULD I PASS ID THROUGH PARAMS OR BODY? CURRENTLY IT'S IN PARAMS FOR UPDATE AND DELETE, BUT IN BODY FOR DISABLE, SHOULD BE CONSISTENT, PREFERABLY IN PARAMS FOR ALL OF THEM.
-
 	// PUBLIC - FIND ALL ACTIVE BISCUITS
-	fastify.get<{ Reply: ReplyType<FromSchema<typeof schemas.findAllActiveBiscuitsSuccessReturnSchema>> }>( "/biscuit", { schema: {
+	fastify.get<{
+		Querystring: FromSchema<typeof schemas.findAllActiveBiscuitsQuerySchema>,
+		Reply: ReplyType<FindAllActiveBiscuitsReturnType>
+	}>( "/biscuit/active", { schema: {
 		tags: ["Biscuit"],
+		querystring: schemas.findAllActiveBiscuitsQuerySchema,
 		response: {
 			200: schemas.findAllActiveBiscuitsSuccessReturnSchema,
 			...errorSchemas
 		}
 	} }, async ( req, reply ) => {
-		const data = await usecasesFactory.findAllActiveBiscuits.execute()
+		const data = await usecasesFactory.findAllActiveBiscuits.execute( req.query )
 
 		return reply.code( 200 ).send( data )
 	} )
@@ -31,7 +39,7 @@ export async function biscuitController( fastify: FastifyInstance ) {
 	// PUBLIC - FIND ACTIVE BISCUIT BY ID
 	fastify.get<{
 		Params: FromSchema<typeof schemas.findActiveBiscuitByIdParamsSchema>,
-		Reply: ReplyType<FromSchema<typeof schemas.findActiveBiscuitByIdSuccessReturnSchema>>
+		Reply: ReplyType<FindActiveBiscuitByIdReturnType>
 	}>( "/biscuit/active/:id", { schema: {
 		tags: ["Biscuit"],
 		params: schemas.findActiveBiscuitByIdParamsSchema,
@@ -52,14 +60,18 @@ export async function biscuitController( fastify: FastifyInstance ) {
 	} )
 
 	// PRIVATE - FIND ALL BISCUITS (ACTIVE AND NON ACTIVE)
-	fastify.get<{ Reply: ReplyType<FromSchema<typeof schemas.findAllBiscuitsSuccessReturnSchema>> }>( "/biscuit/all", { schema: {
+	fastify.get<{
+		Querystring: FromSchema<typeof schemas.findAllBiscuitsQuerySchema>,
+		Reply: ReplyType<FindAllBiscuitsReturnType>
+	}>( "/biscuit", { schema: {
 		tags: ["Biscuit"],
+		querystring: schemas.findAllBiscuitsQuerySchema,
 		response: {
 			200: schemas.findAllBiscuitsSuccessReturnSchema,
 			...errorSchemas
 		}
 	} }, async ( req, reply ) => {
-		const data = await usecasesFactory.findAllBiscuits.execute()
+		const data = await usecasesFactory.findAllBiscuits.execute( req.query )
 
 		return reply.code( 200 ).send( data )
 	} )
@@ -67,7 +79,7 @@ export async function biscuitController( fastify: FastifyInstance ) {
 	// PRIVATE - FIND BISCUIT BY ID (ACTIVE AND NON ACTIVE)
 	fastify.get<{
 		Params: FromSchema<typeof schemas.findBiscuitByIdParamsSchema>,
-		Reply: ReplyType<FromSchema<typeof schemas.findBiscuitByIdSuccessReturnSchema>>
+		Reply: ReplyType<FindBiscuitByIdReturnType>
 	}>( "/biscuit/:id", { schema: {
 		tags: ["Biscuit"],
 		params: schemas.findBiscuitByIdParamsSchema,
@@ -89,11 +101,11 @@ export async function biscuitController( fastify: FastifyInstance ) {
 
 	// PRIVATE - CREATE BISCUIT
 	fastify.post<{
-		Body: FromSchema<typeof schemas.createBiscuitParamsSchema>,
-		Reply: ReplyType<FromSchema<typeof schemas.createBiscuitSuccessReturnSchema>>
+		Body: FromSchema<typeof schemas.createBiscuitBodySchema>,
+		Reply: ReplyType<CreateBiscuitReturnType>
 	}>( "/biscuit", { schema: {
 		tags: ["Biscuit"],
-		body: schemas.createBiscuitParamsSchema,
+		body: schemas.createBiscuitBodySchema,
 		response: {
 			200: schemas.createBiscuitSuccessReturnSchema,
 			...errorSchemas
@@ -116,7 +128,7 @@ export async function biscuitController( fastify: FastifyInstance ) {
 	fastify.put<{
 		Params: FromSchema<typeof schemas.updateBiscuParamsSchema>,
 		Body: FromSchema<typeof schemas.updateBiscuitBodySchema>,
-		Reply: ReplyType<FromSchema<typeof schemas.updateBiscuitSuccessReturnSchema>>
+		Reply: ReplyType<UpdateBiscuitReturnType>
 	}>( "/biscuit/:id", { schema: {
 		tags: ["Biscuit"],
 		params: schemas.updateBiscuParamsSchema,
@@ -136,6 +148,10 @@ export async function biscuitController( fastify: FastifyInstance ) {
 		} catch ( err: unknown ) {
 			const errorMessage = err instanceof Error ? err.message : "Unknown error"
 
+			if ( errorMessage === "Biscuit not found" ) {
+				return reply.code( 404 ).send( { error: errorMessage } )
+			}
+
 			return reply.code( 500 ).send( { message: errorMessage } )
 		}
 	} )
@@ -143,7 +159,7 @@ export async function biscuitController( fastify: FastifyInstance ) {
 	// PRIVATE - DELETE BISCUIT
 	fastify.delete<{
 		Params: FromSchema<typeof schemas.deleteBiscuitParamsSchema>,
-		Reply: ReplyType<FromSchema<typeof schemas.deleteBiscuitSuccessReturnSchema>>
+		Reply: ReplyType<DeleteBiscuitReturnType>
 	}>( "/biscuit/:id", { schema: {
 		tags: ["Biscuit"],
 		params: schemas.deleteBiscuitParamsSchema,
@@ -173,7 +189,7 @@ export async function biscuitController( fastify: FastifyInstance ) {
 	fastify.put<{
 		Params: FromSchema<typeof schemas.setDisableBiscuitParamsSchema>,
 		Body: FromSchema<typeof schemas.setDisableBiscuitBodySchema>,
-		Reply: ReplyType<FromSchema<typeof schemas.setBiscuitDisabledSuccessReturnSchema>>
+		Reply: ReplyType<SetBiscuitDisabledReturnType>
 	}>( "/biscuit/:id/disabled", { schema: {
 		tags: ["Biscuit"],
 		params: schemas.setDisableBiscuitParamsSchema,
@@ -192,6 +208,10 @@ export async function biscuitController( fastify: FastifyInstance ) {
 			return reply.code( 200 ).send( biscuit )
 		} catch ( err: unknown ) {
 			const errorMessage = err instanceof Error ? err.message : "Unknown error"
+
+			if ( errorMessage === "Biscuit not found" ) {
+				return reply.code( 404 ).send( { error: errorMessage } )
+			}
 
 			return reply.code( 500 ).send( { message: errorMessage } )
 		}

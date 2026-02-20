@@ -5,7 +5,7 @@ import type { OrderRepositoryPort } from "@/order/domain/order.repository.ports.
 import type { CreateOrderParamsType, CreateOrderReturnType, DeleteOrderParamsType, DeleteOrderReturnType, FindAllOrdersReturnType, FindOrderByIdParamsType, FindOrderByIdReturnType, UpdateOrderParams, UpdateOrderReturnType, UpdateOrderPaymentParamsType, UpdateOrderPaymentReturnType, UpdateOrderFulfillmentParamsType, UpdateOrderFulfillmentReturnType } from "@/order/types.js"
 import type { FastifyInstance } from "fastify"
 
-export class MockOrderRepository implements OrderRepositoryPort {
+export class PostgresOrderRepository implements OrderRepositoryPort {
 	constructor( private fastify: FastifyInstance ) {}
 
 	async findAllOrders(): Promise<FindAllOrdersReturnType> {

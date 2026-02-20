@@ -135,6 +135,17 @@ export const findAllActiveBiscuitsSuccessReturnSchema = {
 	]
 } as const
 
+const findAllActiveBiscuitsQuerySchema = {
+	description: "Pagination query for biscuits list.",
+	type: "object",
+	properties: {
+		page: {
+			type: "number",
+			minimum: 1
+		},
+	}
+} as const
+
 const findActiveBiscuitByIdParamsSchema = biscuitIdSchema
 
 const findActiveBiscuitByIdSuccessReturnSchema = biscuitSchema
@@ -155,16 +166,15 @@ const findAllBiscuitsSuccessReturnSchema = {
 	]
 } as const
 
+const findAllBiscuitsQuerySchema = findAllActiveBiscuitsQuerySchema
+
 const findBiscuitByIdParamsSchema = biscuitIdSchema
 
 const findBiscuitByIdSuccessReturnSchema = biscuitSchema
 
-const createBiscuitParamsSchema = {
+const createBiscuitBodySchema = {
 	description: "Create biscuit payload schema.",
 	properties: {
-		createdAt: {
-			type: "string"
-		},
 		description: {
 			type: "string"
 		},
@@ -220,7 +230,6 @@ const createBiscuitParamsSchema = {
 		}
 	},
 	required: [
-		"createdAt",
 		"description",
 		"images",
 		"ingredients",
@@ -350,7 +359,8 @@ export default {
 	biscuitIdSchema,
 	biscuitSchema,
 	findAllActiveBiscuitsSuccessReturnSchema,
-	createBiscuitParamsSchema,
+	findAllActiveBiscuitsQuerySchema,
+	createBiscuitBodySchema,
 	createBiscuitSuccessReturnSchema,
 	setDisableBiscuitBodySchema,
 	setDisableBiscuitParamsSchema,
@@ -362,6 +372,7 @@ export default {
 	findActiveBiscuitByIdParamsSchema,
 	findActiveBiscuitByIdSuccessReturnSchema,
 	findAllBiscuitsSuccessReturnSchema,
+	findAllBiscuitsQuerySchema,
 	findBiscuitByIdParamsSchema,
 	findBiscuitByIdSuccessReturnSchema,
 	deleteBiscuitParamsSchema,

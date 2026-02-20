@@ -1,9 +1,32 @@
-POST http://localhost:80/signup HTTP/1.1
+# POST http://localhost:80/signup HTTP/1.1
+# Content-Type: application/json
+
+# {
+#   "email": "peach@gmail.com",
+#   "role": "admin",
+#   "provider": "local",
+#   "password": "peach123"
+# }
+
+POST http://localhost:80/biscuit HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "peach@gmail.com",
-  "role": "admin",
-  "provider": "local",
-  "password": "peach123"
+  "name": "Chocolate Chip Cookie",
+  "description": "A delicious chocolate chip cookie.",
+  "price": 2.99,
+  "isActive": true,
+  "images": [
+    "https://images.unsplash.com/photo-1761839257845-9283b7d1b933?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  ],
+  "ingredients": "Flour, Vanilla Extract",
+  "nutritionalValues": {
+    "carbohydrates": 1,
+    "energy": 1,
+    "fats": 1,
+    "protein": 1,
+    "salt": 1,
+    "saturatedFats": 1,
+    "sugarCarbohydrates": 1
+  }
 }

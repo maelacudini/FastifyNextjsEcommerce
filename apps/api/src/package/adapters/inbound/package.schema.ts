@@ -172,15 +172,13 @@ const createPackageBodySchema = packageBaseSchema
 const createPackageReturnSuccessSchema = packageSchema
 
 const updatePackageParamsSchema = {
-	  properties: {
+	properties: {
 		id: {
 			type: "string"
-		},
-		package: packageBaseSchema
+		}
 	},
 	required: [
-		"id",
-		"package"
+		"id"
 	],
 	type: "object"
 } as const

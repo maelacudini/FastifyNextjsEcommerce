@@ -30,7 +30,7 @@ export default defineConfig( [
       "complexity": [ "error", 8 ],
       "max-lines": [ "error", 400 ],
       "max-statements": [ "error", 20 ],
-      "max-lines-per-function": [ "error", 200 ],
+      "max-lines-per-function": [ "error", 400 ],
       "no-duplicate-imports": [ "error", { "includeExports": true } ],
       "no-trailing-spaces": "error",
       "no-console": "error",

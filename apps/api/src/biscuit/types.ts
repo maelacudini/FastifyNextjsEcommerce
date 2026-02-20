@@ -3,15 +3,20 @@ import type { Biscuit } from "./domain/biscuit.entity.js"
 
 // Generic types
 export type BiscuitId = Biscuit["id"]
+export type BiscuitPaginationParamsType = {
+	page?: number
+}
 
 // Request params types
+export type FindAllActiveBiscuitsParamsType = BiscuitPaginationParamsType
 export type FindActiveBiscuitByIdParamsType = {
   id: BiscuitId
 }
+export type FindAllBiscuitsParamsType = BiscuitPaginationParamsType
 export type FindBiscuitByIdParamsType = {
   id: BiscuitId
 }
-export type CreateBiscuitParamsType = Pick<Biscuit, "name" | "price" | "ingredients" | "description" | "nutritionalValues" | "createdAt" | "images">
+export type CreateBiscuitParamsType = Pick<Biscuit, "name" | "price" | "ingredients" | "description" | "nutritionalValues" | "images">
 export type UpdateBiscuitParamsType = {
   id: BiscuitId
   biscuit: Omit<Biscuit, "id" | "createdAt">

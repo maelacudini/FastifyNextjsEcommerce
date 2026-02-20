@@ -194,15 +194,42 @@ const createOrderBodySchema = {
 
 const createOrderSuccessReturnSchema = orderSchema
 
-const updateOrderBodySchema = {
+const updateOrderPayloadSchema = {
 	properties: {
-		id: {
+		discountTotal: {
+			type: "number"
+		},
+		fulfillmentStatus: fulfillmentStatusSchema,
+		items: {
+			items: orderItemSchema,
+			type: "array"
+		},
+		paymentStatus: paymentStatusSchema,
+		shippingAddress: shippingAddressSchema,
+		shippingCost: {
+			type: "number"
+		},
+		subtotal: {
+			type: "number"
+		},
+		total: {
+			type: "number"
+		},
+		updatedAt: {
 			type: "string"
 		},
-		order: orderSchema
+		userId: {
+			type: "string"
+		}
+	},
+	type: "object"
+} as const
+
+const updateOrderBodySchema = {
+	properties: {
+		order: updateOrderPayloadSchema
 	},
 	required: [
-		"id",
 		"order"
 	],
 	type: "object"
@@ -215,10 +242,9 @@ const updateOrderSuccessReturnSchema = orderSchema
 const updateOrderPaymentStatusBodySchema = {
 	type: "object",
 	properties: {
-		id: { type: "string" },
 		paymentStatus: paymentStatusSchema
 	},
-	required: ["id","paymentStatus"]
+	required: ["paymentStatus"]
 } as const
 
 const updateOrderPaymentStatusParamsSchema = orderIdSchema
@@ -228,10 +254,9 @@ const updateOrderPaymentSuccessReturnSchema = orderSchema
 const updateOrderFulfillmentBodySchema = {
 	type: "object",
 	properties: {
-		id: { type: "string" },
 		fulfillmentStatus: fulfillmentStatusSchema
 	},
-	required: ["id","fulfillmentStatus"]
+	required: ["fulfillmentStatus"]
 } as const
 
 const updateOrderFulfillmentParamsSchema = orderIdSchema

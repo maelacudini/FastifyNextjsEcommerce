@@ -2,7 +2,10 @@
 import type { FastifyInstance } from "fastify"
 import createAuthUsecases from "./auth.usecase.factory.js"
 import type { ReplyType } from "@/types.js"
-import type { CreateUserWithAuthReturnType, FindByIdReturnType } from "@/auth/types.js"
+import type {
+	CreateUserWithAuthReturnType,
+	FindByIdReturnType,
+} from "@/auth/types.js"
 import schemas from "./auth.schema.js"
 import { errorSchemas } from "@/const.js"
 import type { FromSchema } from "json-schema-to-ts"

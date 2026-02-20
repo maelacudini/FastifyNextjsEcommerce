@@ -5,11 +5,11 @@ import { UpdateOrderPaymentStatusUseCase } from "@/order/application/update-orde
 import { UpdateOrderFulfillmentStatusUseCase } from "@/order/application/update-order-fulfillment.usecase.js"
 import { FindOrderByIdUseCase } from "@/order/application/find-order-by-id.usecase.js"
 import { FindAllOrdersUseCase } from "@/order/application/find-all-orders.usecase.js"
-import { MockOrderRepository } from "../outbound/order.repository.postgres.js"
+import { PostgresOrderRepository } from "../outbound/order.repository.postgres.js"
 import type { FastifyInstance } from "fastify"
 
 export default function createOrderUsecases( fastify: FastifyInstance ) {
-	const orderRepo = new MockOrderRepository( fastify )
+	const orderRepo = new PostgresOrderRepository( fastify )
 
 	const createOrder = new CreateOrderUseCase( orderRepo )
 	const deleteOrder = new DeleteOrderUseCase( orderRepo )
