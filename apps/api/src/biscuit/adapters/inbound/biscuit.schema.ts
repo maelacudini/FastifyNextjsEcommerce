@@ -143,6 +143,11 @@ const findAllActiveBiscuitsQuerySchema = {
 			type: "number",
 			minimum: 1
 		},
+		search: {
+			type: "string",
+			minLength: 1,
+			maxLength: 120
+		}
 	}
 } as const
 

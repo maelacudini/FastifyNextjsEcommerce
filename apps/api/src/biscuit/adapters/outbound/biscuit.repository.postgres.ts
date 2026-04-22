@@ -32,20 +32,24 @@ export class PostgresBiscuitRepository implements BiscuitRepositoryPort {
 
 		try {
 			const { page, limit, offset } = this.normalizePagination( data )
+			const { whereClause, params } = this.buildListWhereClause( data.search, true )
 			const { rows: countRows } = await client.query<{ total: number }>( `
 				SELECT COUNT(*)::int AS total
 				FROM biscuits
-				WHERE COALESCE(is_disabled, FALSE) = FALSE
-			` )
+				${whereClause}
+			`, params )
+
+			const limitParamIndex = params.length + 1
+			const offsetParamIndex = params.length + 2
 
 			const { rows } = await client.query<Biscuit>( `
 				SELECT ${biscuitSelectFields}
 				FROM biscuits
-				WHERE COALESCE(is_disabled, FALSE) = FALSE
+				${whereClause}
 				ORDER BY created_at DESC
-				LIMIT $1
-				OFFSET $2
-			`, [limit, offset] )
+				LIMIT $${limitParamIndex}
+				OFFSET $${offsetParamIndex}
+			`, [...params, limit, offset] )
 
 			const total = countRows[0]?.total ?? 0
 			return {
@@ -69,18 +73,24 @@ export class PostgresBiscuitRepository implements BiscuitRepositoryPort {
 
 		try {
 			const { page, limit, offset } = this.normalizePagination( data )
+			const { whereClause, params } = this.buildListWhereClause( data.search )
 			const { rows: countRows } = await client.query<{ total: number }>( `
 				SELECT COUNT(*)::int AS total
 				FROM biscuits
-			` )
+				${whereClause}
+			`, params )
+
+			const limitParamIndex = params.length + 1
+			const offsetParamIndex = params.length + 2
 
 			const { rows } = await client.query<Biscuit>( `
 				SELECT ${biscuitSelectFields}
 				FROM biscuits
+				${whereClause}
 				ORDER BY created_at DESC
-				LIMIT $1
-				OFFSET $2
-			`, [limit, offset] )
+				LIMIT $${limitParamIndex}
+				OFFSET $${offsetParamIndex}
+			`, [...params, limit, offset] )
 
 			const total = countRows[0]?.total ?? 0
 			return {
@@ -240,5 +250,44 @@ export class PostgresBiscuitRepository implements BiscuitRepositoryPort {
 		const offset = ( page - 1 ) * limit
 
 		return { page, limit, offset }
+	}
+
+	private buildListWhereClause( search?: string, onlyActive = false ) {
+		const clauses: string[] = []
+		const params: string[] = []
+		const normalizedSearch = this.normalizeSearch( search )
+
+		if ( onlyActive ) {
+			clauses.push( "COALESCE(is_disabled, FALSE) = FALSE" )
+		}
+
+		if ( normalizedSearch ) {
+			params.push( `%${normalizedSearch}%` )
+			const searchParam = `$${params.length}`
+
+			clauses.push( `
+				(
+					name ILIKE ${searchParam}
+					OR description ILIKE ${searchParam}
+					OR ingredients ILIKE ${searchParam}
+					OR COALESCE(array_to_string(tags, ' '), '') ILIKE ${searchParam}
+				)
+			` )
+		}
+
+		return {
+			whereClause: clauses.length > 0 ? `WHERE ${clauses.join( " AND " )}` : "",
+			params
+		}
+	}
+
+	private normalizeSearch( search?: string ) {
+		if ( !search ) {
+			return undefined
+		}
+
+		const normalizedSearch = search.trim()
+
+		return normalizedSearch.length > 0 ? normalizedSearch : undefined
 	}
 }

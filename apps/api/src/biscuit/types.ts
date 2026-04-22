@@ -5,14 +5,19 @@ import type { Biscuit } from "./domain/biscuit.entity.js"
 export type BiscuitId = Biscuit["id"]
 export type BiscuitPaginationParamsType = {
 	page?: number
+	limit?: number
+}
+
+export type BiscuitSearchParamsType = {
+	search?: string
 }
 
 // Request params types
-export type FindAllActiveBiscuitsParamsType = BiscuitPaginationParamsType
+export type FindAllActiveBiscuitsParamsType = BiscuitPaginationParamsType & BiscuitSearchParamsType
 export type FindActiveBiscuitByIdParamsType = {
   id: BiscuitId
 }
-export type FindAllBiscuitsParamsType = BiscuitPaginationParamsType
+export type FindAllBiscuitsParamsType = BiscuitPaginationParamsType & BiscuitSearchParamsType
 export type FindBiscuitByIdParamsType = {
   id: BiscuitId
 }
