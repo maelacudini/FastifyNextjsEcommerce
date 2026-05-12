@@ -1,4 +1,4 @@
-import { Button } from "../Button";
+import { Button } from "@app/_components/shadcn/button";
 
 export const ThemeSwitch = () => {
 	return (

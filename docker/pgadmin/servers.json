@@ -1,0 +1,13 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "FastifyNext Postgres",
+      "Group": "Development",
+      "Host": "postgres",
+      "Port": 5432,
+      "MaintenanceDB": "postgres",
+      "Username": "postgres",
+      "SSLMode": "prefer"
+    }
+  }
+}

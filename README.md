@@ -18,7 +18,7 @@ This repository is organized in two main folders:
 ## Quick overview
 
 - Client: located in `apps/web/` — Next.js app.
-- Server: located in `app/api/` — Fastify app.
+- Server: located in `apps/api/` — Fastify app.
 
 You can run the apps independently or start them together via Docker Compose.
 
@@ -26,8 +26,27 @@ You can run the apps independently or start them together via Docker Compose.
 
 ## Run locally (recommended for development)
 
-1. Start the server:
-  - Set up .env with correct variables
+1. Prepare Docker env/secrets for Postgres:
+  - Copy `docker/compose.env.example` to `docker/compose.env`
+  - Copy `docker/secrets/postgres_password.txt.example` to `docker/secrets/postgres_password.txt`
+  - Set the values you want in `docker/compose.env` (`POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PORT`)
+  - Replace the example password in `docker/secrets/postgres_password.txt`
+
+2. Start only Postgres with Docker:
+  - `docker compose --env-file docker/compose.env up -d postgres`
+
+3. Configure the API to use that Postgres container:
+  - Copy `apps/api/.env.example` to `apps/api/.env`
+  - Keep `POSTGRES_HOST=localhost`
+  - Set `POSTGRES_PORT` to the same value as `POSTGRES_PORT` in `docker/compose.env`
+    - Example: if Docker exposes Postgres on `5433`, then `apps/api/.env` should also use `5433`
+    - We use `5433` for local development so it does not clash with another Postgres already using the default port `5432` on your machine
+  - Set `POSTGRES_USER` to the same value as `POSTGRES_USER` in `docker/compose.env`
+  - Set `POSTGRES_NAME` to the same value as `POSTGRES_DB` in `docker/compose.env`
+  - Set `POSTGRES_PSW` to the password stored in `docker/secrets/postgres_password.txt`
+  - Set `JWT_SECRET` to any local development secret
+
+4. Start the server:
   - Open a terminal
   - cd into the server folder and install dependencies:
     - cd apps/api
@@ -35,10 +54,10 @@ You can run the apps independently or start them together via Docker Compose.
   - Start the server in watch/dev mode:
     - npm run dev
 
-2. Start the client:
-  - Set up .env with correct variables
+5. Start the client:
+  - Copy `apps/web/.env.example` to `apps/web/.env` if needed
   - Open a terminal
-  - cd into the server folder and install dependencies:
+  - cd into the client folder and install dependencies:
     - cd apps/web
     - npm install
   - Start Next.js in development:
@@ -52,31 +71,41 @@ The compose setup includes four services:
 - `postgres` (database)
 - `backend` (Fastify API)
 - `frontend` (Next.js)
-- `pgadmin` (database administration UI)
+- `pgadmin` (optional database administration UI)
 
 ### 1) Prepare env files
 
-- Backend runtime variables in `apps/api/.env`.
-- Frontend runtime variables in `apps/web/.env`.
+- Copy `docker/compose.env.example` to `docker/compose.env` for non-sensitive Docker Compose values.
+- Copy `apps/web/.env.example` to `apps/web/.env` if you also run the frontend outside Docker.
+- Copy `apps/api/.env.example` to `apps/api/.env` only if you run the API outside Docker.
+- Keep secrets out of all `.env` files used by Compose.
 
 ### 2) Prepare Docker secrets
 
-This setup uses Compose secrets for sensitive values (`POSTGRES_PSW`, `JWT_SECRET`, pgAdmin password).
+This setup uses Docker secrets for sensitive values (`POSTGRES_PSW`, `JWT_SECRET`, pgAdmin password).
 
 Create the secret files from the examples:
 
 ```bash
-cp secrets/postgres_password.txt.example secrets/postgres_password.txt
-cp secrets/jwt_secret.txt.example secrets/jwt_secret.txt
-cp secrets/pgadmin_password.txt.example secrets/pgadmin_password.txt
+cp docker/secrets/postgres_password.txt.example docker/secrets/postgres_password.txt
+cp docker/secrets/jwt_secret.txt.example docker/secrets/jwt_secret.txt
+cp docker/secrets/pgadmin_password.txt.example docker/secrets/pgadmin_password.txt
+cp docker/compose.env.example docker/compose.env
 ```
 
 Then replace the example values with real credentials.
+The backend reads sensitive values from mounted secret files, not from Compose environment variables.
 
 ### 3) Start in development mode (watch)
 
 ```bash
-docker compose up --watch
+docker compose --env-file docker/compose.env up --watch
+```
+
+To start pgAdmin as well:
+
+```bash
+docker compose --env-file docker/compose.env --profile tools up --watch
 ```
 
 ### 4) Stop services
@@ -89,7 +118,7 @@ docker compose down
 
 - Frontend: `http://localhost:3000`
 - Backend: `http://localhost:80`
-- pgAdmin: `http://localhost:5050`
+- pgAdmin: `http://localhost:5050` when started with `--profile tools`
 
 
 
@@ -134,12 +163,12 @@ docker compose down
   - JWT_SECRET — JWT secret
 
 - docker compose:
-  - Non-sensitive values can stay in `.env` files and be loaded with `env_file`.
-  - Sensitive values are provided through Docker secrets files mounted at `/run/secrets/*`.
+  - Non-sensitive values should live in `docker/compose.env` or service-specific local `.env` files.
+  - Sensitive values should live only in Docker secrets files mounted at `/run/secrets/*`.
   - In this repo:
-    - `POSTGRES_PSW` is read from `secrets/postgres_password.txt`
-    - `JWT_SECRET` is read from `secrets/jwt_secret.txt`
-    - `PGADMIN_DEFAULT_PASSWORD` is read from `secrets/pgadmin_password.txt`
+    - `POSTGRES_PSW` is read from `docker/secrets/postgres_password.txt`
+    - `JWT_SECRET` is read from `docker/secrets/jwt_secret.txt`
+    - `PGADMIN_DEFAULT_PASSWORD` is read from `docker/secrets/pgadmin_password.txt`
 
 
 
@@ -149,7 +178,7 @@ docker compose down
   - package.json — scripts: `dev`, `build`, `start`, `lint`
   - next.js app files
 
-- app/api/
+- apps/api/
   - package.json — scripts: `dev`, `build`, `start`, `lint`
   - src/ — source code
   - dist/ — compiled output after build (created by `npm run build`)

@@ -17,6 +17,15 @@ export const unauthorizedSchema = {
 	required: ["message"],
 } as const
 
+export const forbiddenSchema = {
+	description: "Forbidden.",
+	type: "object",
+	properties: {
+		message: { type: "string" },
+	},
+	required: ["message"],
+} as const
+
 export const serverErrorSchema = {
 	description: "Server error.",
 	type: "object",
@@ -29,6 +38,7 @@ export const serverErrorSchema = {
 export const errorSchemas = {
 	404: notFoundSchema,
 	401: unauthorizedSchema,
+	403: forbiddenSchema,
 	500: serverErrorSchema,
 }
 

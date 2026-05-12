@@ -4,7 +4,7 @@ services:
     image: postgres:16-alpine
     restart: no
     environment:
-      POSTGRES_DB: ${POSTGRES_NAME:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
     secrets:
@@ -13,12 +13,13 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./docker/postgres/init:/docker-entrypoint-initdb.d:ro
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT:-5432}:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_NAME:-postgres}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-postgres}"]
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 15s
 
   backend:
     container_name: fastify_next_server_cont
@@ -26,29 +27,28 @@ services:
       context: ./apps/api
       dockerfile: Dockerfile.dev
     restart: no
-    env_file:
-      - ./apps/api/.env
     environment:
-      PORT: ${PORT:-80}
+      PORT: 80
       POSTGRES_HOST: postgres
-      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
-      POSTGRES_NAME: ${POSTGRES_NAME:-postgres}
+      POSTGRES_PORT: 5432
+      POSTGRES_NAME: ${POSTGRES_DB:-postgres}
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PSW_FILE: /run/secrets/postgres_password
+      JWT_SECRET_FILE: /run/secrets/jwt_secret
     secrets:
       - postgres_password
       - jwt_secret
-    command:
-      - sh
-      - -c
-      - |
-        export POSTGRES_PSW="$(cat /run/secrets/postgres_password)"
-        export JWT_SECRET="$(cat /run/secrets/jwt_secret)"
-        npm run dev
     ports:
-      - "80:80"
+      - "${API_PORT:-80}:80"
     depends_on:
       postgres:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:80/docs/json').then((r)=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 25s
     develop:
       watch:
         - action: sync
@@ -64,17 +64,22 @@ services:
       context: ./apps/web
       dockerfile: Dockerfile.dev
     restart: no
-    env_file:
-      - ./apps/web/.env
     environment:
+      PORT: 3000
       NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:80}
       API_INTERNAL_URL: http://backend:80
       NEXT_TELEMETRY_DISABLED: ${NEXT_TELEMETRY_DISABLED:-1}
     ports:
-      - "3000:3000"
+      - "${FRONTEND_PORT:-3000}:3000"
     depends_on:
       backend:
-        condition: service_started
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000').then((r)=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 20s
+      timeout: 5s
+      retries: 10
+      start_period: 45s
     develop:
       watch:
         - action: sync
@@ -88,27 +93,30 @@ services:
     container_name: fastify_next_pgadmin_cont
     image: dpage/pgadmin4:8
     restart: no
+    profiles: ["tools"]
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@local.dev}
       PGADMIN_DEFAULT_PASSWORD_FILE: /run/secrets/pgadmin_password
       PGADMIN_CONFIG_SERVER_MODE: "False"
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
     secrets:
       - pgadmin_password
     volumes:
       - pgadmin_data:/var/lib/pgadmin
+      - ./docker/pgadmin/servers.json:/pgadmin4/servers.json:ro
     ports:
-      - "5050:80"
+      - "${PGADMIN_PORT:-5050}:80"
     depends_on:
       postgres:
         condition: service_healthy
 
 secrets:
   postgres_password:
-    file: ./secrets/postgres_password.txt
+    file: ./docker/secrets/postgres_password.txt
   jwt_secret:
-    file: ./secrets/jwt_secret.txt
+    file: ./docker/secrets/jwt_secret.txt
   pgadmin_password:
-    file: ./secrets/pgadmin_password.txt
+    file: ./docker/secrets/pgadmin_password.txt
 
 volumes:
   postgres_data:

@@ -58,6 +58,17 @@ export interface paths {
                         };
                     };
                 };
+                /** @description Forbidden. */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
                 /** @description No resource found. */
                 404: {
                     headers: {
@@ -84,6 +95,121 @@ export interface paths {
         };
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/signup": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            /** @description Create user with auth body. */
+            requestBody: {
+                content: {
+                    "application/json": {
+                        email: string;
+                        /** @enum {string} */
+                        role: "admin" | "customer";
+                        password?: string;
+                        /** @enum {string} */
+                        provider: "local" | "google";
+                    } & unknown;
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            /** @description Base user schema. */
+                            user: {
+                                address?: {
+                                    city: string;
+                                    country: string;
+                                    postalCode: string;
+                                    street: string;
+                                };
+                                cart?: string[];
+                                createdAt: string;
+                                email: string;
+                                favorites?: string[];
+                                firstName?: string;
+                                id: string;
+                                isDisabled: boolean;
+                                lastName?: string;
+                                marketingOptIn?: boolean;
+                                phone?: string;
+                                /** @enum {string} */
+                                role: "admin" | "customer";
+                                updatedAt?: string;
+                            };
+                            auth: unknown;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
         delete?: never;
         options?: never;
         head?: never;
@@ -123,7 +249,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/biscuit": {
+    "/biscuit/active": {
         parameters: {
             query?: never;
             header?: never;
@@ -132,7 +258,9 @@ export interface paths {
         };
         get: {
             parameters: {
-                query?: never;
+                query?: {
+                    page?: number;
+                };
                 header?: never;
                 path?: never;
                 cookie?: never;
@@ -163,7 +291,9 @@ export interface paths {
                                     saturatedFats: number;
                                     sugarCarbohydrates: number;
                                 };
-                                price: string;
+                                /** @enum {string} */
+                                baseCurrency: "EUR" | "USD" | "GBP";
+                                basePriceMinor: number;
                                 tags?: string[];
                                 updatedAt?: string;
                             }[];
@@ -176,6 +306,17 @@ export interface paths {
                 };
                 /** @description Unauthorized. */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. */
+                403: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -210,100 +351,7 @@ export interface paths {
             };
         };
         put?: never;
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            /** @description Create biscuit payload schema. */
-            requestBody: {
-                content: {
-                    "application/json": {
-                        createdAt: string;
-                        description: string;
-                        images: string[];
-                        ingredients: string;
-                        name: string;
-                        nutritionalValues: {
-                            carbohydrates: number;
-                            energy: number;
-                            fats: number;
-                            protein: number;
-                            salt: number;
-                            saturatedFats: number;
-                            sugarCarbohydrates: number;
-                        };
-                        price: string;
-                    };
-                };
-            };
-            responses: {
-                /** @description Biscuit entity schema. */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            createdAt: string;
-                            description: string;
-                            id: string;
-                            images: string[];
-                            ingredients: string;
-                            isDisabled?: boolean;
-                            name: string;
-                            nutritionalValues: {
-                                carbohydrates: number;
-                                energy: number;
-                                fats: number;
-                                protein: number;
-                                salt: number;
-                                saturatedFats: number;
-                                sugarCarbohydrates: number;
-                            };
-                            price: string;
-                            tags?: string[];
-                            updatedAt?: string;
-                        };
-                    };
-                };
-                /** @description Unauthorized. */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            message: string;
-                        };
-                    };
-                };
-                /** @description No resource found. */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: string;
-                        };
-                    };
-                };
-                /** @description Server error. */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            message: string;
-                        };
-                    };
-                };
-            };
-        };
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -351,7 +399,9 @@ export interface paths {
                                 saturatedFats: number;
                                 sugarCarbohydrates: number;
                             };
-                            price: string;
+                            /** @enum {string} */
+                            baseCurrency: "EUR" | "USD" | "GBP";
+                            basePriceMinor: number;
                             tags?: string[];
                             updatedAt?: string;
                         };
@@ -359,6 +409,17 @@ export interface paths {
                 };
                 /** @description Unauthorized. */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. */
+                403: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -400,7 +461,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/biscuit/all": {
+    "/biscuit": {
         parameters: {
             query?: never;
             header?: never;
@@ -409,7 +470,9 @@ export interface paths {
         };
         get: {
             parameters: {
-                query?: never;
+                query?: {
+                    page?: number;
+                };
                 header?: never;
                 path?: never;
                 cookie?: never;
@@ -440,7 +503,9 @@ export interface paths {
                                     saturatedFats: number;
                                     sugarCarbohydrates: number;
                                 };
-                                price: string;
+                                /** @enum {string} */
+                                baseCurrency: "EUR" | "USD" | "GBP";
+                                basePriceMinor: number;
                                 tags?: string[];
                                 updatedAt?: string;
                             }[];
@@ -453,6 +518,17 @@ export interface paths {
                 };
                 /** @description Unauthorized. */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. */
+                403: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -487,7 +563,114 @@ export interface paths {
             };
         };
         put?: never;
-        post?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            /** @description Create biscuit payload schema. */
+            requestBody: {
+                content: {
+                    "application/json": {
+                        description: string;
+                        images: string[];
+                        ingredients: string;
+                        name: string;
+                        nutritionalValues: {
+                            carbohydrates: number;
+                            energy: number;
+                            fats: number;
+                            protein: number;
+                            salt: number;
+                            saturatedFats: number;
+                            sugarCarbohydrates: number;
+                        };
+                        /** @enum {string} */
+                        baseCurrency: "EUR" | "USD" | "GBP";
+                        basePriceMinor: number;
+                    };
+                };
+            };
+            responses: {
+                /** @description Biscuit entity schema. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            createdAt: string;
+                            description: string;
+                            id: string;
+                            images: string[];
+                            ingredients: string;
+                            isDisabled?: boolean;
+                            name: string;
+                            nutritionalValues: {
+                                carbohydrates: number;
+                                energy: number;
+                                fats: number;
+                                protein: number;
+                                salt: number;
+                                saturatedFats: number;
+                                sugarCarbohydrates: number;
+                            };
+                            /** @enum {string} */
+                            baseCurrency: "EUR" | "USD" | "GBP";
+                            basePriceMinor: number;
+                            tags?: string[];
+                            updatedAt?: string;
+                        };
+                    };
+                };
+                /** @description Unauthorized. */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description No resource found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                        };
+                    };
+                };
+                /** @description Server error. */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
         delete?: never;
         options?: never;
         head?: never;
@@ -535,7 +718,9 @@ export interface paths {
                                 saturatedFats: number;
                                 sugarCarbohydrates: number;
                             };
-                            price: string;
+                            /** @enum {string} */
+                            baseCurrency: "EUR" | "USD" | "GBP";
+                            basePriceMinor: number;
                             tags?: string[];
                             updatedAt?: string;
                         };
@@ -543,6 +728,17 @@ export interface paths {
                 };
                 /** @description Unauthorized. */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. */
+                403: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -604,11 +800,12 @@ export interface paths {
                                 saturatedFats: number;
                                 sugarCarbohydrates: number;
                             };
-                            price: string;
+                            /** @enum {string} */
+                            baseCurrency: "EUR" | "USD" | "GBP";
+                            basePriceMinor: number;
                             tags?: string[];
                             updatedAt?: string;
                         };
-                        id: string;
                     };
                 };
             };
@@ -636,7 +833,9 @@ export interface paths {
                                 saturatedFats: number;
                                 sugarCarbohydrates: number;
                             };
-                            price: string;
+                            /** @enum {string} */
+                            baseCurrency: "EUR" | "USD" | "GBP";
+                            basePriceMinor: number;
                             tags?: string[];
                             updatedAt?: string;
                         };
@@ -644,6 +843,17 @@ export interface paths {
                 };
                 /** @description Unauthorized. */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. */
+                403: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -712,7 +922,9 @@ export interface paths {
                                 saturatedFats: number;
                                 sugarCarbohydrates: number;
                             };
-                            price: string;
+                            /** @enum {string} */
+                            baseCurrency: "EUR" | "USD" | "GBP";
+                            basePriceMinor: number;
                             tags?: string[];
                             updatedAt?: string;
                         };
@@ -720,6 +932,17 @@ export interface paths {
                 };
                 /** @description Unauthorized. */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. */
+                403: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -779,7 +1002,6 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
-                        id: string;
                         isDisabled: boolean;
                     };
                 };
@@ -808,7 +1030,9 @@ export interface paths {
                                 saturatedFats: number;
                                 sugarCarbohydrates: number;
                             };
-                            price: string;
+                            /** @enum {string} */
+                            baseCurrency: "EUR" | "USD" | "GBP";
+                            basePriceMinor: number;
                             tags?: string[];
                             updatedAt?: string;
                         };
@@ -816,6 +1040,17 @@ export interface paths {
                 };
                 /** @description Unauthorized. */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. */
+                403: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -881,15 +1116,22 @@ export interface paths {
                         "application/json": {
                             items: {
                                 createdAt: string;
-                                discountTotal?: number;
+                                /** @enum {string} */
+                                baseCurrency: "EUR" | "USD" | "GBP";
+                                discountTotalMinor?: number;
+                                /** @enum {string} */
+                                currency: "EUR" | "USD" | "GBP";
+                                exchangeRate?: number;
+                                exchangeRateCapturedAt?: string;
                                 /** @enum {string} */
                                 fulfillmentStatus: "cancelled" | "delivered" | "processing" | "shipped" | "unfulfilled";
                                 id: string;
                                 items: {
+                                    lineTotalMinor: number;
                                     name: string;
                                     productId: string;
                                     quantity: number;
-                                    totalPrice: number;
+                                    unitPriceMinor: number;
                                 }[];
                                 /** @enum {string} */
                                 paymentStatus: "failed" | "paid" | "pending";
@@ -899,9 +1141,9 @@ export interface paths {
                                     postalCode: string;
                                     street: string;
                                 };
-                                shippingCost: number;
-                                subtotal: number;
-                                total: number;
+                                shippingCostMinor: number;
+                                subtotalMinor: number;
+                                totalMinor: number;
                                 updatedAt?: string;
                                 userId: string;
                             }[];
@@ -914,6 +1156,17 @@ export interface paths {
                 };
                 /** @description Unauthorized. */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. */
+                403: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -959,26 +1212,18 @@ export interface paths {
                 content: {
                     "application/json": {
                         createdAt: string;
-                        discountTotal?: number;
-                        /** @enum {string} */
-                        fulfillmentStatus: "cancelled" | "delivered" | "processing" | "shipped" | "unfulfilled";
                         items: {
-                            name: string;
                             productId: string;
                             quantity: number;
-                            totalPrice: number;
                         }[];
                         /** @enum {string} */
-                        paymentStatus: "failed" | "paid" | "pending";
+                        currency: "EUR" | "USD" | "GBP";
                         shippingAddress: {
                             city: string;
                             country: string;
                             postalCode: string;
                             street: string;
                         };
-                        shippingCost: number;
-                        subtotal: number;
-                        total: number;
                         userId: string;
                     };
                 };
@@ -992,15 +1237,22 @@ export interface paths {
                     content: {
                         "application/json": {
                             createdAt: string;
-                            discountTotal?: number;
+                            /** @enum {string} */
+                            baseCurrency: "EUR" | "USD" | "GBP";
+                            discountTotalMinor?: number;
+                            /** @enum {string} */
+                            currency: "EUR" | "USD" | "GBP";
+                            exchangeRate?: number;
+                            exchangeRateCapturedAt?: string;
                             /** @enum {string} */
                             fulfillmentStatus: "cancelled" | "delivered" | "processing" | "shipped" | "unfulfilled";
                             id: string;
                             items: {
+                                lineTotalMinor: number;
                                 name: string;
                                 productId: string;
                                 quantity: number;
-                                totalPrice: number;
+                                unitPriceMinor: number;
                             }[];
                             /** @enum {string} */
                             paymentStatus: "failed" | "paid" | "pending";
@@ -1010,9 +1262,9 @@ export interface paths {
                                 postalCode: string;
                                 street: string;
                             };
-                            shippingCost: number;
-                            subtotal: number;
-                            total: number;
+                            shippingCostMinor: number;
+                            subtotalMinor: number;
+                            totalMinor: number;
                             updatedAt?: string;
                             userId: string;
                         };
@@ -1020,6 +1272,17 @@ export interface paths {
                 };
                 /** @description Unauthorized. */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. */
+                403: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -1085,15 +1348,22 @@ export interface paths {
                     content: {
                         "application/json": {
                             createdAt: string;
-                            discountTotal?: number;
+                            /** @enum {string} */
+                            baseCurrency: "EUR" | "USD" | "GBP";
+                            discountTotalMinor?: number;
+                            /** @enum {string} */
+                            currency: "EUR" | "USD" | "GBP";
+                            exchangeRate?: number;
+                            exchangeRateCapturedAt?: string;
                             /** @enum {string} */
                             fulfillmentStatus: "cancelled" | "delivered" | "processing" | "shipped" | "unfulfilled";
                             id: string;
                             items: {
+                                lineTotalMinor: number;
                                 name: string;
                                 productId: string;
                                 quantity: number;
-                                totalPrice: number;
+                                unitPriceMinor: number;
                             }[];
                             /** @enum {string} */
                             paymentStatus: "failed" | "paid" | "pending";
@@ -1103,9 +1373,9 @@ export interface paths {
                                 postalCode: string;
                                 street: string;
                             };
-                            shippingCost: number;
-                            subtotal: number;
-                            total: number;
+                            shippingCostMinor: number;
+                            subtotalMinor: number;
+                            totalMinor: number;
                             updatedAt?: string;
                             userId: string;
                         };
@@ -1113,6 +1383,17 @@ export interface paths {
                 };
                 /** @description Unauthorized. */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. */
+                403: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -1158,32 +1439,36 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
-                        id: string;
                         order: {
-                            createdAt: string;
-                            discountTotal?: number;
                             /** @enum {string} */
-                            fulfillmentStatus: "cancelled" | "delivered" | "processing" | "shipped" | "unfulfilled";
-                            id: string;
-                            items: {
+                            baseCurrency?: "EUR" | "USD" | "GBP";
+                            /** @enum {string} */
+                            currency?: "EUR" | "USD" | "GBP";
+                            discountTotalMinor?: number;
+                            exchangeRate?: number;
+                            exchangeRateCapturedAt?: string;
+                            /** @enum {string} */
+                            fulfillmentStatus?: "cancelled" | "delivered" | "processing" | "shipped" | "unfulfilled";
+                            items?: {
+                                lineTotalMinor: number;
                                 name: string;
                                 productId: string;
                                 quantity: number;
-                                totalPrice: number;
+                                unitPriceMinor: number;
                             }[];
                             /** @enum {string} */
-                            paymentStatus: "failed" | "paid" | "pending";
-                            shippingAddress: {
+                            paymentStatus?: "failed" | "paid" | "pending";
+                            shippingAddress?: {
                                 city: string;
                                 country: string;
                                 postalCode: string;
                                 street: string;
                             };
-                            shippingCost: number;
-                            subtotal: number;
-                            total: number;
+                            shippingCostMinor?: number;
+                            subtotalMinor?: number;
+                            totalMinor?: number;
                             updatedAt?: string;
-                            userId: string;
+                            userId?: string;
                         };
                     };
                 };
@@ -1197,15 +1482,22 @@ export interface paths {
                     content: {
                         "application/json": {
                             createdAt: string;
-                            discountTotal?: number;
+                            /** @enum {string} */
+                            baseCurrency: "EUR" | "USD" | "GBP";
+                            discountTotalMinor?: number;
+                            /** @enum {string} */
+                            currency: "EUR" | "USD" | "GBP";
+                            exchangeRate?: number;
+                            exchangeRateCapturedAt?: string;
                             /** @enum {string} */
                             fulfillmentStatus: "cancelled" | "delivered" | "processing" | "shipped" | "unfulfilled";
                             id: string;
                             items: {
+                                lineTotalMinor: number;
                                 name: string;
                                 productId: string;
                                 quantity: number;
-                                totalPrice: number;
+                                unitPriceMinor: number;
                             }[];
                             /** @enum {string} */
                             paymentStatus: "failed" | "paid" | "pending";
@@ -1215,9 +1507,9 @@ export interface paths {
                                 postalCode: string;
                                 street: string;
                             };
-                            shippingCost: number;
-                            subtotal: number;
-                            total: number;
+                            shippingCostMinor: number;
+                            subtotalMinor: number;
+                            totalMinor: number;
                             updatedAt?: string;
                             userId: string;
                         };
@@ -1225,6 +1517,17 @@ export interface paths {
                 };
                 /** @description Unauthorized. */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. */
+                403: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -1278,15 +1581,22 @@ export interface paths {
                     content: {
                         "application/json": {
                             createdAt: string;
-                            discountTotal?: number;
+                            /** @enum {string} */
+                            baseCurrency: "EUR" | "USD" | "GBP";
+                            discountTotalMinor?: number;
+                            /** @enum {string} */
+                            currency: "EUR" | "USD" | "GBP";
+                            exchangeRate?: number;
+                            exchangeRateCapturedAt?: string;
                             /** @enum {string} */
                             fulfillmentStatus: "cancelled" | "delivered" | "processing" | "shipped" | "unfulfilled";
                             id: string;
                             items: {
+                                lineTotalMinor: number;
                                 name: string;
                                 productId: string;
                                 quantity: number;
-                                totalPrice: number;
+                                unitPriceMinor: number;
                             }[];
                             /** @enum {string} */
                             paymentStatus: "failed" | "paid" | "pending";
@@ -1296,9 +1606,9 @@ export interface paths {
                                 postalCode: string;
                                 street: string;
                             };
-                            shippingCost: number;
-                            subtotal: number;
-                            total: number;
+                            shippingCostMinor: number;
+                            subtotalMinor: number;
+                            totalMinor: number;
                             updatedAt?: string;
                             userId: string;
                         };
@@ -1306,6 +1616,17 @@ export interface paths {
                 };
                 /** @description Unauthorized. */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. */
+                403: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -1364,7 +1685,6 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
-                        id: string;
                         /** @enum {string} */
                         paymentStatus: "failed" | "paid" | "pending";
                     };
@@ -1379,15 +1699,22 @@ export interface paths {
                     content: {
                         "application/json": {
                             createdAt: string;
-                            discountTotal?: number;
+                            /** @enum {string} */
+                            baseCurrency: "EUR" | "USD" | "GBP";
+                            discountTotalMinor?: number;
+                            /** @enum {string} */
+                            currency: "EUR" | "USD" | "GBP";
+                            exchangeRate?: number;
+                            exchangeRateCapturedAt?: string;
                             /** @enum {string} */
                             fulfillmentStatus: "cancelled" | "delivered" | "processing" | "shipped" | "unfulfilled";
                             id: string;
                             items: {
+                                lineTotalMinor: number;
                                 name: string;
                                 productId: string;
                                 quantity: number;
-                                totalPrice: number;
+                                unitPriceMinor: number;
                             }[];
                             /** @enum {string} */
                             paymentStatus: "failed" | "paid" | "pending";
@@ -1397,9 +1724,9 @@ export interface paths {
                                 postalCode: string;
                                 street: string;
                             };
-                            shippingCost: number;
-                            subtotal: number;
-                            total: number;
+                            shippingCostMinor: number;
+                            subtotalMinor: number;
+                            totalMinor: number;
                             updatedAt?: string;
                             userId: string;
                         };
@@ -1407,6 +1734,17 @@ export interface paths {
                 };
                 /** @description Unauthorized. */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. */
+                403: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -1467,7 +1805,6 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
-                        id: string;
                         /** @enum {string} */
                         fulfillmentStatus: "cancelled" | "delivered" | "processing" | "shipped" | "unfulfilled";
                     };
@@ -1482,15 +1819,22 @@ export interface paths {
                     content: {
                         "application/json": {
                             createdAt: string;
-                            discountTotal?: number;
+                            /** @enum {string} */
+                            baseCurrency: "EUR" | "USD" | "GBP";
+                            discountTotalMinor?: number;
+                            /** @enum {string} */
+                            currency: "EUR" | "USD" | "GBP";
+                            exchangeRate?: number;
+                            exchangeRateCapturedAt?: string;
                             /** @enum {string} */
                             fulfillmentStatus: "cancelled" | "delivered" | "processing" | "shipped" | "unfulfilled";
                             id: string;
                             items: {
+                                lineTotalMinor: number;
                                 name: string;
                                 productId: string;
                                 quantity: number;
-                                totalPrice: number;
+                                unitPriceMinor: number;
                             }[];
                             /** @enum {string} */
                             paymentStatus: "failed" | "paid" | "pending";
@@ -1500,9 +1844,9 @@ export interface paths {
                                 postalCode: string;
                                 street: string;
                             };
-                            shippingCost: number;
-                            subtotal: number;
-                            total: number;
+                            shippingCostMinor: number;
+                            subtotalMinor: number;
+                            totalMinor: number;
                             updatedAt?: string;
                             userId: string;
                         };
@@ -1510,6 +1854,17 @@ export interface paths {
                 };
                 /** @description Unauthorized. */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. */
+                403: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -1608,6 +1963,17 @@ export interface paths {
                         };
                     };
                 };
+                /** @description Forbidden. */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
                 /** @description No resource found. */
                 404: {
                     headers: {
@@ -1686,6 +2052,17 @@ export interface paths {
                 };
                 /** @description Unauthorized. */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. */
+                403: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -1783,6 +2160,17 @@ export interface paths {
                         };
                     };
                 };
+                /** @description Forbidden. */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
                 /** @description No resource found. */
                 404: {
                     headers: {
@@ -1869,6 +2257,17 @@ export interface paths {
                         };
                     };
                 };
+                /** @description Forbidden. */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
                 /** @description No resource found. */
                 404: {
                     headers: {
@@ -1899,20 +2298,6 @@ export interface paths {
                 header?: never;
                 path: {
                     id: string;
-                    package: {
-                        description?: string;
-                        discountPercent?: number;
-                        images?: string[];
-                        isDisabled?: boolean;
-                        items?: {
-                            id: string;
-                            quantity: number;
-                        }[];
-                        name?: string;
-                        packagingPrice?: number;
-                        tags?: string[];
-                        weight?: number;
-                    };
                 };
                 cookie?: never;
             };
@@ -1965,6 +2350,17 @@ export interface paths {
                 };
                 /** @description Unauthorized. */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. */
+                403: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -2037,6 +2433,17 @@ export interface paths {
                 };
                 /** @description Unauthorized. */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. */
+                403: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -2137,6 +2544,17 @@ export interface paths {
                         };
                     };
                 };
+                /** @description Forbidden. */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
                 /** @description No resource found. */
                 404: {
                     headers: {
@@ -2177,7 +2595,10 @@ export interface paths {
         };
         get: {
             parameters: {
-                query?: never;
+                query?: {
+                    page?: number;
+                    limit?: number;
+                };
                 header?: never;
                 path?: never;
                 cookie?: never;
@@ -2221,6 +2642,17 @@ export interface paths {
                 };
                 /** @description Unauthorized. */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. */
+                403: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -2304,6 +2736,17 @@ export interface paths {
                 };
                 /** @description Unauthorized. */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. */
+                403: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -2401,6 +2844,17 @@ export interface paths {
                         };
                     };
                 };
+                /** @description Forbidden. */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
                 /** @description No resource found. */
                 404: {
                     headers: {
@@ -2444,7 +2898,9 @@ export interface paths {
                             postalCode: string;
                             street: string;
                         };
-                        email: string;
+                        email?: string;
+                        firstName?: string;
+                        lastName?: string;
                         phone?: string;
                     };
                 };
@@ -2481,6 +2937,17 @@ export interface paths {
                 };
                 /** @description Unauthorized. */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. */
+                403: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -2557,6 +3024,17 @@ export interface paths {
                 };
                 /** @description Unauthorized. */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. */
+                403: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -2644,6 +3122,17 @@ export interface paths {
                 };
                 /** @description Unauthorized. */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. */
+                403: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -2751,6 +3240,17 @@ export interface paths {
                         };
                     };
                 };
+                /** @description Forbidden. */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
                 /** @description No resource found. */
                 404: {
                     headers: {
@@ -2840,6 +3340,17 @@ export interface paths {
                 };
                 /** @description Unauthorized. */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. */
+                403: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -2946,6 +3457,17 @@ export interface paths {
                         };
                     };
                 };
+                /** @description Forbidden. */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
                 /** @description No resource found. */
                 404: {
                     headers: {
@@ -3043,6 +3565,17 @@ export interface paths {
                         };
                     };
                 };
+                /** @description Forbidden. */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
                 /** @description No resource found. */
                 404: {
                     headers: {
@@ -3131,6 +3664,17 @@ export interface paths {
                 };
                 /** @description Unauthorized. */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Forbidden. */
+                403: {
                     headers: {
                         [name: string]: unknown;
                     };

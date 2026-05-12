@@ -176,7 +176,7 @@ This is the app entry point — composition root for wiring everything.
 ## Because writing schemas is a pain in the @ss
 
 I refused to write all schemas on my own, so I picked [typescript-json-schema](https://github.com/YousefED/typescript-json-schema) to help me generate schemas. Now, I know that there might be better options out there, if you happen to know one of them please let me know.
-To generate a schema from a type (e.g. FindUserByEmailParamsType) open the terminal and enter the following command (inside apps/api):
+To generate a schema from a type (e.g. FindUserByEmailRequestType) open the terminal and enter the following command (inside apps/api):
 
 ```powershell
 npx typescript-json-schema tsconfig.json <your type> --required > <your file>.json
@@ -185,10 +185,10 @@ npx typescript-json-schema tsconfig.json <your type> --required > <your file>.js
 Example:
 
 ```powershell
-npx typescript-json-schema tsconfig.json FindUserByEmailParamsType --required > generated.schemas.json
+npx typescript-json-schema tsconfig.json FindUserByEmailRequestType --required > generated.schemas.json
 ```
 
-Then, from the generated file, pick the part of the schema you're interested in and use it wherever you're defining schemas (e.g. user.schemas.ts, the schema generated with the command right above from FindUserByEmailParamsType would be the 200 response schema).
+Then, from the generated file, pick the part of the schema you're interested in and use it wherever you're defining schemas (e.g. user.schemas.ts, the schema generated with the command right above from FindUserByEmailRequestType would be the 200 response schema).
 
 
 
@@ -243,9 +243,9 @@ Now restart the server — Swagger UI will display routes grouped by the tag nam
 These are the environment variables needed to run the project smoothly: add them in your .env file and don't share them with anyone, not even your best friend.
 
 - PORT — port for the API used by the server
-- POSTGRES_PSW — Postgres database password
 - POSTGRES_HOST — Postgres database host, e.g. localhost
 - POSTGRES_PORT — Postgres database port, usually 5432
 - POSTGRES_NAME — Postgres database name
 - POSTGRES_USER — Postgres username
-- JWT_SECRET — JWT secret
+- POSTGRES_PSW_FILE — Postgres password file
+- JWT_SECRET_FILE — Postgres JWT secret file
