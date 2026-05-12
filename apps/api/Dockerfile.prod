@@ -2,9 +2,11 @@ FROM node:23.8.0
 
 WORKDIR /apps/api
 
-COPY package.json .
+ENV NODE_ENV=production
 
-RUN npm install
+COPY package*.json ./
+
+RUN npm ci
 
 COPY . .
 

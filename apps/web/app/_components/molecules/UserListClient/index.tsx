@@ -2,20 +2,21 @@
 
 import { findAllUsers } from "@/lib/api/user/user.client";
 import { useTranslations } from "next-intl";
+import { Button } from "../../shadcn/button";
 
 export const UserListClient = () => {
 	const { data, error, isLoading } = findAllUsers();
 	const t = useTranslations("common");
 
-	if (isLoading) {
-		return (
-			<p>{t("loading")}</p>
-		);
-	}
-
 	if (!data || error) {
 		return (
 			<p>{t("error")}</p>
+		);
+	}
+
+	if (isLoading) {
+		return (
+			<p>{t("loading")}</p>
 		);
 	}
 
@@ -25,6 +26,7 @@ export const UserListClient = () => {
 			{data.items.length > 0 ? data.items.map((user) => (
 				<p className="text-foreground" key={user.id}>{user.email}</p>
 			)) : <p>No users.</p>}
+			<Button>button</Button>
 		</div>
 	);
 };

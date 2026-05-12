@@ -4,7 +4,7 @@ import { registerPlugins } from "./plugins.js"
 import dotenv from "dotenv"
 
 async function main() {
-	dotenv.config()
+	dotenv.config( { override: true } )
 
 	const fastify = Fastify( { logger: true } )
 

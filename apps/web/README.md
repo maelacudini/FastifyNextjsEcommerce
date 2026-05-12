@@ -4,7 +4,7 @@ This folder contains the Next.js frontend for the project. It is a modern React/
 
 - Next.js (App Router)
 - next-intl for i18n (server + client translations)
-- Tailwind CSS for utility-first styling
+- Tailwind CSS for utility-first styling, coupled with Shadcn
 - ESLint for linting
 - TypeScript for types and safety
 - Docker support (Dockerfile.dev) for containerized development
@@ -89,19 +89,29 @@ npm run gen:api
 This project uses openapi-react-query, a type-safe tiny wrapper (1 kb) around @tanstack/react-query to work with OpenAPI schema. It works by using openapi-fetch and openapi-typescript.
 For the official documentation on openapi-react-query please check out their official [website](https://openapi-ts.dev/openapi-react-query/).
 
-## Docker / Containerized development
 
-From the client folder, build the image:
-```powershell
-docker build -t fastify_next_client_img .
-```
+## lib folder content
+`apps\web\lib` should contain app-internal code that is reusable, framework-safe enough to import from multiple places, and not itself a top-level app concern.
 
-From the client folder, to build only client side:
-```powershell
-docker run --name fastify_next_client_cont --rm -p 3000:3000 fastify_next_client_img
-```
+In this repo, good candidates for `apps/web/lib` are:
 
-Stop container (with --rm it removes itself after being stopped):
-```powershell
-docker stop fastify_next_client_cont
-```
+- API client setup and API helper modules, like `apps/web/lib/api`
+- Generic utilities, like utils.ts
+- Shared helpers such as formatters, validators, query builders, cookie helpers, URL helpers, mapping functions
+- Thin wrappers around third-party libraries used across the app
+
+
+Things I would not put in lib:
+
+- app route files, layouts, pages, and UI composition
+- i18n setup and translation messages
+- generated contract files like api.d.ts
+- feature content/assets that are really app configuration rather than reusable code
+
+
+A simple rule:
+
+- If it is shared reusable code, put it in lib
+- If it is framework/app wiring, keep it top-level
+- If it is generated types, keep it in types
+- If it is UI, keep it in app/_components or whatever component structure you use

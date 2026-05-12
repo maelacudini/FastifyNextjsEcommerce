@@ -1,9 +1,9 @@
-[] not too happy about the placement of this file apps\api\src\plugins\jwtPlugin.ts, the folder Plugin gets a little lost between all 
+[x] not too happy about the placement of this file apps\api\src\plugins\jwtPlugin.ts, the folder Plugin gets a little lost between all 
   entities folders inside apps\api\src
 
-[] where should i put apps\api\src\auth\application\bcrypt-password-hasher.usecase.ts and apps\api\src\auth\domain\password-hasher.port.ts?
+[x] where should i put apps\api\src\auth\application\bcrypt-password-hasher.usecase.ts and apps\api\src\auth\domain\password-hasher.port.ts?
 
-[] should i keep the use of bcrypt separate? i'm thinking: if a thing can change independently,
+[x] should i keep the use of bcrypt separate? i'm thinking: if a thing can change independently,
   it gets an interface. Hashing algorithms change, libraries change, security requirements change.
   is this correct?
 
@@ -17,3 +17,7 @@
   where can i place the logic and how do i divide it while keeping a clear hexagonal architecture pattern?
 
 [x] how do i setup docker compose secrets?
+
+WHAT AM I WORKING ON?
+- BE/implement-search-params: implementing search params in case the user wants to search for title/names/tags...
+- BE-FE/handle-multiple-currencies: in case i have to deal with multiple users buying from different countries with different currencies 

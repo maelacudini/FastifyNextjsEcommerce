@@ -1,0 +1,21 @@
+import type { Biscuit } from "@/domain/biscuit/domain/biscuit.entity.js"
+
+type PackageItem = {
+  id: Biscuit["id"]
+  quantity: number
+}
+
+export type Package = {
+  id: string
+  name: string
+  description: string
+  items: PackageItem[]
+  createdAt: string
+  images: string[]
+  packagingPrice: number
+  isDisabled: boolean
+  updatedAt?: string
+  tags?: string[]
+  weight?: number
+  discountPercent?: number
+}

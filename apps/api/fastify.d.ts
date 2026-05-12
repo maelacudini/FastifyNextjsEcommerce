@@ -1,5 +1,6 @@
-import type { User } from "@/user/domain/user.entity.ts"
 import "fastify"
+import type { User } from "@/domain/user/domain/user.entity.js"
+import type { FastifyReply, FastifyRequest } from "fastify"
 
 declare module "fastify" {
   interface FastifyInstance {

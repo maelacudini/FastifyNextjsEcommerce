@@ -5,17 +5,11 @@ export const UserListServer = async () => {
 	const { data, error } = await findAllUsers();
 	const t = await getTranslations("common");
 
-	if (error) {
-		return (
-			<p>{t("loading")}</p>
-		);
-	}
-
 	if (!data || error) {
 		return (
 			<p>{t("error")}</p>
 		);
-	}	
+	}
 
 	return (
 		<div>

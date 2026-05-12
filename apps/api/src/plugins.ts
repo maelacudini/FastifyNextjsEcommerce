@@ -5,17 +5,24 @@ import fastifyRateLimit from "@fastify/rate-limit"
 import fastifySwagger from "@fastify/swagger"
 import fastifySwaggerUi from "@fastify/swagger-ui"
 import type { FastifyInstance } from "fastify"
-import jwtPlugin from "./plugins/jwtPlugin.js"
+import { requireEnvVariable } from "@/lib/config/env.js"
+import jwtPlugin from "@/lib/plugins/jwt.js"
 
 export async function registerPlugins( fastify: FastifyInstance ) {
+	const postgresUser = requireEnvVariable( "POSTGRES_USER" )
+	const postgresPassword = requireEnvVariable( "POSTGRES_PSW" )
+	const postgresHost = requireEnvVariable( "POSTGRES_HOST" )
+	const postgresPort = requireEnvVariable( "POSTGRES_PORT" )
+	const postgresName = requireEnvVariable( "POSTGRES_NAME" )
+	const jwtSecret = requireEnvVariable( "JWT_SECRET" )
 
 	// TODO: EXPLORE PLUGIN USAGE, SET RATE LIMITS ETC ETC
 	await fastify.register( fastifyPostgres, {
-		connectionString: `postgres://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PSW}@${process.env.POSTGRES_HOST}:${process.env.POSTGRES_PORT}/${process.env.POSTGRES_NAME}`,
+		connectionString: `postgres://${postgresUser}:${postgresPassword}@${postgresHost}:${postgresPort}/${postgresName}`,
 	} )
 
 	await fastify.register( fastifyJwt, {
-		secret: `${process.env.JWT_SECRET}`
+		secret: jwtSecret
 	} )
 
 	await fastify.register( jwtPlugin )
