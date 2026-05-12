@@ -31,11 +31,16 @@ export const textVariants = cva(
         primary: "text-primary",
         secondary: "text-secondary",
       },
+      font: {
+        sans: "font-sans",
+        heading: "font-heading",
+      },
     },
     defaultVariants: {
       size: "default",
       weight: "default",
       color: "default",
+      font: "sans",
     },
   }
 )

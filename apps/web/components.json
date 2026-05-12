@@ -1,12 +1,12 @@
 {
   "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "radix-nova",
+  "style": "radix-luma",
   "rsc": true,
   "tsx": true,
   "tailwind": {
     "config": "",
     "css": "./app/_styles/globals.css",
-    "baseColor": "taupe",
+    "baseColor": "mauve",
     "cssVariables": true,
     "prefix": ""
   },
@@ -14,12 +14,12 @@
   "rtl": false,
   "aliases": {
     "components": "@app/_components/shadcn",
-    "utils": "@app/lib/shadcn/utils",
+    "utils": "@/lib/shadcn/utils",
     "ui": "@app/_components/shadcn",
-    "lib": "@app/lib/shadcn/utils",
-    "hooks": "@app/hooks/shadcn/hooks"
+    "lib": "@/lib/shadcn/utils",
+    "hooks": "@/hooks/shadcn/hooks"
   },
-  "menuColor": "default",
+  "menuColor": "default-translucent",
   "menuAccent": "subtle",
   "registries": {}
 }

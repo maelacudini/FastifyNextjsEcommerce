@@ -9,6 +9,7 @@ export const Text: FC<PropsWithChildren<TextPropsType>> = ({
   size = "default",
   weight = "default",
   tag = "p",
+  font = "sans",
   className = "",
   ...otherProps
 }) => {
@@ -16,7 +17,7 @@ export const Text: FC<PropsWithChildren<TextPropsType>> = ({
 
   return (
     <Tag
-      className={ cn(textVariants({color, size, weight, className}))}
+      className={ cn(textVariants({color, size, weight, font, className}))}
       {...otherProps}
     >
       {children}

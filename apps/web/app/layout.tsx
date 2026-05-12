@@ -4,11 +4,18 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale } from "next-intl/server";
 import ClientProviders from "./clientProviders";
-import { Geist } from "next/font/google";
+import { Geist, Figtree } from "next/font/google";
+
+const FIGTREE = Figtree({
+	subsets: ["latin"],
+	display: 'swap',
+	variable:'--font-figtree'
+});
 
 const GEIST_SANS = Geist({
-	variable: "--font-geist-sans",
 	subsets: ["latin"],
+	display: 'swap',
+	variable: "--font-geist",
 });
 
 export const metadata: Metadata = {
@@ -24,10 +31,10 @@ export default async function RootLayout({
 	const locale = await getLocale();
 
 	return (
-		<html lang={locale} className="light">
+		<html lang={locale} className={`${GEIST_SANS.variable} ${FIGTREE.variable} light`}>
 			<body
 				suppressHydrationWarning
-				className={`${GEIST_SANS.className} antialiased`}
+				className={`antialiased`}
 			>
 				<NextIntlClientProvider>
 					<ClientProviders>
